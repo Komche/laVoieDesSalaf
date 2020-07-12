@@ -326,6 +326,7 @@
     <script src="public/vendor/js/display_profile_image.js"></script>
     <!-- Switchery js -->
     <script src="public/vendor/plugins/switchery/switchery.min.js"></script>
+    <script src="public/vendor/plugins/select2/select2.min.js"></script>
 
     <!-- Datatable js -->
     <script src="public/vendor/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -350,6 +351,9 @@
     <script src="public/js/data_handler.js"></script>
     <!-- End js -->
     <script>
+        $(document).ready(function () { 
+            $('.searchable').select2();
+         })
         $(function() {
             $('#example1').DataTable()
             $('#example2').DataTable({

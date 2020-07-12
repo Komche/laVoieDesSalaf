@@ -254,10 +254,11 @@ class Manager
 
     public static function messages($msg, $type_alerte)
     {
+        $font = ($type_alerte=='alert-success') ? 'fa-check' : 'fa-ban';
         // die(var_dump($msg));
         echo  '<div class="alert ' . $type_alerte . ' alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-ban"></i> AEMN!</h4>
+        <h4><i class="icon fa '.$font.'"></i> Checker!</h4>
         ' . $msg . '
       </div>';
     }
