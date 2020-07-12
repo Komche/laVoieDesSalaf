@@ -342,6 +342,7 @@
     <script src="public/vendor/plugins/datatables/dataTables.responsive.min.js"></script>
     <script src="public/vendor/plugins/datatables/responsive.bootstrap4.min.js"></script>
     <script src="public/vendor/js/custom/custom-table-datatable.js"></script>
+    <script src="public/vendor/js/jquery.serializeObject.js"></script>
     <!-- Core js -->
     <!-- Core js -->
     <script src="public/vendor/js/core.js"></script>

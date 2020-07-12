@@ -3,6 +3,7 @@
 class ville {
 	 public $idVille;
 	 public $nomVille;
+	 public $country;
 	 public $ville=array();
 
 
@@ -17,10 +18,11 @@ class ville {
                     return $this->ville;
                 }
 
-                public function role($idVille, $nomVille)
+                public function role($idVille, $nomVille, $country)
                     {
                         $this->idVille = $idVille;
 $this->nomVille = $nomVille;
+$this->country = $country;
 
                     }
                 
@@ -41,6 +43,7 @@ $this->nomVille = $nomVille;
 $d=$data[0];
 $this->setIdVille($d['idVille']);
 $this->setNomVille($d['nomVille']);
+$this->setCountry($d['country']);
 $this->ville =$data; 
  return $this;
                                 }
@@ -65,12 +68,38 @@ $this->ville =$data;
 $d=$data[0];
 $this->setIdVille($d['idVille']);
 $this->setNomVille($d['nomVille']);
+$this->setCountry($d['country']);
 $this->ville =$data; 
  return $this;
                                 }
                             
                         } else {
                             return $this->nomVille;
+                        }
+                        
+                    }
+                    /**
+                    * Get the value of country
+                    */ 
+                    public function getCountry($country=null)
+                    {
+                        if ($country != null && is_array($this->ville) && count($this->ville)!=0) {
+                            $table_name = strtolower(get_class($this));
+                            $query = "SELECT * FROM $table_name WHERE country = ?";
+                            $req = Manager::bdd()->prepare($query);
+                            $req->execute([$country]);
+                            $data = "";
+                            if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
+$d=$data[0];
+$this->setIdVille($d['idVille']);
+$this->setNomVille($d['nomVille']);
+$this->setCountry($d['country']);
+$this->ville =$data; 
+ return $this;
+                                }
+                            
+                        } else {
+                            return $this->country;
                         }
                         
                     }
@@ -95,6 +124,17 @@ $this->ville =$data;
                    public function setNomVille($nomVille)
                    {
                     $this->nomVille = $nomVille;
+               
+                       return $this;
+                   }
+                    /**
+                    * Set the value of country
+                    *
+                    * @return  self
+                    */ 
+                   public function setCountry($country)
+                   {
+                    $this->country = $country;
                
                        return $this;
                    }
