@@ -20,7 +20,8 @@ if (isset($_SESSION['user'])) {
         extract($_GET);
         global $title;
         $_SESSION['user']['prevTitle']  = $title;
-        $module = Manager::getData("module", "action_url", $action)['data']['id'];
+        $sql = "SELECT id FROM module WHERE action_url=?";
+        $module = Manager::getSingleRecords($sql, [$action])['id'];
         if (!haveAction($_SESSION['user']['roleId'], $module)) {
             require('view/notFoundView.php');
         }

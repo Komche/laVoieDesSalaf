@@ -9,8 +9,6 @@ ob_start();
       <div class="breadcrumb-list">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-          <!-- <li class="breadcrumb-item"><a href="#"><?= $title ?></a></li>
-                                <li class="breadcrumb-item"><a href="#">Basic</a></li> -->
           <li class="breadcrumb-item active" aria-current="page"><?= $title ?></li>
         </ol>
       </div>
