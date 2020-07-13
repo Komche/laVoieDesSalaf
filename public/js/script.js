@@ -52,21 +52,41 @@ $(document).ready(function () {
     });
 
 });
-moment.locale('fr');
+// moment.locale('fr');
 
 $exercice = "";
 
-$("#date_debut").on("change", function () { 
-    $exercice = "Exercice " +  moment($(this).val()).format('YYYY');
-    console.log($exercice);
-    $("#libelle").val($exercice);
-    $("#date_fin").prop("readonly", false);
- });
-$("#date_fin").on("change", function () { 
-    $exercice +=  "-"+moment($(this).val()).format('YYYY');
-    $("#libelle").val($exercice);
-    $("#date_fin").prop("readonly", true);
-    $("#date_debut").prop("readonly", true);
- });
+// $("#date_debut").on("change", function () { 
+//     $exercice = "Exercice " +  moment($(this).val()).format('YYYY');
+//     console.log($exercice);
+//     $("#libelle").val($exercice);
+//     $("#date_fin").prop("readonly", false);
+//  });
+// $("#date_fin").on("change", function () { 
+//     $exercice +=  "-"+moment($(this).val()).format('YYYY');
+//     $("#libelle").val($exercice);
+//     $("#date_fin").prop("readonly", true);
+//     $("#date_debut").prop("readonly", true);
+//  });
 
- 
+ $("#inputSearch").on('keyup', function () { 
+     
+     table = $('#searchTable');
+     tr = $('#searchTable tr');
+     console.log("ok search", tr);
+     input = this;
+     filter = input.value.toUpperCase();
+
+     for (let i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            value = td.textContent ||td.innerText;
+            if (value.toUpperCase().indexOf(filter)>1) {
+                tr[i].style.display = "block";
+            }else {
+                tr[i].style.display = "none";
+            }
+        }
+         
+     }
+  });

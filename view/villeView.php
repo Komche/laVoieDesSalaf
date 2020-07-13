@@ -80,7 +80,7 @@ ob_start();
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-          <table class="table table-bordered">
+          <table id="searchTable" class="table table-bordered">
             <tbody>
               <tr>
                 <th>Nom de la ville</th>
