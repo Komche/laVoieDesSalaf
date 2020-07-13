@@ -1,0 +1,1 @@
+ALTER TABLE `module` ADD `is_menu` BOOLEAN NOT NULL DEFAULT TRUE AFTER `sub_module`;
