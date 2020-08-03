@@ -99,15 +99,17 @@
                     <ul class="vertical-menu in">
 
                         <?php
-                        $res = Manager::getData('module_role', 'role_id', $_SESSION['user']['roleId'], true);
-                        $res = $res['data'];
+                        $sql = "SELECT * FROM module_role mr, module m WHERE mr.module = m.id AND is_menu=1 AND role_id = ? ";
+                        $res = Manager::getMultiplesRecords($sql, [$_SESSION['user']['roleId']]);
+                        // $res = $res['data'];
                         $thisSMenu = array();
                         foreach ($res as $key => $value) {
-
-                            $name = Manager::getData('module', 'id', $value['module']);
-                            if (empty($name['data']['sub_module'])) {
+                            $sql = "SELECT * FROM module WHERE is_menu=1 AND id = ?";
+                            $name = Manager::getSingleRecords($sql, [$value['module']]);
+                            // print_r($name);
+                            if (empty($name['sub_module'])) {
                                 //echo ($value['module']);
-                                $name = $name['data'];
+                                // $name = $name['data'];
                                 $menu = new MenuManager($name['name']);
                                 $sMenu = getActions($name['id']);
                                 //print_r($sMenu); die;

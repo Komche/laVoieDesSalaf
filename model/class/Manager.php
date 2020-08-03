@@ -163,9 +163,9 @@ class Manager
         }
     }
 
-    public static function addoNTable($url, $data)
+    public static function addoNTable($url, $data, $table_name=null)
     {
-        $res = self::verif($data);
+        $res = self::verif($data, $table_name);
         if ($res != 1) {
             return $res;
         }
@@ -225,13 +225,13 @@ class Manager
         return $res;
     }
 
-    public static function verif($data)
+    public static function verif($data, $table_name=null)
     {
         if (!is_array($data)) {
             return 'Une erreur s\'est produite';
         }
 
-        $res = self::is_not_empty($data);
+        $res = self::is_not_empty($data, $table_name);
         if ($res != 1) {
             $res['message'] = $res;
             return $res;
@@ -294,10 +294,10 @@ class Manager
     public static function is_not_empty($fields = [], $table_name = null)
     {
         if (!empty($table_name)) {
-            $tField = getFields($table_name);
+            $tField = self::getFields($table_name);
             if (count($fields) != 0 && count($tField) != 0) {
                 foreach ($fields as $key => $field) {
-                    if ($tField[$key] == "NO" AND $tField[$key]==$fields['$key']) {
+                    if ($tField[$key] == "NO") {
                         if (empty($field) && trim($field) == "") {
                             self::throwError(503, "$key est vide");
                             return false;
@@ -319,11 +319,11 @@ class Manager
         }
     }
 
-    function getFields($table)
+    static function  getFields($table)
     {
 
         $sql = "DESCRIBE $table";
-        $req = bdd()->query($sql);
+        $req = self::bdd()->query($sql);
         while ($res = $req->fetch()) {
             $data[$res['Field']] = $res['Null'];
         }

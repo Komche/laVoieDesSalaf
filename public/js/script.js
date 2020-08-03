@@ -25,7 +25,7 @@ function addTableRow() {
             </td>
             <td>
             <button type="button" onclick="addData('module')" class="btn btn-primary">
-                <i class="fa  fa-check-square"></i>
+                <i class="fa  fa-check-square white"></i>
                 Valider
             </button>
             </td>

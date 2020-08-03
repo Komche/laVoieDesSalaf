@@ -24,6 +24,7 @@ if (isset($_SESSION['user'])) {
         $module = Manager::getSingleRecords($sql, [$action])['id'];
         if (!haveAction($_SESSION['user']['roleId'], $module)) {
             require('view/notFoundView.php');
+            return;
         }
         if ($action == 'role') {
             if (!empty($_POST)) {
@@ -43,11 +44,25 @@ if (isset($_SESSION['user'])) {
                 $data = $_POST;
                 $res = addData($data, 'module');
 
+                // Manager::showError($res);
+
                 if ($res != 1) {
                     $_SESSION['messages'] = $res;
                 }
             }
             require_once("view/moduleView.php");
+        } elseif ($action == 'entite') {
+            if (!empty($_POST)) {
+                $data = $_POST;
+                $res = addData($data, 'entity');
+
+                // Manager::showError($res);
+
+                if ($res != 1) {
+                    $_SESSION['messages'] = $res;
+                }
+            }
+            require_once("view/entityView.php");
         } elseif ($action == 'permission') {
             if (!empty($_POST)) {
                 $data = $_POST;

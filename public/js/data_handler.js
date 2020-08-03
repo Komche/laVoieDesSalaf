@@ -125,7 +125,7 @@ function getPermission() {
                 <td>` + v.description + `</td>
                 <td>
                   <a class="btn btn-primary">
-                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-edit white"></i>
                   </a>
                 </td>
               </tr>
@@ -272,7 +272,7 @@ function addTablRow() {
             </td>
             <td>
             <button type="button" onclick="addData('action')" class="btn btn-primary">
-                <i class="fa  fa-check-square"></i>
+                <i class="fa  fa-check-square white"></i>
                 Valider
             </button>
             </td>

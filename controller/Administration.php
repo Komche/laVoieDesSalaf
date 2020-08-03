@@ -21,7 +21,8 @@ include_once('model/database/country.php');
 function addData($data, $table)
 {
     $url = API_ROOT_PATH. "/object/$table";
-    $res = Manager::addoNTable($url, $data);
+    $res = Manager::addoNTable($url, $data, $table);
+    // Manager::showError($res);
     $res = Manager::correct($res);
     if (isset($res['error'])) {
         if (!$res['error']) {

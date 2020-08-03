@@ -23,7 +23,7 @@ ob_start();
 <div class="container container-margin">
   <div class="row">
     <?php if (!isset($_GET['role'])) : ?>
-      <div class="col-md-6">
+      <div class="col-md-5">
         <!-- general form elements -->
         <div class="card m-b-30">
           <div class="card-header with-border">
@@ -39,11 +39,18 @@ ob_start();
               </div>
               <div class="form-group">
                 <label for="name">icon</label>
-                <input type="text" class="form-control" id="icon" name="icon" placeholder="icon sous-format fontawsome (pas obligatoire)">
+                <input type="text" class="form-control" id="icon" name="icon" placeholder="icon sous-format fontawsome (facultatif)">
               </div>
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea required class="form-control" id="description" name="description" placeholder="description du module"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="is_menu">Menu</label>
+                <select class="form-control" id="is_menu" name="is_menu">
+                  <option value="1">Oui</option>
+                  <option value="0">Non</option>
+                </select>
               </div>
             </div>
             <!-- /.card-body -->
@@ -62,7 +69,7 @@ ob_start();
 
       </div>
     <?php endif; ?>
-    <div class="<?= (isset($_GET['role'])) ? 'col-md-12' : 'col-md-6' ?>">
+    <div class="<?= (isset($_GET['role'])) ? 'col-md-12' : 'col-md-7' ?>">
       <div class="card m-b-30">
         <div class="card-header with-border">
           <h3 class="card-title"><b><?= isset($_GET['role']) ? Manager::getData('roles', 'id', $role)['data']['name'] : 'Module' ?></b></h3>
