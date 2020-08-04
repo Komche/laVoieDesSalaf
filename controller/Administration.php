@@ -167,13 +167,13 @@ function handleMatricule($mat)
 
 function getMatricule()
 {
-    $sql = "SELECT COUNT(*) +1 nb FROM membre";
+    $sql = "SELECT COUNT(*) +1 nb FROM document";
     $res = Manager::getSingleRecords($sql);
     // Manager::showError($res);
     try {
-        return handleMatricule("00000".$res['nb'])."/AEMN/".date("yy");
+        return date("yy").'-chcodu-'.handleMatricule("00000".$res['nb']);
     } catch (\Throwable $th) {
-        return "000001/AEMN/".date("yy");
+        return date("y")."-chcodu-000001";
     }
 
 }

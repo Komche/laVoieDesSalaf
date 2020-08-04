@@ -63,6 +63,18 @@ if (isset($_SESSION['user'])) {
                 }
             }
             require_once("view/entityView.php");
+        } elseif ($action == 'document') {
+            if (!empty($_POST)) {
+                $data = $_POST;
+                $res = addData($data, 'document');
+
+                // Manager::showError($res);
+
+                if ($res != 1) {
+                    $_SESSION['messages'] = $res;
+                }
+            }
+            require_once("view/documentView.php");
         } elseif ($action == 'permission') {
             if (!empty($_POST)) {
                 $data = $_POST;
