@@ -1,6 +1,15 @@
 <?php
 session_start();
+require 'vendor/autoload.php';
+
+use MrShan0\PHPFirestore\FirestoreClient;
+
+use function GuzzleHttp\json_encode;
+
 require('controller/Administration.php');
+$firestoreClient = new FirestoreClient('test-gdg-406a8', 'AIzaSyDC7P_clu0e9Gj06S5Z6a0FSFMTaBkENFE', [
+    'database' => '(default)',
+]);
 
 if (isset($_SESSION['messages'])) {
     unset($_SESSION['messages']);
@@ -54,8 +63,9 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'entite') {
             if (!empty($_POST)) {
                 $data = $_POST;
+                $data['uniqueId'] = uniqid("enti-", true);
+                $firestoreClient->addDocument("entity", $data);
                 $res = addData($data, 'entity');
-
                 // Manager::showError($res);
 
                 if ($res != 1) {
@@ -63,6 +73,55 @@ if (isset($_SESSION['user'])) {
                 }
             }
             require_once("view/entityView.php");
+        } elseif ($action == 'model') {
+            if (!empty($_POST)) {
+                $data = $_POST;
+                $data['uniqueId'] = uniqid("chec", true);
+                $firestoreClient->addDocument("entity", $data);
+                $res = addData($data, 'entity');
+                // Manager::showError($res);
+
+                if ($res != 1) {
+                    $_SESSION['messages'] = $res;
+                }
+            }
+            require_once("view/modelView.php");
+        } elseif ($action == 'addModel') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            if (!empty($data)) {
+                // var_dump($data); die;
+                if (!empty($data['model_name'])) {
+
+                    $firestoreClient->addDocument("model", $data, $data['uniqueId']);
+                    $res = addData($data, 'model');
+                }
+                if (isset($data['model_key'])) {
+                    $data[$data['model_key']] = $data['model_key'];
+                    unset($data['model_key']);
+                    $firestoreClient->updateDocument("model/".$data['uniqueId'], $data);
+                }
+                $result['msg'] = 1;
+                $result['uniqueId'] = $data['uniqueId'];
+
+                echo json_encode($result);
+            }
+        } elseif ($action == 'getModel') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            if (!empty($data)) {
+                // var_dump($data); die;
+                $data['uniqueId'] = uniqid("model-", true);
+                if ($data['model_key'] == "model_key") {
+
+                    $res = addData($data, 'model');
+                }
+                $firestoreClient->addDocument("entity", $data, $data['uniqueId']);
+                // Manager::showError($res);
+
+                if ($res != 1) {
+                    $_SESSION['messages'] = $res;
+                }
+            }
+            // require_once("view/modelView.php");
         } elseif ($action == 'document') {
             if (!empty($_POST)) {
                 $data = $_POST;

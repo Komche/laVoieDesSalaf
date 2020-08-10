@@ -34,6 +34,29 @@ function addTableRow() {
     $('#table_permission').append($tr);
   }
 }
+function addTableRowModel() {
+    $tr = `<tr id="addModel">
+    <form >
+            <td>
+            <div class="form-group">
+                <input type="text" required class="form-control" id="model_key" name="model_key" placeholder="la cle du model">
+            </div>
+           
+            
+            </td>
+            
+            
+            <td>
+            <button type="button" onclick="addModel('module')" class="btn btn-primary">
+                <i class="fa  fa-check-square white"></i>
+                Valider
+            </button>
+            </td>
+  </tr>`;
+  if (!$("#addModel").length) {
+    $('#table_model').append($tr);
+  }
+}
 
 $(document).ready(function () {
 

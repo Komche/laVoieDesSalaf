@@ -4,7 +4,9 @@ folder = '';
 if (host == 'localhost') {
     folder = '/checker';
 }
+customUrl = protocol + '//' + host + folder + '/index.php?action=';
 myurl = protocol + '//' + host + folder + '/api/object/';
+firestoreUrl = 'https://firestore.googleapis.com/v1/projects/test-gdg-406a8/databases/(default)/documents/';
 var $_GET = {};
 document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
     function decode(s) {
@@ -13,6 +15,10 @@ document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
 
     $_GET[decode(arguments[1])] = decode(arguments[2]);
 });
+if ($_GET['uniqueId']!='') {
+    
+    getModel($_GET['uniqueId']);
+}
 getPermission();
 $('input:checkbox.module_is_checked').each(function (i, v) {
     $mr = getDataWith2Param('module_role', 'module', $(v).val(), 'role_id', $_GET['role']);
@@ -80,7 +86,7 @@ function addPermissionRole(chec) {
     }
 }
 // filtrage de l'exercice par ville
-$("#bureau").on('select2:selecting', function(e) {
+$("#bureau").on('select2:selecting', function (e) {
     showPleaseWait();
     val = $(this).val();
     $exercice = getDatas("exercice", "bureau", val);
@@ -89,8 +95,8 @@ $("#bureau").on('select2:selecting', function(e) {
         console.log(data, "exercice");
         data = data.data;
         html = "";
-        $.each(data, function (i, v) { 
-            html += '<option value="'+v.id_exercice+'">'+v.libelle+'</option>';
+        $.each(data, function (i, v) {
+            html += '<option value="' + v.id_exercice + '">' + v.libelle + '</option>';
         });
         $("#exercice").html(html);
         hidePleaseWait();
@@ -104,6 +110,7 @@ $("#bureau").on('select2:selecting', function(e) {
     });
 
 });
+
 function getModuleRole() {
 
 }
@@ -135,7 +142,57 @@ function getPermission() {
         }
     });
 
-    
+
+}
+
+function getModel(uniqueId) {
+
+    //console.log("module", $permision);
+    $dataModel = '';
+    $.ajax({
+        url: firestoreUrl + 'model/' + uniqueId,
+        type: "GET",
+        contentType: 'application/json',
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            hidePleaseWait();
+
+            $.each(result.fields, function (i, v) {
+                $key = '';
+                // console.log(i, 'index');
+                if (i != 'entity' && i != 'uniqueId') {
+                    $.map(v, function (element, index) {
+                        console.log("i="+i);
+                        if (i=="model_name") {
+                            $("#modelName").text(element);
+                        }else {
+
+                        $dataModel += `
+                                <tr>
+                                <td>` + element + `</td>
+                                <td>
+                                <a class="btn btn-primary">
+                                    <i class="fa fa-edit white"></i>
+                                </a>
+                                </td>
+                            </tr>
+                                `;
+                        }
+                    });
+                }
+
+            });
+            $('#body_model').html($dataModel);
+        },
+        error: function (xhr, resp, text) {
+            //  error to console
+            console.log(xhr, resp, text);
+        }
+    });
+
+
+
 }
 
 function setActionUrl(name) {
@@ -171,6 +228,54 @@ function addData(table) {
             }
         });
     }
+}
+uniqueId = newGuid();
+
+function addModel() {
+    var go;
+    var data = $('#add_model').serializeObject();
+    if ($_GET['uniqueId']!= '') {
+        
+        data.uniqueId = $_GET['uniqueId'];
+    }else {
+
+        data.uniqueId = uniqueId;
+    }
+    var form_data = JSON.stringify(data);
+    go = canContinue(data);
+    console.log(form_data, data, customUrl + "addModel");
+    if (go) {
+        showPleaseWait();
+        $.ajax({
+            url: customUrl + "addModel",
+            type: "POST",
+            contentType: 'application/json',
+            dataType: "json",
+            data: form_data,
+            success: function (result) {
+                console.log(result, "res");
+
+                getModel(result.uniqueId);
+            },
+            error: function (xhr, resp, text) {
+                //  error to console
+                console.log(xhr, resp, text);
+            }
+        });
+    }
+}
+/**
+ * Create a random Guid.
+ *
+ * @return {String} a random guid value.
+ */
+function newGuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+        function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        }).toUpperCase();
 }
 
 function getData(table, field, value) {
@@ -301,7 +406,7 @@ function canContinue(data) {
 
 function showPleaseWait() {
     if (document.querySelector("#pleaseWaitDialog") == null) {
-      var modalLoading = `<div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" role="dialog">
+        var modalLoading = `<div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -317,14 +422,14 @@ function showPleaseWait() {
             </div>
         </div>
     </div>`;
-      $(document.body).append(modalLoading);
+        $(document.body).append(modalLoading);
     }
     $("#pleaseWaitDialog").modal("show");
-  }
+}
 
-  /**
-   * Hides "Please wait" overlay. See function showPleaseWait().
-   */
-  function hidePleaseWait() {
+/**
+ * Hides "Please wait" overlay. See function showPleaseWait().
+ */
+function hidePleaseWait() {
     $("#pleaseWaitDialog").modal("hide");
-  }
+}
