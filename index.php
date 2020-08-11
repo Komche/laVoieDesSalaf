@@ -125,7 +125,13 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'document') {
             if (!empty($_POST)) {
                 $data = $_POST;
-                $res = addData($data, 'document');
+                var_dump($data);
+                $document['entity'] = $data['entity'];
+                $document['matricule'] = $data['matricule'];
+                $document['entity_matricule'] = $data['entity_matricule'];
+                $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
+                $firestoreClient->addDocument("model/".$data['model']."/document", $data);
+                $res = addData($document, 'document');
 
                 // Manager::showError($res);
 

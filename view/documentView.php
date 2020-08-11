@@ -1,5 +1,6 @@
 <?php
-$title = "Entité";
+$title = "Document";
+$mat = generateRandomString()."ch".rand(0,99);
 ob_start();
 ?>
 <div class="breadcrumbbar">
@@ -9,6 +10,8 @@ ob_start();
       <div class="breadcrumb-list">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
+          <!-- <li class="breadcrumb-item"><a href="#"><?= $title ?></a></li>
+                                <li class="breadcrumb-item"><a href="#">Basic</a></li> -->
           <li class="breadcrumb-item active" aria-current="page"><?= $title ?></li>
         </ol>
       </div>
@@ -16,68 +19,106 @@ ob_start();
 
   </div>
 </div>
+<br>
 <div class="container container-margin">
   <div class="row">
-    <div class="col-md-12">
-      <!-- general form elements -->
-      <div class="card m-b-30">
-        <div class="card-header with-border">
-          <h3 class="card-title"><?= $title ?></h3>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-        <form role="form" method="post">
+    <?php
+    $data = Manager::getData("model", "entity", "chec5f2f296c876071.51955557");
+    if ((is_array($data) || is_object($data)) && empty($_GET['uniqueId'])) :
+
+
+    ?>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header with-border">
+            <h3 class="card-title">Model</h3>
+          </div>
+          <!-- /.card-header -->
           <div class="card-body">
-            <div class="form-group">
-              <label for="matricule">Matricule</label>
-              <input value="<?= getMatricule() ?>" type="text" required class="form-control" id="matricule" name="matricule" placeholder="Veuillez entrer matricule">
-            </div>
-            <div class="form-group">
-              <label for="entity">Entité</label>
-              <select class="form-control" name="entity" id="entity">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th style="width: 10px">Nom du model</th>
+
+                </tr>
                 <?php
-                $sql = "SELECT * FROM entity";
-                $data = Manager::getMultiplesRecords($sql);
-                foreach ($data as $key => $value) {
+                if (is_array($data) || is_object($data)) {
+                  foreach ($data as $value) {
+
 
                 ?>
-                  <option value="<?= $value['id_entity'] ?>"><?= $value['label'] ?></option>
-                <?php } ?>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="entity_matricule">Matricule de l'entité</label>
-              <input value="" type="text" required class="form-control" id="entity_matricule" name="entity_matricule" placeholder="Veuillez entrer le matricule de l'entité">
-            </div>
-            <div class="form-group">
-              <label for="first_name">Nom</label>
-              <input value="" type="text" required class="form-control" id="first_name" name="first_name" placeholder="Veuillez entrer le nom">
-            </div>
-            <div class="form-group">
-              <label for="last_name">Prénom</label>
-              <input value="" type="text" required class="form-control" id="last_name" name="last_name" placeholder="Veuillez entrer le prénom">
-            </div>
-            <div class="form-group">
-              <label for="phone_number">N° de téléphone</label>
-              <input value="" type="text" required class="form-control" id="phone_number" name="phone_number" placeholder="Veuillez entrer le N° de téléphone">
-            </div>
-            <div class="form-group">
-              <label for="birthday">Date de naissance</label>
-              <input value="" type="date" required class="form-control" id="birthday" name="birthday" placeholder="Veuillez entrer la date de naissance">
-            </div>
+                    <tr>
+                      <td><a href="index.php?action=document&uniqueId=<?= $value['uniqueId'] ?>"><?= $value['model_name'] ?></a></td>
+                    </tr>
+                <?php
+                  }
+                } else {
+                  Manager::messages('Aucune donnée trouvé', 'alert-warning');
+                }
+                ?>
+              </tbody>
+            </table>
           </div>
-          <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Valider</button>
-            <p></p>
-            <?php
-            if (isset($_SESSION['messages'])) {
-              echo Manager::messages($_SESSION['messages'], 'alert-danger');
-            }
-            ?>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            </ul>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    <?php else : ?>
+      <div class="col-md-12">
+        <div class="card m-b-30">
+          <div class="card-header with-border">
+            <h3 class="card-title"><?= $title ?></h3>
+          </div>
+          <!-- form start -->
+          <form role="form" method="post">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="matricule">Matricule</label>
+                <input disabled value="<?=$mat?>" type="text" required class="form-control" placeholder="Veuillez entrer matricule">
+                <input  value="<?=$mat?>" type="hidden" required class="form-control" id="matricule" name="matricule" placeholder="Veuillez entrer matricule">
+              </div>
+              <div class="form-group">
+                <label for="entity_matricule">Référence (identifiant) du document</label>
+                <input value="" type="text" required class="form-control" id="entity_matricule" name="entity_matricule" placeholder="Veuillez entrer la réfrence">
+                <input value="3" type="hidden" required class="form-control" id="entity" name="entity" placeholder="Veuillez entrer la réfrence">
+                <input value="<?=$_GET['uniqueId']?>" type="hidden" required class="form-control" id="model" name="model" placeholder="Veuillez entrer la réfrence">
+              </div>
+              <?php
+              $data = file_get_contents(FIRESTORE_PATH . "model/" . $_GET['uniqueId']);
+              $data = json_decode($data)->fields;
+              if (is_array($data) || is_object($data)) {
+                foreach ($data as $key => $value) {
+                  if ($key != 'model_name' && $key != "uniqueId") {
+
+              ?>
+                    <div class="form-group">
+                      <label for="<?= $value->stringValue ?>"><?= ucfirst($value->stringValue) ?></label>
+                      <input value="" type="text" required class="form-control" id="<?= $value->stringValue ?>" name="<?= $value->stringValue ?>" placeholder="Veuillez entrer <?= $value->stringValue ?>">
+                    </div>
+
+            <?php }
+                }
+              }
+            endif; ?>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">Valider</button>
+              <p></p>
+              <?php
+              if (isset($_SESSION['messages'])) {
+                echo Manager::messages($_SESSION['messages'], 'alert-danger');
+              }
+              ?>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="container ">
+  <div class="row">
 
     <div class="col-md-12">
       <div class="card m-b-30">
