@@ -147,8 +147,8 @@ if (isset($_SESSION['user'])) {
 
                 file_put_contents($targetPath . $timestamp . '.png', $imageData);
 
-                $document['imgpath'] = $targetPath . $timestamp . '.png';
-                $document['documentQrpath'] = "http://checker.akoybiz.com/index.php?mat=".$document['matricule'];
+                $data['imgpath'] = $targetPath . $timestamp . '.png';
+                $data['documentQrpath'] = "http://checker.akoybiz.com/index.php?mat=".$document['matricule'];
 
                 $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
                 $firestoreClient->addDocument("model/" . $data['model'] . "/document", $data, $data['matricule']);
