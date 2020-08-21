@@ -12,7 +12,7 @@ class Manager
 
     public static function database()
     {
-        $dbname = 'akoybizc_checke';
+        $dbname = 'akoybizc_checker';
         $user = 'akoybizc_komche';
         $pass = '@damoukomche2019';
         $host = 'localhost';
@@ -34,7 +34,7 @@ class Manager
 
     public static function bdd()
     {
-        $dbname = 'akoybizc_baseaemn';
+        $dbname = 'akoybizc_checker';
         $user = 'akoybizc_komche';
         $pass = '@damoukomche2019';
         $host = 'localhost';
