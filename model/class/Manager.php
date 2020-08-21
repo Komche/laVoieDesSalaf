@@ -12,7 +12,7 @@ class Manager
 
     public static function database()
     {
-        $dbname = 'akoybizc_checker';
+        $dbname = 'akoybizc_checke';
         $user = 'akoybizc_komche';
         $pass = '@damoukomche2019';
         $host = 'localhost';
