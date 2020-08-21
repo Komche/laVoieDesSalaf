@@ -99,7 +99,7 @@
                     <ul class="vertical-menu in">
 
                         <?php
-                        $sql = "SELECT * FROM module_role mr, module m WHERE mr.module = m.id AND is_menu=1 AND role_id = ? ";
+                        $sql = "SELECT * FROM module_role mr, module m WHERE mr.module = m.id AND m.is_menu=1 AND mr.role_id = ? ";
                         $res = Manager::getMultiplesRecords($sql, [$_SESSION['user']['roleId']]);
                         // $res = $res['data'];
                         $thisSMenu = array();

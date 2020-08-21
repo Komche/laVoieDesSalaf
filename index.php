@@ -98,7 +98,7 @@ if (isset($_SESSION['user'])) {
                 if (isset($data['model_key'])) {
                     $data[$data['model_key']] = $data['model_key'];
                     unset($data['model_key']);
-                    $firestoreClient->updateDocument("model/".$data['uniqueId'], $data);
+                    $firestoreClient->updateDocument("model/" . $data['uniqueId'], $data);
                 }
                 $result['msg'] = 1;
                 $result['uniqueId'] = $data['uniqueId'];
@@ -125,12 +125,32 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'document') {
             if (!empty($_POST)) {
                 $data = $_POST;
-                var_dump($data);
+                // var_dump($data);
                 $document['entity'] = $data['entity'];
                 $document['matricule'] = $data['matricule'];
                 $document['entity_matricule'] = $data['entity_matricule'];
+
+                $barcode = new \Com\Tecnick\Barcode\Barcode();
+                $targetPath = "public/img/documents/";
+                if (!is_dir($targetPath)) {
+                    mkdir($targetPath, 0777, true);
+                }
+                $bobj = $barcode->getBarcodeObj('QRCODE,H', $document['matricule'], -16, -16, 'black', array(
+                    -2,
+                    -2,
+                    -2,
+                    -2
+                ))->setBackgroundColor('#fff');
+
+                $imageData = $bobj->getPngData();
+                $timestamp = time();
+
+                file_put_contents($targetPath . $timestamp . '.png', $imageData);
+
+                $document['imgpath'] = $targetPath . $timestamp . '.png';
+
                 $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
-                $firestoreClient->addDocument("model/".$data['model']."/document", $data);
+                $firestoreClient->addDocument("model/" . $data['model'] . "/document", $data, $data['matricule']);
                 $res = addData($document, 'document');
 
                 // Manager::showError($res);
