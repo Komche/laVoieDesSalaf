@@ -1,6 +1,6 @@
 <?php
 $title = "Document";
-$mat = generateRandomString()."ch".rand(0,99);
+$mat = generateRandomString() . "ch" . rand(0, 99);
 ob_start();
 ?>
 <div class="breadcrumbbar">
@@ -76,14 +76,14 @@ ob_start();
             <div class="card-body">
               <div class="form-group">
                 <label for="matricule">Matricule</label>
-                <input disabled value="<?=$mat?>" type="text" required class="form-control" placeholder="Veuillez entrer matricule">
-                <input  value="<?=$mat?>" type="hidden" required class="form-control" id="matricule" name="matricule" placeholder="Veuillez entrer matricule">
+                <input disabled value="<?= $mat ?>" type="text" required class="form-control" placeholder="Veuillez entrer matricule">
+                <input value="<?= $mat ?>" type="hidden" required class="form-control" id="matricule" name="matricule" placeholder="Veuillez entrer matricule">
               </div>
               <div class="form-group">
                 <label for="entity_matricule">Référence (identifiant) du document</label>
                 <input value="" type="text" required class="form-control" id="entity_matricule" name="entity_matricule" placeholder="Veuillez entrer la réfrence">
                 <input value="3" type="hidden" required class="form-control" id="entity" name="entity" placeholder="Veuillez entrer la réfrence">
-                <input value="<?=$_GET['uniqueId']?>" type="hidden" required class="form-control" id="model" name="model" placeholder="Veuillez entrer la réfrence">
+                <input value="<?= $_GET['uniqueId'] ?>" type="hidden" required class="form-control" id="model" name="model" placeholder="Veuillez entrer la réfrence">
               </div>
               <?php
               $data = file_get_contents(FIRESTORE_PATH . "model/" . $_GET['uniqueId']);
@@ -120,61 +120,58 @@ ob_start();
 <div class="container ">
   <div class="row">
 
-    <div class="col-md-12">
-      <div class="card m-b-30">
-        <div class="card-header with-border">
-          <h3 class="card-title"><?= $title ?></h3>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th>Matricule</th>
-                <th>Entité</th>
-                <th>Matricule de l'entité</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>N° de téléphone</th>
-                <th>Date de Naissance</th>
-                <th>Action</th>
-              </tr>
-              <?php
-              $data = Manager::getData('document')['data'];
-              if (is_array($data) || is_object($data)) {
-                foreach ($data as $value) {
+    <?php
+    $data = file_get_contents(FIRESTORE_PATH . "model/" . $_GET['uniqueId'] . "/document");
+    // var_dump(json_decode($data, true));
+    $data = json_decode($data, true)['documents'];
+    if (is_array($data) || is_object($data)) {
+      foreach ($data as $key => $value) {
+        // var_dump($value);
+        // echo  $data[$key];
+        $value = $value['fields'];
+        // if ($key == 'imgpath') {
+        unset($value['model']);
+        unset($value['matricule']);
+        unset($value['entity']);
+        
+       
+    ?>
+        <div class="col-md-4">
+          <div class="card m-b-30">
+            <div class="card-header with-border">
+              <h3 class="card-title"><?= $title ?></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
 
 
-              ?>
-                  <tr>
-                    <td><?= $value['matricule'] ?></td>
-                    <td><?= $value['entity'] ?></td>
-                    <td><?= $value['entity_matricule'] ?></td>
-                    <td><?= $value['first_name'] ?></td>
-                    <td><?= $value['last_name'] ?></td>
-                    <td><?= $value['phone_number'] ?></td>
-                    <td><?= $value['birthday'] ?></td>
-                    <td>
-                      <a class="btn btn-primary">
-                        <i class="fa fa-edit white"></i>
-                      </a>
-                    </td>
-                  </tr>
-              <?php
-                }
-              } else {
-                Manager::messages('Aucune donnée trouvé', 'alert-warning');
-              }
-              ?>
-            </tbody>
-          </table>
+              <img style="width: 100%;" src="http://checker.akoybiz.com/<?= $value['imgpath']['stringValue'] ?>" alt="">
+              <a href="http://checker.akoybiz.com/<?= $value['imgpath']['stringValue'] ?>" target="_blank" rel="noopener noreferrer">Télécharger</a>
+              <ul class="list-group">
+                <?php
+                unset($value['imgpath']);
+                unset($value['documentQrpath']);
+                $keys = array_keys($value);
+                foreach ($keys as $k => $v) {
+
+
+                ?>
+                  <li class="list-group-item"><?= ($v=='entity_matricule')? 'ref: '.$value[$v]['stringValue'] : $v.": ".$value[$v]['stringValue'] ?></li>
+                <?php } ?>
+              </ul>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+              </ul>
+            </div>
+          </div>
         </div>
-        <!-- /.card-body -->
-        <div class="card-footer clearfix">
-          </ul>
-        </div>
-      </div>
-    </div>
+
+    <?php
+
+      }
+    }
+    ?>
   </div>
 </div>
 <br> <br> <br>
