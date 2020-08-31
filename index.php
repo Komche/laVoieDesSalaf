@@ -604,7 +604,7 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'logout') {
             require_once("view/logout.php");
         }
-    } else {
+    } elseif(empty($_GET['mat'])) {
         require_once("view/homeView.php");
     }
 } elseif (isset($_GET['signup'])) {
@@ -656,4 +656,8 @@ if (isset($_SESSION['user'])) {
         }
         require('view/loginView.php');
     }
+}
+
+if (!empty($_GET['mat'])) {
+    require('view/getDocumentView.php');
 }

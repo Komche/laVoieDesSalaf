@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>Login</title>
     <!-- Fevicon -->
-    <link rel="shortcut icon" href="public/vendor/images/favicon.ico">
+    <link rel="shortcut icon" href="public/img/favicon.ico">
     <!-- Start css -->
     <link href="public/vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="public/vendor/css/icons.css" rel="stylesheet" type="text/css">
