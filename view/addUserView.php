@@ -60,12 +60,12 @@ ob_start();
             </div>
             <input type="text" required class="form-control" id="last_name" name="last_name" placeholder="Veuillez entrer le prénom de l'utilisateur" value="<?= (!empty($_GET['modif'])) ? $datas['last_name'] : "" ?>">
           </div>
-          <div class="input-group mb-3">
+          <!-- <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Matricule</span>
             </div>
             <input type="tel" required class="form-control" id="matricule" name="matricule" placeholder="Veuillez entrer le matricule" value="<?= (!empty($_GET['modif'])) ? $datas['matricule'] : "" ?>">
-          </div>
+          </div> -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">N° de téléphone</span>
@@ -78,6 +78,7 @@ ob_start();
             </div>
             <select class="form-control" id="type_agent" name="type_agent">
               <?php
+
               $data = Manager::getData('type_agent')['data'];
               if (is_array($data) || is_object($data)) {
                 foreach ($data as $value) {
@@ -110,6 +111,32 @@ ob_start();
               ?>
             </select>
           </div>
+          <!-- <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="isEntity" id="isEntity">
+            <label class="form-check-label" for="isEntity">
+              Entité
+            </label>
+          </div> -->
+          <div id="selectEntity" style="display: none;" class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Entité</span>
+            </div>
+            <select class="form-control" id="entity" name="entity">
+              <option value="<?= NULL ?>">Choisir une entité</option>
+              <?php
+              $data = Manager::getData('entity')['data'];
+              if (is_array($data) || is_object($data)) {
+                foreach ($data as $value) {
+              ?>
+                  <option <?= (!empty($_GET['modif'])) ? ($value['id'] == $datas['entity']) ? "selected" : "" : "" ?> value="<?= $value['id_entity'] ?>"><?= $value['label'] ?></option>
+              <?php
+                }
+              } else {
+                Manager::messages('Aucune donnée trouvé', 'alert-warning');
+              }
+              ?>
+            </select>
+          </div>
           <div class="input-group mb-3" style="text-align: center;">
             <img src="<?= (!empty($_GET['modif'])) ? $src : 'public/img/150x150.png' ?>" id="profile_img" style="height: 100px; border-radius: 50%" alt="">
             <!-- hidden file input to trigger with JQuery  -->
@@ -130,6 +157,26 @@ ob_start();
     </div>
   </div>
 </div>
+<script>
+  
+  $(document).ready(function() {
+    //set initial state.
+    
+
+    $('#role').change(function() {
+      
+      if ($(this).val()!=6) {
+        $('#entity').val(null);
+        $('#selectEntity').hide();
+      }else {
+        $('#selectEntity').show();
+
+      }
+    console.log($('#entity').val());      
+    });
+  });
+ 
+</script>
 <?php
 $content = ob_get_clean();
 require('template.php');

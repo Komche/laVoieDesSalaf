@@ -86,6 +86,10 @@ class UserManager  extends Manager
                 $_SESSION['user']['roleId'] = self::getData('roles', 'id', $res['role'])['data']['id'];
                 $_SESSION['user']['type_agent'] = self::getData('type_agent', 'id', $res['type_agent'])['data']['label'];
                 $_SESSION['user']['photo'] = self::getData('files', 'id', $res['photo'])['data']['file_url'];
+                if (!empty($res['entity'])) {
+                    $entity = $res = self::getData('entity', 'id_entity', $res['entity'])['data'];
+                    $_SESSION['user']['entity'] = $entity;
+                }
                 return 1;
             } else {
                 return 'N° de téléphone ou mot de passe incorrecte';

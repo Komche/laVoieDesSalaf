@@ -1,7 +1,13 @@
 <?php
 $title = "Model";
 $module = 1;
+$uniqueID = "";
 if (isset($_GET['module'])) extract($_GET);
+if (!empty($_SESSION['user']['entity'])) {
+  $uniqueID = $_SESSION['user']['entity']['uniqueId'];
+} elseif (!empty($_GET['uniqueID'])) {
+  $uniqueID = $_GET['uniqueID'];
+}
 ob_start();
 ?>
 <div class="breadcrumbbar">
@@ -21,104 +27,196 @@ ob_start();
   </div>
 </div>
 <br>
-<div class="container">
-  <div class="row">
-  <?php
-    $data = Manager::getData("model", "entity", "chec5f2f296c876071.51955557");
-    if ((is_array($data) || is_object($data)) && empty($_GET['uniqueId'])):
-      
-    
-  ?>
-  <div class="col-md-6">
-      <div class="card">
-        <div class="card-header with-border">
-          <h3 class="card-title">Model</h3>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th style="width: 10px">Nom du model</th>
-                
-              </tr>
-              <?php
-              if (is_array($data) || is_object($data)) {
-                foreach ($data as $value) {
-
-
-              ?>
-                  <tr>
-                    <td><a href="index.php?action=model&uniqueId=<?= $value['uniqueId'] ?>"><?= $value['model_name'] ?></a></td>
-                  </tr>
-              <?php
-                }
-              } else {
-                Manager::messages('Aucune donnée trouvé', 'alert-warning');
-              }
-              ?>
-            </tbody>
-          </table>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer clearfix">
-          </ul>
-        </div>
-      </div>
-    </div>
-    <?php else : ?>
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header with-border">
-          <i class="fa fa-server"></i>
-          <h3 class="card-title" id="modelName"></h3>
-          <a onclick="addTableRowModel()" style="float: right" class="btn btn-primary">
-            <i class="fa fa-plus white"></i>
-          </a>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <form action="" id="add_model">
-            <table id="table_model" class="table table-bordered">
-              <thead>
+<?php if ($_SESSION['user']['roleId'] == 1  && empty($uniqueID) && empty($_GET['uniqueId'])) : ?>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header with-border">
+            <h3 class="card-title">Enités</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered">
+              <tbody>
                 <tr>
-                  <th>Clé du model</th>
-                  <th>Action</th>
+                  <th style="width: 10px">Nom de l'entité</th>
+
                 </tr>
-              </thead>
-              <tbody id="body_model">
-                <tr id="addModel">
-                  <form>
-                    
-                    <td>
-                      <div class="form-group">
-                        <input required class="form-control" id="model_name" name="model_name" placeholder="le nom du model que vous voulez créer">
-                      </div>
-                      <div style="display:none" class="form-group">
-                        <input required class="form-control" id="entity" name="entity" value="chec5f2f296c876071.51955557" placeholder="description du module">
-                      </div>
-                      
-                    </td>
-                    <td>
-                      <button type="button" onclick="addModel()" class="btn btn-primary">
-                        <i class="fa  fa-check-square white"></i>
-                        Valider
-                      </button>
-                    </td>
-                </tr>
+                <?php
+                $data = Manager::getData("entity")['data'];
+                if (is_array($data) || is_object($data)) {
+                  foreach ($data as $value) {
+                ?>
+                    <tr>
+                      <td><a href="index.php?action=model&uniqueID=<?= $value['uniqueId'] ?>"><?= $value['label'] ?></a></td>
+                    </tr>
+                <?php
+                  }
+                } else {
+                  Manager::messages('Aucune donnée trouvé', 'alert-warning');
+                }
+                ?>
               </tbody>
             </table>
-          </form>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer clearfix">
-          </ul>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            </ul>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+<?php else : ?>
+<div class="container">
+  <div class="row">
+    <?php
+    // var_dump($_SESSION['user']['entity']);
+    $data = Manager::getData("model", "entity", $uniqueID,  true)['data'];
+    if ((is_array($data) || is_object($data)) && empty($_GET['uniqueId'])) :
+
+    ?>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header with-border">
+            <h3 class="card-title">Model</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th style="width: 10px">Nom du model</th>
+
+                </tr>
+                <?php
+                if (is_array($data) || is_object($data)) {
+                  foreach ($data as $value) {
+
+
+                ?>
+                    <tr>
+                      <td><a href="index.php?action=model&uniqueId=<?= $value['uniqueId'] ?>"><?= $value['model_name'] ?></a></td>
+                    </tr>
+                <?php
+                  }
+                } else {
+                  Manager::messages('Aucune donnée trouvé', 'alert-warning');
+                }
+                ?>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 100px;" class="col-md-12 container-margin">
+        <div class="card">
+          <div class="card-header with-border">
+            <i class="fa fa-server"></i>
+            <h3 class="card-title" id="modelName"></h3>
+            <a onclick="addTableRowModel()" style="float: right" class="btn btn-primary">
+              <i class="fa fa-plus white"></i>
+            </a>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form action="" id="add_model">
+              <table id="table_model" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Clé du model</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="body_model">
+                  <tr id="addModel">
+                    <form>
+
+                      <td>
+                        <div class="form-group">
+                          <input required class="form-control" id="model_name" name="model_name" placeholder="le nom du model que vous voulez créer">
+                        </div>
+                        <div style="display:none" class="form-group">
+                          <input required class="form-control" id="entity" name="entity" value="<?= $uniqueID ?>" placeholder="description du module">
+                        </div>
+
+                      </td>
+                      <td>
+                        <button type="button" onclick="addModel()" class="btn btn-primary">
+                          <i class="fa  fa-check-square white"></i>
+                          Valider
+                        </button>
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            </ul>
+          </div>
+        </div>
+      </div>
+    <?php else : ?>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header with-border">
+            <i class="fa fa-server"></i>
+            <h3 class="card-title" id="modelName"></h3>
+            <a onclick="addTableRowModel()" style="float: right" class="btn btn-primary">
+              <i class="fa fa-plus white"></i>
+            </a>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form action="" id="add_model">
+              <table id="table_model" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Clé du model</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="body_model">
+                  <tr id="addModel">
+                    <form>
+
+                      <td>
+                        <div class="form-group">
+                          <input required class="form-control" id="model_name" name="model_name" placeholder="le nom du model que vous voulez créer">
+                        </div>
+                        <div style="display:none" class="form-group">
+                          <input required class="form-control" id="entity" name="entity" value="<?= $uniqueID ?>" placeholder="description du module">
+                        </div>
+
+                      </td>
+                      <td>
+                        <button type="button" onclick="addModel()" class="btn btn-primary">
+                          <i class="fa  fa-check-square white"></i>
+                          Valider
+                        </button>
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            </ul>
+          </div>
+        </div>
+      </div>
     <?php endif; ?>
   </div>
 </div>
+    <?php endif; ?>
 <?php
 $content = ob_get_clean();
 require('template.php');

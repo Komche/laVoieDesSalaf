@@ -234,13 +234,13 @@ uniqueId = newGuid();
 function addModel() {
     var go;
     var data = $('#add_model').serializeObject();
-    if ($_GET['uniqueId']!= '') {
+    data.uniqueId = uniqueId;
+    console.log(data, "ok", uniqueId);
+    if ($_GET['uniqueId']!= '' && $_GET['uniqueId']!=undefined) {
         
         data.uniqueId = $_GET['uniqueId'];
-    }else {
-
-        data.uniqueId = uniqueId;
     }
+    
     var form_data = JSON.stringify(data);
     go = canContinue(data);
     console.log(form_data, data, customUrl + "addModel");
@@ -270,7 +270,7 @@ function addModel() {
  * @return {String} a random guid value.
  */
 function newGuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+    return 'xxxxxxxx-xxxx-6xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
         function (c) {
             var r = Math.random() * 16 | 0,
                 v = c == 'x' ? r : (r & 0x3 | 0x8);

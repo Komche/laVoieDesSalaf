@@ -64,7 +64,7 @@ $(document).ready(function () {
         var descripcion = $(this).attr('title');
         $('#caption').html(descripcion);
         var img = $(this).find('img');
-        var src = img.attr('src')
+        var src = img.attr('src');
         $('#img01').attr('src', src);
         $('#myModal').css('display', 'block');
         $('.modal-backdrop').remove();
