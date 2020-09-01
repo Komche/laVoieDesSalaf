@@ -154,7 +154,7 @@ if (isset($_SESSION['user'])) {
                 $firestoreClient->addDocument("model/" . $data['model'] . "/document", $data, $data['matricule']);
                 $res = addData($document, 'document');
 
-                // Manager::showError($res);
+                Manager::showError($res);
 
                 if ($res != 1) {
                     $_SESSION['messages'] = $res;
