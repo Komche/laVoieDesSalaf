@@ -88,6 +88,26 @@ function haveAction($role, $module)
    
 }
 
+function countFields($table, $field=null, $value=null)
+{
+    $sql = "SELECT COUNT(*) nb FROM $table";
+    if (!empty($field) && !empty($value)) {
+        $sql = "SELECT COUNT(*) nb FROM $table WHERE $field=?";
+        
+    }
+    return Manager::getSingleRecords($sql, [$value]);
+}
+function getModelByDocuments($value=null)
+{
+    $sql = "SELECT model_name, COUNT(DISTINCT(id_document)) nb_doc FROM model m LEFT JOIN document d ON d.model=m.id_model GROUP BY id_model";
+    if (!empty($value)) {
+        $sql = "SELECT model_name, COUNT(DISTINCT(id_document)) nb_doc FROM model m LEFT JOIN document d ON d.model=m.id_model WHERE m.entity=? GROUP BY id_model";
+        
+    }
+    return Manager::getMultiplesRecords($sql, [$value]);
+}
+
+
 function handleMatricule($mat)
 {
     $lentgh = strlen($mat);
