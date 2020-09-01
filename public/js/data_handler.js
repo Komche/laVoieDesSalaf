@@ -267,10 +267,10 @@ function addModel() {
 /**
  * Create a random Guid.
  *
- * @return {String} a random guid value.
+ * @return {String}  random guid value.
  */
 function newGuid() {
-    return 'xxxxxxxx-xxxx-6xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+    return 'xxxxxxxx-xxxx-10xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
         function (c) {
             var r = Math.random() * 16 | 0,
                 v = c == 'x' ? r : (r & 0x3 | 0x8);
