@@ -59,7 +59,7 @@ ob_start();
                                     <span class="font-13"></span>
                                 </div>
                                 <div class="col-4 text-right">
-                                    <span class="badge badge-success"><i class="feather icon-trending-up mr-1"></i><?= countFields("model", 'entity', $uniqueId)['nb'] * 100 / countFields("model", 'entity', $uniqueId)['nb'] . "%" ?></span>
+                                    <span class="badge badge-success"><i class="feather icon-trending-up mr-1"></i><?= (countFields("model", 'entity', $uniqueId)['nb']==0) ? '0' : countFields("model", 'entity', $uniqueId)['nb'] * 100 / countFields("model")['nb'] . "%" ?></span>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@ ob_start();
                                     <span class="font-13"></span>
                                 </div>
                                 <div class="col-4 text-right">
-                                    <span class="badge badge-success"><i class="feather icon-trending-up mr-1"></i><?= countFields("document", "entity", $entity)['nb'] * 100 / countFields("document", "entity", $entity)['nb'] . "%" ?></span>
+                                    <span class="badge badge-success"><i class="feather icon-trending-up mr-1"></i><?= (countFields("document", "entity", $entity)['nb']==0) ? '0' : countFields("document", "entity", $entity)['nb'] * 100 / countFields("document")['nb'] . "%" ?></span>
                                 </div>
                             </div>
                         </div>
