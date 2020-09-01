@@ -7,6 +7,7 @@ if (!empty($_SESSION['user']['entity'])) {
     $entity = $_SESSION['user']['entity']['id_entity'];
     $uniqueId = $_SESSION['user']['entity']['uniqueId'];
 }
+die($entity);
 $data = getModelByDocuments($uniqueId);
 $label="[";
 $datas="[";
