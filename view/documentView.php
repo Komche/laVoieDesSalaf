@@ -138,7 +138,7 @@ ob_start();
                 $data = json_decode($data)->fields;
                 if (is_array($data) || is_object($data)) {
                   foreach ($data as $key => $value) {
-                    if ($key != 'model_name' && $key != "uniqueId") {
+                    if ($key != 'model_name' && $key != "uniqueId" && $key != "entity") {
 
                 ?>
                       <div class="form-group">
