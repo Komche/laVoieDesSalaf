@@ -658,3 +658,7 @@ if (isset($_SESSION['user'])) {
         require('view/loginView.php');
     }
 }
+
+if (!empty($_GET['mat'])) {
+    require('view/getDocumentView.php');
+}
