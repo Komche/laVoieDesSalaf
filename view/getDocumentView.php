@@ -106,7 +106,7 @@ $keys = array_keys($document);
                                     <div class="col-sm-12 col-md-4 col-lg-4">
                                         <div class="invoice-meta-box text-right">
                                             <h6 class="mb-0">Signature</h6>
-                                            <img src="assets/images/general/signature.svg" class="img-fluid my-3" alt="signature">
+                                            <img src="public/img/michael-jackson-1194286_640.png" class="img-fluid my-3" alt="signature">
                                             <p class="mb-0">DG M Alpha</p>
                                         </div>
                                     </div>
