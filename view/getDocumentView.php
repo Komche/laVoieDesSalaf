@@ -6,7 +6,8 @@ require_once('controller/Administration.php');
     AND d.matricule=?";
     $data = Manager::getSingleRecords($sql, [$_GET['mat']]);
     $document = file_get_contents(FIRESTORE_PATH."model/".$data['uniqueId']."/document/".$_GET['mat']);
-    print_r($document); die(FIRESTORE_PATH."model/".$data['uniqueId']."/document/".$_GET['mat']." ".$sql);
+    $document = json_decode($document, true)->fields;
+    print_r($document); die();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
