@@ -1,13 +1,20 @@
-<?php 
+<?php
 require_once('controller/Administration.php');
-    $sql = "SELECT entity_matricule, d.entity, d.model, model_name, m.entity uniqueEntity, nomVille, 
+$sql = "SELECT entity_matricule, d.entity, d.model, model_name, m.entity uniqueEntity, nomVille, 
     m.uniqueId, label, domaine, email, phone_number FROM entity e, document d, 
     model m, ville v WHERE e.id_entity=d.entity AND d.model = m.id_model AND v.idVille = e.ville
     AND d.matricule=?";
-    $data = Manager::getSingleRecords($sql, [$_GET['mat']]);
-    $document = file_get_contents(FIRESTORE_PATH."model/".$data['uniqueId']."/document/".$_GET['mat']);
-    $document = json_decode($document, true)['fields'];
-    // print_r($document); die();
+$data = Manager::getSingleRecords($sql, [$_GET['mat']]);
+$document = file_get_contents(FIRESTORE_PATH . "model/" . $data['uniqueId'] . "/document/" . $_GET['mat']);
+$document = json_decode($document, true)['fields'];
+
+unset($document['model']);
+unset($document['matricule']);
+unset($document['entity']);
+unset($document['imgpath']);
+unset($document['documentQrpath']);
+$keys = array_keys($document);
+// print_r($document); die();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -46,12 +53,12 @@ require_once('controller/Administration.php');
                                         </div>
                                         <h4>Ingéniurie Informatique Soft</h4>
                                         <p>Rue du Nigéria</p>
-                                        
+
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6">
                                         <div class="invoice-name">
                                             <h6 class="text-uppercase mb-3"><?= $data['label'] ?></h6>
-                                            <p class="mb-1"><?= $data['domaine']. " à ". $data['nomVille']?></p>
+                                            <p class="mb-1"><?= $data['domaine'] . " à " . $data['nomVille'] ?></p>
                                             <p class="mb-0"><?= $data['email'] ?></p>
                                             <h4 class="text-success mb-0 mt-3"><?= $data['phone_number'] ?></h4>
                                         </div>
@@ -62,12 +69,14 @@ require_once('controller/Administration.php');
                                 <div class="row">
                                     <div class="col-sm-6 col-md-4 col-lg-4">
                                         <div class="invoice-address">
-                                            <h6 class="mb-3">Bill to</h6>
-                                            <h6 class="text-muted">Amy Adams</h6>
+                                            <h6 class="mb-3">Document</h6>
                                             <ul class="list-unstyled">
-                                                <li>417 Redbud Drive, Manhattan Building, Whitestone, NY, New York-11357</li>
-                                                <li>+1-9876543210</li>
-                                                <li>amyadams@email.com</li>
+                                                <?php
+                                                foreach ($keys as $k => $v) {
+                                                ?>
+                                                    <li><?= ($v == 'entity_matricule') ? 'ref: ' . $value[$v]['stringValue'] : $v . ": " . $value[$v]['stringValue'] ?></li>
+                                                <?php } ?>
+                                               
                                             </ul>
                                         </div>
                                     </div>
