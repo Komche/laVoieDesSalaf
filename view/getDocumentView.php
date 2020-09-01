@@ -74,7 +74,7 @@ $keys = array_keys($document);
                                                 <?php
                                                 foreach ($keys as $k => $v) {
                                                 ?>
-                                                    <li><?= ($v == 'entity_matricule') ? 'ref: ' . $value[$v]['stringValue'] : $v . ": " . $value[$v]['stringValue'] ?></li>
+                                                    <li><?= ($v == 'entity_matricule') ? 'ref: ' . $document[$v]['stringValue'] : $v . ": " . $document[$v]['stringValue'] ?></li>
                                                 <?php } ?>
                                                
                                             </ul>
