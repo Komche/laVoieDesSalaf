@@ -625,7 +625,7 @@ if (isset($_SESSION['user'])) {
         if ($res != 1) {
             $_SESSION['messages'] = $res;
         } else {
-            header('Location: index.php?action=profile');
+            header('Location: index.php?action=homeView');
         }
     }
     require('view/loginView.php');
@@ -652,7 +652,7 @@ if (isset($_SESSION['user'])) {
             if ($res != 1) {
                 $_SESSION['messages'] = $res;
             } else {
-                header('Location: index.php?action=profile');
+                header('Location: index.php?action=homeView');
             }
         }
         require('view/loginView.php');
