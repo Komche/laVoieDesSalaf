@@ -7,6 +7,15 @@ if (!empty($_SESSION['user']['entity'])) {
 } elseif (!empty($_GET['uniqueID'])) {
   $uniqueID = $_GET['uniqueID'];
 }
+$sql = "";
+$id_entity = 0;
+if (!empty($_GET['uniqueId'])) {
+  $sql = "SELECT id_entity FROM entity e LEFT JOIN model m ON e.uniqueId = m.entity WHERE m.entity=?";
+  $id_entity = Manager::getSingleRecords($sql, [$_GET['uniqueId']]);
+} else {
+  $sql = "SELECT id_entity FROM entity WHERE uniqueId=?";
+  $id_entity = Manager::getSingleRecords($sql, [$uniqueID]);
+}
 ob_start();
 ?>
 <div class="breadcrumbbar">
@@ -130,7 +139,7 @@ ob_start();
                 <div class="form-group">
                   <label for="entity_matricule">Référence (identifiant) du document</label>
                   <input value="" type="text" required class="form-control" id="entity_matricule" name="entity_matricule" placeholder="Veuillez entrer la réfrence">
-                  <input value="3" type="hidden" required class="form-control" id="entity" name="entity" placeholder="Veuillez entrer la réfrence">
+                  <input value="<?= $id_entity ?>" type="hidden" required class="form-control" id="entity" name="entity" placeholder="Veuillez entrer la réfrence">
                   <input value="<?= $_GET['uniqueId'] ?>" type="hidden" required class="form-control" id="model" name="model" placeholder="Veuillez entrer la réfrence">
                 </div>
                 <?php
