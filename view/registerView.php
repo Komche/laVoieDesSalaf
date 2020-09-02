@@ -1,90 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Activation de compte</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="public/vendor/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="public/vendor/bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="public/vendor/bower_components/Ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="public/vendor/dist/css/AdminLTE.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="public/vendor/plugins/iCheck/square/blue.css">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <meta name="description" content="Orbiter is a bootstrap minimal & clean admin template">
+  <meta name="keywords" content="admin, admin panel, admin template, admin dashboard, responsive, bootstrap 4, ui kits, ecommerce, web app, crm, cms, html, sass support, scss">
+  <meta name="author" content="Themesbox">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <title>Changer mot de passe</title>
+  <!-- Fevicon -->
+  <link rel="shortcut icon" href="public/img/favicon.ico">
+  <!-- Start css -->
+  <link href="public/vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="public/vendor/css/icons.css" rel="stylesheet" type="text/css">
+  <link href="public/vendor/css/style.css" rel="stylesheet" type="text/css">
+  <!-- End css -->
 </head>
 
-<body class="hold-transition register-page">
-  <div class="register-box">
-    <div class="register-logo">
-      <a href="public/vendor/index2.html"><b>Saro</b>App</a>
-    </div>
-
-    <div class="register-box-body">
-      <p class="login-box-msg">Activation de compte </p>
-
-      <form action="#" method="post">
-        <div class="form-group has-feedback">
-          <input type="tel" name="phone_number" id="phone_number" class="form-control" placeholder="N° de téléphone">
-          <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-          <input type="password" id="password_" name="password_" class="form-control" placeholder="Mot de passe">
-          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-          <input type="password" id="password_2" name="password_2" class="form-control" placeholder="Mot de passe de confirmation">
-          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <div class="row">
-          <!-- /.col -->
-          <div class="col-xs-12">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Activer</button>
+<body class="vertical-layout">
+  <!-- Start Containerbar -->
+  <div id="containerbar" class="containerbar authenticate-bg">
+    <!-- Start Container -->
+    <div class="container">
+      <div class="auth-box login-box">
+        <!-- Start row -->
+        <div class="row no-gutters align-items-center justify-content-center">
+          <!-- Start col -->
+          <div class="col-md-6 col-lg-5">
+            <!-- Start Auth Box -->
+            <div class="auth-box-right">
+              <div class="card">
+                <div class="card-body">
+                  <form action="#" method="POST">
+                    <div class="form-head" style="background-color: #bdd6d6;">
+                      <a href="index.html" class="logo"><img src="public/img/Logo2.png" class="img-fluid" alt="logo"></a>
+                    </div>
+                    <h4 class="text-primary my-4">Changer mot de passe</h4>
+                    <div class="form-group">
+                      <input type="tel" name="phone_number" id="phone_number" class="form-control" placeholder="N° de téléphone" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="password" id="password_" name="password_" class="form-control" placeholder="Mot de passe" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="password" id="password_2" name="password_2" class="form-control" placeholder="Mot de passe de confirmation" required>
+                    </div>
+                    <div class="form-row mb-3">
+                      <div class="col-sm-6">
+                        <!-- <div class="custom-control custom-checkbox text-left">
+                                                  <input type="checkbox" class="custom-control-input" id="rememberme">
+                                                  <label class="custom-control-label font-14" for="rememberme">Remember Me</label>
+                                                </div>                                 -->
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="forgot-psw">
+                          <a id="forgot-psw" href="index.php" class="font-14">Se connecter</a>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block font-18">Valider</button>
+                  </form>
+                  <!-- <div class="login-or">
+                                        <h6 class="text-muted">OR</h6>
+                                    </div>
+                                    <div class="social-login text-center">
+                                        <button type="submit" class="btn btn-primary-rgba font-18"><i class="mdi mdi-facebook mr-2"></i>Facebook</button>
+                                        <button type="submit" class="btn btn-danger-rgba font-18"><i class="mdi mdi-google mr-2"></i>Google</button>
+                                    </div>
+                                    <p class="mb-0 mt-3">Don't have a account? <a href="user-register.html">Sign up</a></p> -->
+                </div>
+              </div>
+            </div>
+            <!-- End Auth Box -->
           </div>
-          <!-- /.col -->
+          <!-- End col -->
         </div>
-      </form>
-      <?php
-      if (isset($_SESSION['messages'])) {
-        echo Manager::messages($_SESSION['messages'], 'alert-danger');
-      }
-      ?>
-      <a href="index.php" class="text-center">Se connecter</a>
+        <!-- End row -->
+      </div>
     </div>
-    <!-- /.form-box -->
+    <!-- End Container -->
   </div>
-  <!-- /.register-box -->
-
-  <!-- jQuery 3 -->
-  <script src="public/vendor/bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <script src="public/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- iCheck -->
-  <script src="public/vendor/plugins/iCheck/icheck.min.js"></script>
-  <script>
-    $(function() {
-      $('input').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue',
-        increaseArea: '20%' /* optional */
-      });
-    });
-  </script>
+  <!-- End Containerbar -->
+  <!-- Start js -->
+  <script src="public/vendor/js/jquery.min.js"></script>
+  <script src="public/vendor/js/popper.min.js"></script>
+  <script src="public/vendor/js/bootstrap.min.js"></script>
+  <script src="public/vendor/js/modernizr.min.js"></script>
+  <script src="public/vendor/js/detect.js"></script>
+  <script src="public/vendor/js/jquery.slimscroll.js"></script>
+  <!-- End js -->
 </body>
 
 </html>
