@@ -10,7 +10,7 @@ if (!empty($_SESSION['user']['entity'])) {
 $sql = "";
 $id_entity = 0;
 if (!empty($_GET['uniqueId'])) {
-  $sql = "SELECT id_entity FROM entity e LEFT JOIN model m ON e.uniqueId = m.entity WHERE m.entity=?";
+  $sql = "SELECT id_entity FROM entity e LEFT JOIN model m ON e.uniqueId = m.entity WHERE m.uniqueId=?";
   $id_entity = Manager::getSingleRecords($sql, [$_GET['uniqueId']]);
 } else {
   $sql = "SELECT id_entity FROM entity WHERE uniqueId=?";
