@@ -695,7 +695,13 @@ if (isset($_SESSION['user'])) {
         }
         $data = json_decode(file_get_contents('php://input'), true);
         if (!empty($data)) {
-            // var_dump($data);
+            if (empty($data['entity']) || empty($data['matricule']) || empty($data['entity_matricule'])) {
+                http_response_code(404);
+                $msg['code'] = 404;
+                $msg['msg'] = "Une des données obligatoire non renseigner";
+                echo json_encode($msg);
+                return;
+            }
             $document['entity'] = $data['entity'];
             $document['matricule'] = $data['matricule'];
             $document['entity_matricule'] = $data['entity_matricule'];
