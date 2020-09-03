@@ -687,6 +687,8 @@ if (isset($_SESSION['user'])) {
         $msg['code'] = 404;
         $msg['msg'] = "Données non renseigner";
         if ($_SERVER['REQUEST_METHOD'] != "POST") {
+            http_response_code(405);
+            $msg['code'] = 405;
             $msg['msg'] = "La methoded doit être post";
             echo json_encode($msg);
             return;
