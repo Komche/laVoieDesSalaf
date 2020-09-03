@@ -164,7 +164,7 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'addDocument') {
             $msg['code'] = 404;
             $msg['msg'] = "Données non renseigner";
-            if ($_SERVER['REQUEST_METHOD']!="POST") {
+            if ($_SERVER['REQUEST_METHOD'] != "POST") {
                 $msg['msg'] = "La methoded doit être post";
                 echo json_encode($msg);
                 return;
@@ -210,7 +210,7 @@ if (isset($_SESSION['user'])) {
                     $msg['msg'] = "Ajout échouer";
                 }
                 echo json_encode($msg);
-            }else {
+            } else {
                 echo json_encode($msg);
             }
         } elseif ($action == 'permission') {
@@ -681,6 +681,61 @@ if (isset($_SESSION['user'])) {
         }
     }
     require('view/loginView.php');
+} elseif (!empty($_GET['api'])) {
+    if ($_GET['api'] == 'addDocument') {
+        
+        $msg['code'] = 404;
+        $msg['msg'] = "Données non renseigner";
+        if ($_SERVER['REQUEST_METHOD'] != "POST") {
+            $msg['msg'] = "La methoded doit être post";
+            echo json_encode($msg);
+            return;
+        }
+        $data = json_decode(file_get_contents('php://input'), true);
+        if (!empty($data)) {
+            // var_dump($data);
+            $document['entity'] = $data['entity'];
+            $document['matricule'] = $data['matricule'];
+            $document['entity_matricule'] = $data['entity_matricule'];
+    
+            $barcode = new \Com\Tecnick\Barcode\Barcode();
+            $targetPath = "public/img/documents/";
+            if (!is_dir($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+            $bobj = $barcode->getBarcodeObj('QRCODE,H', "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'], -16, -16, 'black', array(
+                -2,
+                -2,
+                -2,
+                -2
+            ))->setBackgroundColor('#fff');
+    
+            $imageData = $bobj->getPngData();
+            $timestamp = time();
+    
+            file_put_contents($targetPath . $timestamp . '.png', $imageData);
+    
+            $data['imgpath'] = $targetPath . $timestamp . '.png';
+            $data['documentQrpath'] = "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
+    
+            $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
+            $firestoreClient->addDocument("model/" . $data['model'] . "/document", $data, $data['matricule']);
+            $res = addData($document, 'document');
+    
+            // Manager::showError($res);
+    
+            if ($res != 1) {
+                $msg['code'] = 200;
+                $msg['msg'] = "Document ajouter avec succès";
+            } else {
+                $msg['code'] = 404;
+                $msg['msg'] = "Ajout échouer";
+            }
+            echo json_encode($msg);
+        } else {
+            echo json_encode($msg);
+        }
+    }
 } else {
 
     if (!empty($_GET['mat'])) {
