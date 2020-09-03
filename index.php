@@ -695,7 +695,7 @@ if (isset($_SESSION['user'])) {
         }
         $data = json_decode(file_get_contents('php://input'), true) ?? $_POST;
         if (!empty($data)) {
-            if (empty($data['entity']) || empty($data['matricule']) || empty($data['entity_matricule'])) {
+            if (empty($data['entity']) || empty($data['entity_matricule'])) {
                 http_response_code(404);
                 $msg['code'] = 404;
                 $msg['msg'] = "Une des données obligatoire non renseigner";
@@ -703,7 +703,7 @@ if (isset($_SESSION['user'])) {
                 return;
             }
             $document['entity'] = $data['entity'];
-            $document['matricule'] = $data['matricule'];
+            $document['matricule'] = generateRandomString();
             $document['entity_matricule'] = $data['entity_matricule'];
     
             $barcode = new \Com\Tecnick\Barcode\Barcode();

@@ -1,7 +1,7 @@
 <?php
 $title = "Document";
 $uniqueID = "";
-$mat = generateRandomString() . "ch" . rand(0, 99);
+$mat = generateRandomString();
 if (!empty($_SESSION['user']['entity'])) {
   $uniqueID = $_SESSION['user']['entity']['uniqueId'];
 } elseif (!empty($_GET['uniqueID'])) {
