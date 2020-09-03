@@ -702,7 +702,7 @@ if (isset($_SESSION['user'])) {
                 echo json_encode($msg);
                 return;
             }
-            $entity = Manager::getData("entity", "uniqueId", $data['entity'])['data'];
+            $entity = Manager::getData("entity", "uniqueId", $data['entity']);
             http_response_code(404);
             $msg['code'] = 404;
             $msg['msg'] = $entity;
