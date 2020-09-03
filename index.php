@@ -693,7 +693,7 @@ if (isset($_SESSION['user'])) {
             echo json_encode($msg);
             return;
         }
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = json_decode(file_get_contents('php://input'), true) ?? $_POST;
         if (!empty($data)) {
             if (empty($data['entity']) || empty($data['matricule']) || empty($data['entity_matricule'])) {
                 http_response_code(404);
