@@ -164,6 +164,11 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'addDocument') {
             $msg['code'] = 404;
             $msg['msg'] = "Données non renseigner";
+            if ($_SERVER['REQUEST_METHOD']!="POST") {
+                $msg['msg'] = "La methoded doit être post";
+                echo json_encode($msg);
+                return;
+            }
             $data = json_decode(file_get_contents('php://input'), true);
             if (!empty($data)) {
                 // var_dump($data);
