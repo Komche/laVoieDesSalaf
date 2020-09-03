@@ -157,7 +157,7 @@ class HttpRequest
 
         // if the string starts with number
         if (is_numeric(substr($formattedName, 0, 1))) {
-            $part = $part == $this->controllerkey ? 'controller' : 'action';
+            $part = ($part == $this->controllerkey) ? 'controller' : 'action';
             throw new Exception('Incorrect ' . $part . ' name "' . $formattedName . '".');
         }
         return ltrim($formattedName, '_');
