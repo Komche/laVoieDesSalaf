@@ -683,7 +683,7 @@ if (isset($_SESSION['user'])) {
     require('view/loginView.php');
 } elseif (!empty($_GET['api'])) {
     if ($_GET['api'] == 'addDocument') {
-        
+        http_response_code(404);
         $msg['code'] = 404;
         $msg['msg'] = "Données non renseigner";
         if ($_SERVER['REQUEST_METHOD'] != "POST") {
@@ -725,6 +725,7 @@ if (isset($_SESSION['user'])) {
             // Manager::showError($res);
     
             if ($res != 1) {
+                http_response_code(200);
                 $msg['code'] = 200;
                 $msg['msg'] = "Document ajouter avec succès";
             } else {
