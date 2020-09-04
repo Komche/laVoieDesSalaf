@@ -164,7 +164,7 @@ ob_start();
         </div>
       </div>
     <?php else : ?>
-      <div class="col-md-12 container-margin">
+      <div class="col-md-12 container-margin" style="margin-bottom: 100px;">
         <div class="card">
           <div class="card-header with-border">
             <i class="fa fa-server"></i>
