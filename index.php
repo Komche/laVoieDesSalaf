@@ -718,11 +718,14 @@ if (isset($_SESSION['user'])) {
                 echo json_encode($msg);
                 return;
             }else {
-                http_response_code(404);
-                $msg['code'] = 404;
-                $msg['msg'] = $model['data'];
-                echo json_encode($msg);
-                return;
+                if ($model['data']['entity'] != $data['entity'] ) {
+                    
+                    http_response_code(404);
+                    $msg['code'] = 404;
+                    $msg['msg'] = "Ce modèle n'appartient pas à cette entité";
+                    echo json_encode($msg);
+                    return;
+                }
             }
             $document['entity'] = $data['entity'];
             $document['matricule'] = generateRandomString();
