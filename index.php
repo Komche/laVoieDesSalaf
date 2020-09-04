@@ -695,7 +695,7 @@ if (isset($_SESSION['user'])) {
         }
         $data = json_decode(file_get_contents('php://input'), true) ?? $_POST;
         if (!empty($data)) {
-            if (empty($data['entity']) || empty($data['entity_matricule'])) {
+            if (empty($data['entity']) || empty($data['entity_matricule'] || empty($data['model']))) {
                 http_response_code(404);
                 $msg['code'] = 404;
                 $msg['msg'] = "Une des données obligatoire non renseigner";
@@ -707,6 +707,12 @@ if (isset($_SESSION['user'])) {
                 http_response_code(404);
                 $msg['code'] = 404;
                 $msg['msg'] = "L'entité n'existe pas";
+                echo json_encode($msg);
+                return;
+            }else {
+                http_response_code(404);
+                $msg['code'] = 404;
+                $msg['msg'] = $entity['data'];
                 echo json_encode($msg);
                 return;
             }
