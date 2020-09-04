@@ -165,6 +165,9 @@ function getModel(uniqueId) {
                     if (i!="model_name") {
                         param += element+", ";
                     }
+                    if (i == 'entity' && i == 'uniqueId') {
+                        param += " "+i+": "+element+", ";
+                    }
 
                 });
                 if (i != 'entity' && i != 'uniqueId') {

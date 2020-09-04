@@ -242,7 +242,7 @@ ob_start();
               <pre>
                 <b><i>Endpoint: <a href="http://checker.akoybiz.com/index.php?api=addDocument">http://checker.akoybiz.com/index.php?api=addDocument</a></i></b>
                 <b><i>Method: POST</i></b>
-                <b id="param">Paramètre: </b>
+                <b id="param" style="width:100%; word-wrap: break-word;">Paramètre: </b>
               </pre>
             </div>
           </div>
