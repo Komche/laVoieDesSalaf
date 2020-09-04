@@ -703,11 +703,13 @@ if (isset($_SESSION['user'])) {
                 return;
             }
             $entity = Manager::getData("entity", "uniqueId", $data['entity']);
-            http_response_code(404);
-            $msg['code'] = 404;
-            $msg['msg'] = $entity;
-            echo json_encode($msg);
-            return;
+            if (empty($entity['data'])) {
+                http_response_code(404);
+                $msg['code'] = 404;
+                $msg['msg'] = "L'entité n'existe pas";
+                echo json_encode($msg);
+                return;
+            }
             $document['entity'] = $data['entity'];
             $document['matricule'] = generateRandomString();
             $document['entity_matricule'] = $data['entity_matricule'];
