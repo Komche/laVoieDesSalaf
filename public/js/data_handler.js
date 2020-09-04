@@ -161,9 +161,12 @@ function getModel(uniqueId) {
             $.each(result.fields, function (i, v) {
                 $key = '';
                 // console.log(i, 'index');
-                if (i!="model_name") {
-                    param += element+", ";
-                }
+                $.map(v, function (element, index) {
+                    if (i!="model_name") {
+                        param += element+", ";
+                    }
+
+                });
                 if (i != 'entity' && i != 'uniqueId') {
                     $.map(v, function (element, index) {
                         console.log("i="+i);
