@@ -185,6 +185,7 @@ function getModel(uniqueId) {
 
             });
             $('#body_model').html($dataModel);
+            $('#param').append($dataModel);
         },
         error: function (xhr, resp, text) {
             //  error to console
