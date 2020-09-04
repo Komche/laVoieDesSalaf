@@ -762,11 +762,18 @@ if (isset($_SESSION['user'])) {
             $m = file_get_contents(FIRESTORE_PATH . "model/" . $data['model']);
             $m = json_decode($m, true)['fields']; 
             $tempm = array();
-            foreach ($tempdoc as $key => $value) {
-            }
             if (is_array($m) || is_object($m)) {
                 foreach ($m as $key => $value) {
                     $tempm[] = $key;
+                }
+            }
+            foreach ($tempdoc as $key => $value) {
+                if(!in_array($key, $tempm)) {
+                    http_response_code(404);
+                    $msg['code'] = 404;
+                    $msg['msg'] = "Il semble que vous essayer d'ajouter un champs qu n'existe pas";
+                    echo json_encode($msg);
+                    return;
                 }
             }
             echo json_encode($tempm); return;
