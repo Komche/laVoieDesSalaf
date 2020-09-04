@@ -80,7 +80,7 @@ ob_start();
   <div class="container container-margin">
     <div class="row">
       <?php
-      $data = Manager::getData("model", "entity", $uniqueID);
+      $data = Manager::getData("model", "entity", $uniqueID, true)['data'];
       if ((is_array($data) || is_object($data)) && empty($_GET['uniqueId'])) :
 
 

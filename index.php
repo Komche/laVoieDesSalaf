@@ -655,6 +655,8 @@ if (isset($_SESSION['user'])) {
             require_once("view/profileView.php");
         } elseif ($action == 'logout') {
             require_once("view/logout.php");
+        } elseif ($action == 'homeView') {
+            require_once("view/homeView.php");
         }
     } elseif (empty($_GET['mat'])) {
         require_once("view/homeView.php");
