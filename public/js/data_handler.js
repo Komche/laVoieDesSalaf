@@ -157,13 +157,14 @@ function getModel(uniqueId) {
         success: function (result) {
             console.log(result);
             hidePleaseWait();
-
+            param = "";
             $.each(result.fields, function (i, v) {
                 $key = '';
                 // console.log(i, 'index');
                 if (i != 'entity' && i != 'uniqueId') {
                     $.map(v, function (element, index) {
                         console.log("i="+i);
+                        param += element+", ";
                         if (i=="model_name") {
                             $("#modelName").text(element);
                         }else {

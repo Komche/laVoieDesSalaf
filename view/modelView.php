@@ -240,7 +240,9 @@ ob_start();
             </div>
             <div class="card-body">
               <pre>
-                ce du code
+                <b><i>Endpoint: <a href="http://checker.akoybiz.com/index.php?api=addDocument">http://checker.akoybiz.com/index.php?api=addDocument</a></i></b>
+                <b><i>Method: POST</i></b>
+                <b id="param">Paramètre: </b>
               </pre>
             </div>
           </div>
