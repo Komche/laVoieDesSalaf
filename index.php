@@ -695,7 +695,7 @@ if (isset($_SESSION['user'])) {
         }
         $data = json_decode(file_get_contents('php://input'), true) ?? $_POST;
         if (!empty($data)) {
-            if (empty($data['entity']) || empty($data['entity_matricule'] || empty($data['model']))) {
+            if (empty($data['entity']) || empty($data['entity_matricule']) || empty($data['model'])) {
                 http_response_code(404);
                 $msg['code'] = 404;
                 $msg['msg'] = "Une des données obligatoire non renseigner";
@@ -703,16 +703,24 @@ if (isset($_SESSION['user'])) {
                 return;
             }
             $entity = Manager::getData("entity", "uniqueId", $data['entity']);
+            $model = Manager::getData("entity", "uniqueId", $data['model']);
             if (empty($entity['data'])) {
                 http_response_code(404);
                 $msg['code'] = 404;
                 $msg['msg'] = "L'entité n'existe pas";
                 echo json_encode($msg);
                 return;
+            }
+            if (empty($model['data'])) {
+                http_response_code(404);
+                $msg['code'] = 404;
+                $msg['msg'] = "Le model n'existe pas";
+                echo json_encode($msg);
+                return;
             }else {
                 http_response_code(404);
                 $msg['code'] = 404;
-                $msg['msg'] = $entity['data'];
+                $msg['msg'] = $model['data'];
                 echo json_encode($msg);
                 return;
             }
