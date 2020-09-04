@@ -752,7 +752,7 @@ if (isset($_SESSION['user'])) {
             $data['documentQrpath'] = "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
     
             $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
-            $firestoreClient->updateDocument("model/" . $data['model'] . "/document/".$document['matricule'], $data, false);
+            $firestoreClient->setDocument("model/" . $data['model'] . "/document/".$document['matricule'], $data, false);
             $res = addData($document, 'document');
     
             // Manager::showError($res);
