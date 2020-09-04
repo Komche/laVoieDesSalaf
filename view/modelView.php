@@ -25,7 +25,12 @@ ob_start();
     overflow: auto;
     padding: 1em 0.2em;
     display: block;
-    word-wrap: break-word;
+    display:table;
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 </style>
 <div class="breadcrumbbar">
