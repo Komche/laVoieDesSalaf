@@ -23,7 +23,7 @@ ob_start();
     margin-bottom: 1.6em;
     max-width: 100%;
     overflow: auto;
-    padding: 1em 1.5em;
+    padding: 1em 0.2em;
     display: block;
     word-wrap: break-word;
 }

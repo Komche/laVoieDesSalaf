@@ -165,7 +165,7 @@ function getModel(uniqueId) {
                     if (i!="model_name") {
                         param += element+", ";
                     }
-                    if (i == 'entity' && i == 'uniqueId') {
+                    if (i == 'entity' || i == 'uniqueId') {
                         param += " "+i+": "+element+", ";
                     }
 
