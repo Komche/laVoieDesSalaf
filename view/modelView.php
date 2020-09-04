@@ -246,7 +246,9 @@ ob_start();
             <div class="card-body">
               <pre>
                 <b><i>Endpoint: <a href="http://checker.akoybiz.com/index.php?api=addDocument">http://checker.akoybiz.com/index.php?api=addDocument</a></i></b>
+                <br>
                 <b><i>Method: POST</i></b>
+                <br>
                 <b id="param" style="width:100%; word-wrap: break-word !important;">Paramètre: </b>
               </pre>
             </div>
