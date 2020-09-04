@@ -162,7 +162,7 @@ function getModel(uniqueId) {
                 $key = '';
                 // console.log(i, 'index');
                 $.map(v, function (element, index) {
-                    if (i!="model_name") {
+                    if (i!="model_name" && i == 'entity' && i == 'uniqueId') {
                         param += element+", ";
                     }
                     if (i == 'entity' || i == 'uniqueId') {
