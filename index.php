@@ -761,14 +761,15 @@ if (isset($_SESSION['user'])) {
             unset($tempdoc['model']);
             $m = file_get_contents(FIRESTORE_PATH . "model/" . $data['model']);
             $m = json_decode($m, true)['fields']; 
-            echo json_encode($m); return;
+            $tempm = array();
             foreach ($tempdoc as $key => $value) {
             }
             if (is_array($m) || is_object($m)) {
                 foreach ($m as $key => $value) {
-                
+                    $tempm[] = $key;
                 }
             }
+            echo json_encode($tempm); return;
             $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
             $firestoreClient->setDocument("model/" . $data['model'] . "/document/" . $document['matricule'], $data, true);
             $res = addData($document, 'document');
