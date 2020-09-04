@@ -717,9 +717,9 @@ if (isset($_SESSION['user'])) {
                 $msg['msg'] = "Le model n'existe pas";
                 echo json_encode($msg);
                 return;
-            }else {
-                if ($model['data']['entity'] != $data['entity'] ) {
-                    
+            } else {
+                if ($model['data']['entity'] != $data['entity']) {
+
                     http_response_code(404);
                     $msg['code'] = 404;
                     $msg['msg'] = "Ce modèle n'appartient pas à cette entité";
@@ -727,10 +727,12 @@ if (isset($_SESSION['user'])) {
                     return;
                 }
             }
+
+           
             $document['entity'] = $data['entity'];
             $document['matricule'] = generateRandomString();
             $document['entity_matricule'] = $data['entity_matricule'];
-    
+
             $barcode = new \Com\Tecnick\Barcode\Barcode();
             $targetPath = "public/img/documents/";
             if (!is_dir($targetPath)) {
@@ -742,21 +744,37 @@ if (isset($_SESSION['user'])) {
                 -2,
                 -2
             ))->setBackgroundColor('#fff');
-    
+
             $imageData = $bobj->getPngData();
-            $timestamp = time();
-    
+            $timestamp = time()."_".$document['entity_matricule'];
+
             file_put_contents($targetPath . $timestamp . '.png', $imageData);
-    
+
             $data['imgpath'] = $targetPath . $timestamp . '.png';
             $data['documentQrpath'] = "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
-    
+            
+            $tempdoc = $data;
+            unset($tempdoc['documentQrpath']);
+            unset($tempdoc['imgpath']);
+            unset($tempdoc['entity_matricule']);
+            unset($tempdoc['matricule']);
+            unset($tempdoc['model']);
+            $m = file_get_contents(FIRESTORE_PATH . "model/" . $data['model']);
+            $m = json_decode($m, true)['fields']; 
+            echo json_encode($m); return;
+            foreach ($tempdoc as $key => $value) {
+            }
+            if (is_array($m) || is_object($m)) {
+                foreach ($m as $key => $value) {
+                
+                }
+            }
             $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
-            $firestoreClient->setDocument("model/" . $data['model'] . "/document/".$document['matricule'], $data, true);
+            $firestoreClient->setDocument("model/" . $data['model'] . "/document/" . $document['matricule'], $data, true);
             $res = addData($document, 'document');
-    
+
             // Manager::showError($res);
-    
+
             if ($res != 1) {
                 http_response_code(200);
                 $msg['code'] = 200;
