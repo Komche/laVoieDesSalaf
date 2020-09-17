@@ -187,11 +187,11 @@
                                 </li>
                                 <li class="list-inline-item">
                                     <div class="searchbar">
-                                        <form>
+                                        <form id="submitForm">
                                             <div class="input-group">
                                                 <input id="inputSearch" type="search" class="form-control" placeholder="Recherche" aria-label="Search" aria-describedby="button-addon2">
                                                 <div class="input-group-append">
-                                                    <button class="btn" id="button-addon2"><img src="public/vendor/images/svg-icon/search.svg" class="img-fluid" alt="search"></button>
+                                                    <button class="btn" type="submit" id="button-addon2"><img src="public/vendor/images/svg-icon/search.svg" class="img-fluid" alt="search"></button>
                                                 </div>
                                             </div>
                                         </form>
