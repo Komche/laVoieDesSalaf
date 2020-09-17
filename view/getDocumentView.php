@@ -69,7 +69,7 @@ $keys = array_keys($document);
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="invoice-address text-center">
-                                            <h6 class="mb-3">Document</h6>
+                                            <h4 class="mb-3"> <i style="color:mediumseagreen" class="fa fa-check-circle"></i> Document</h4>
                                             <ul class="list-unstyled">
                                                 <?php
                                                 foreach ($keys as $k => $v) {
