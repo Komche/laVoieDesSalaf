@@ -68,7 +68,7 @@ $keys = array_keys($document);
                             <div class="invoice-billing">
                                 <div class="row">
                                     <div class="col-sm-6 col-md-4 col-lg-4">
-                                        <div class="invoice-address text-center>
+                                        <div class="invoice-address text-center">
                                             <h6 class="mb-3">Document</h6>
                                             <ul class="list-unstyled">
                                                 <?php
