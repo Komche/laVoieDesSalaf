@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
         <?php
+        require_once('../global.php');
         if (!empty($_GET['sDoc'])) {
 
 
