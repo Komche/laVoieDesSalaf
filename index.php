@@ -15,7 +15,7 @@ if (isset($_SESSION['messages'])) {
     unset($_SESSION['messages']);
 }
 
-var_dump($_SESSION['user']);die;
+// var_dump($_SESSION['user']);die;
 // $test = "hh";
 // //echo(Manager::print_var_name($test));  die();
 // $roles = new roles();
