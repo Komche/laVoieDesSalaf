@@ -91,8 +91,8 @@
             <div class="sidebar">
                 <!-- Start Logobar -->
                 <div class="logobar">
-                    <a href="index.html" class="logo logo-large"><img src="public/img/Logo2.png" class="img-fluid" alt="logo"></a>
-                    <a href="index.html" class="logo logo-small"><img src="public/img/Logo.png" class="img-fluid" alt="logo"></a>
+                    <a href="index.php" class="logo logo-large"><img src="public/img/Logo2.png" class="img-fluid" alt="logo"></a>
+                    <a href="index.php" class="logo logo-small"><img src="public/img/Logo.png" class="img-fluid" alt="logo"></a>
                 </div>
                 <!-- End Logobar -->
                 <!-- Start Navigationbar -->
@@ -144,7 +144,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="mobile-logobar">
-                            <a href="index.html" class="mobile-logo"><img src="public/vendor/images/logo.svg" class="img-fluid" alt="logo"></a>
+                            <a href="index.php" class="mobile-logo"><img src="public/vendor/images/logo.svg" class="img-fluid" alt="logo"></a>
                         </div>
                         <div class="mobile-togglebar">
                             <ul class="list-inline mb-0">
@@ -219,31 +219,10 @@
                                                 </div>
                                                 <ul class="list-unstyled">
                                                     <li class="media dropdown-item">
-                                                        <span class="action-icon badge badge-primary-inverse"><i class="feather icon-dollar-sign"></i></span>
-                                                        <div class="media-body">
-                                                            <h5 class="action-title">$135 received</h5>
-                                                            <p><span class="timing">Today, 10:45 AM</span></p>
-                                                        </div>
-                                                    </li>
-                                                    <li class="media dropdown-item">
                                                         <span class="action-icon badge badge-success-inverse"><i class="feather icon-file"></i></span>
                                                         <div class="media-body">
-                                                            <h5 class="action-title">Project X prototype approved</h5>
-                                                            <p><span class="timing">Yesterday, 01:40 PM</span></p>
-                                                        </div>
-                                                    </li>
-                                                    <li class="media dropdown-item">
-                                                        <span class="action-icon badge badge-danger-inverse"><i class="feather icon-eye"></i></span>
-                                                        <div class="media-body">
-                                                            <h5 class="action-title">John requested to view wireframe</h5>
-                                                            <p><span class="timing">3 Sep 2019, 05:22 PM</span></p>
-                                                        </div>
-                                                    </li>
-                                                    <li class="media dropdown-item">
-                                                        <span class="action-icon badge badge-warning-inverse"><i class="feather icon-package"></i></span>
-                                                        <div class="media-body">
-                                                            <h5 class="action-title">Sports shoes are out of stock</h5>
-                                                            <p><span class="timing">15 Sep 2019, 02:55 PM</span></p>
+                                                            <h5 class="action-title">Nouveau doc</h5>
+                                                            <p><span class="timing">Mardi, 18h:40</span></p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -356,6 +335,8 @@
     <script>
         $(document).ready(function () { 
             $('.searchable').select2();
+
+            
          })
         $(function() {
             $('#example1').DataTable()

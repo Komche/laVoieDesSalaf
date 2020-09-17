@@ -19,6 +19,12 @@ if ($_GET['uniqueId']!='') {
     
     getModel($_GET['uniqueId']);
 }
+
+$('#inputSearch').on('click', function () { 
+    if ($_GET['action'] != 'searchView') {
+        window.location.replace("https://checker.akoybiz.com/index.php?action=searchView");
+    }
+});
 getPermission();
 $('input:checkbox.module_is_checked').each(function (i, v) {
     $mr = getDataWith2Param('module_role', 'module', $(v).val(), 'role_id', $_GET['role']);
