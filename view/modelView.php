@@ -245,7 +245,7 @@ ob_start();
             </div>
             <div class="card-body">
               <pre>
-                <p><b><i>Endpoint: <a href="http://checker.akoybiz.com/index.php?api=addDocument">http://checker.akoybiz.com/index.php?api=addDocument</a></i></b></p>
+                <p><b><i>Endpoint: <a href="https://checker.akoybiz.com/index.php?api=addDocument">https://checker.akoybiz.com/index.php?api=addDocument</a></i></b></p>
                 <!-- <br> -->
                 <p><b><i>Method: POST</i></b></p>
                 <!-- <br> -->

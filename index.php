@@ -135,7 +135,7 @@ if (isset($_SESSION['user'])) {
                 if (!is_dir($targetPath)) {
                     mkdir($targetPath, 0777, true);
                 }
-                $bobj = $barcode->getBarcodeObj('QRCODE,H', "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'], -16, -16, 'black', array(
+                $bobj = $barcode->getBarcodeObj('QRCODE,H', "https://checker.akoybiz.com/index.php?mat=" . $document['matricule'], -16, -16, 'black', array(
                     -2,
                     -2,
                     -2,
@@ -148,7 +148,7 @@ if (isset($_SESSION['user'])) {
                 file_put_contents($targetPath . $timestamp . '.png', $imageData);
 
                 $data['imgpath'] = $targetPath . $timestamp . '.png';
-                $data['documentQrpath'] = "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
+                $data['documentQrpath'] = "https://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
 
                 $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
                 $firestoreClient->addDocument("model/" . $data['model'] . "/document", $data, $data['matricule']);
@@ -182,7 +182,7 @@ if (isset($_SESSION['user'])) {
                 if (!is_dir($targetPath)) {
                     mkdir($targetPath, 0777, true);
                 }
-                $bobj = $barcode->getBarcodeObj('QRCODE,H', "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'], -16, -16, 'black', array(
+                $bobj = $barcode->getBarcodeObj('QRCODE,H', "https://checker.akoybiz.com/index.php?mat=" . $document['matricule'], -16, -16, 'black', array(
                     -2,
                     -2,
                     -2,
@@ -195,7 +195,7 @@ if (isset($_SESSION['user'])) {
                 file_put_contents($targetPath . $timestamp . '.png', $imageData);
 
                 $data['imgpath'] = $targetPath . $timestamp . '.png';
-                $data['documentQrpath'] = "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
+                $data['documentQrpath'] = "https://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
 
                 $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
                 $firestoreClient->addDocument("model/" . $data['model'] . "/document", $data, $data['matricule']);
@@ -743,7 +743,7 @@ if (isset($_SESSION['user'])) {
             if (!is_dir($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
-            $bobj = $barcode->getBarcodeObj('QRCODE,H', "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'], -16, -16, 'black', array(
+            $bobj = $barcode->getBarcodeObj('QRCODE,H', "https://checker.akoybiz.com/index.php?mat=" . $document['matricule'], -16, -16, 'black', array(
                 -2,
                 -2,
                 -2,
@@ -756,7 +756,7 @@ if (isset($_SESSION['user'])) {
             file_put_contents($targetPath . $timestamp . '.png', $imageData);
 
             $data['imgpath'] = $targetPath . $timestamp . '.png';
-            $data['documentQrpath'] = "http://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
+            $data['documentQrpath'] = "https://checker.akoybiz.com/index.php?mat=" . $document['matricule'];
             
             $tempdoc = $data;
             unset($tempdoc['documentQrpath']);

@@ -449,3 +449,22 @@ function showPleaseWait() {
 function hidePleaseWait() {
     $("#pleaseWaitDialog").modal("hide");
 }
+
+$('#button-addon2').on('click', function() {
+    if ($_GET['action']=='searchView' && $('#searchView').val()!='') {
+        $.ajax({
+            url: "https://checker.akoybiz.com/model/ajax/geDoc.php",
+            type: "GET",
+            dataType: "html",
+            success: function (result) {
+                console.log(result, "res");
+                $("#allDoc").toggle();
+                $("#searchDoc").html(result);
+            },
+            error: function (xhr, resp, text) {
+                //  error to console
+                console.log(xhr, resp, text);
+            }
+        });
+    }
+});

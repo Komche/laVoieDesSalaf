@@ -72,13 +72,12 @@ ob_start();
       }
       ?>
     </div>
+    <div style="display: none;" id="searchDoc">
+    
+    </div>
   </div>
 </div>
-<script>
-  $('#button-addon2').on('click', function() {
 
-  });
-</script>
 <?php
 $content = ob_get_clean();
 require('template.php');
