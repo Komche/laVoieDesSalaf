@@ -152,7 +152,7 @@ ob_start();
                 ?>
                       <div class="form-group">
                         <label for="<?= $value->stringValue ?>"><?= ucfirst($value->stringValue) ?></label>
-                        <input value="" type="text" required class="form-control" id="<?= $value->stringValue ?>" name="<?= $value->stringValue ?>" placeholder="Veuillez entrer <?= $value->stringValue ?>">
+                        <input value="" type="<?= strpos($value->stringValue, 'date') ? "date": 'text' ?>" required class="form-control" id="<?= $value->stringValue ?>" name="<?= $value->stringValue ?>" placeholder="Veuillez entrer <?= $value->stringValue ?>">
                       </div>
 
                 <?php }
@@ -213,7 +213,7 @@ ob_start();
 
 
                   ?>
-                    <li class="list-group-item"><?= ($v == 'entity_matricule') ? 'ref: ' . $value[$v]['stringValue'] : $v . ": " . $value[$v]['stringValue'] ?></li>
+                    <li class="list-group-item"><?= ($v == 'entity_matricule') ? 'ref: ' . $value[$v]['stringValue'] : str_replace("_"," ",$v) . ": " . $value[$v]['stringValue'] ?></li>
                   <?php } ?>
                 </ul>
               </div>
