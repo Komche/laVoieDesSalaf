@@ -3,12 +3,14 @@
         <?php
         require_once('../global.php');
         if (!empty($_GET['sDoc'])) {
+            try {
 
 
-            $data = file_get_contents(FIRESTORE_PATH . "documents/".$_GET['sDoc']);
-            // var_dump(json_decode($data, true));
-            $data = json_decode($data, true)['fields'];
-            if (is_array($data) || is_object($data)) {
+
+                $data = file_get_contents(FIRESTORE_PATH . "documents/" . $_GET['sDoc']);
+                // var_dump(json_decode($data, true));
+                $data = json_decode($data, true)['fields'];
+                if (is_array($data) || is_object($data)) {
                     unset($data['model']);
                     unset($data['entity']);
 
@@ -45,13 +47,15 @@
 
             <?php
 
-            }else {
-                echo("<p> Document non trouvé </p>");
+                } else {
+                    echo ("<p> Document non trouvé </p>");
+                }
+            } catch (\Throwable $th) {
             }
             ?>
     </div>
-<?php }else {
-    echo("<p> Document non trouvé </p>");
-}
- ?>
+<?php } else {
+            echo ("<p> Document non trouvé </p>");
+        }
+?>
 </div>

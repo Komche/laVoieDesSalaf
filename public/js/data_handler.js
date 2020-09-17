@@ -452,10 +452,10 @@ function hidePleaseWait() {
 
 $(document).ready(function() {
     $('#submitForm').submit(function(e) {
-        if ($_GET['action']=='searchView' && $('#searchView').val()!='') {
+        if ($_GET['action']=='searchView' && $('#inputSearch').val()!='') {
             showPleaseWait();
             $.ajax({
-                url: "https://checker.akoybiz.com/model/ajax/getDoc.php?sDoc="+$('#searchView').val(),
+                url: "https://checker.akoybiz.com/model/ajax/getDoc.php?sDoc="+$('#inputSearch').val(),
                 type: "GET",
                 dataType: "html",
                 success: function (result) {
