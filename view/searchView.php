@@ -55,7 +55,7 @@ ob_start();
 
 
                   ?>
-                    <li class="list-group-item"><?= ($v == 'entity_matricule') ? 'ref: ' . str_replace("_"," ", $value[$v]['stringValue']) : $v . ": " . str_replace("_"," ", $value[$v]['stringValue']) ?></li>
+                    <li class="list-group-item"><?= ($v == 'entity_matricule') ? 'ref: ' . $value[$v]['stringValue'] : str_replace("_"," ",$v) . ": " . $value[$v]['stringValue'] ?></li>
                   <?php } ?>
                 </ul>
               </div>

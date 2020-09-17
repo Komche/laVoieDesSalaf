@@ -34,7 +34,7 @@
 
 
                                     ?>
-                                        <li class="list-group-item"><?= ($v == 'entity_matricule') ? 'ref: ' . str_replace("_"," ",$data[$v]['stringValue']) : $v . ": " . str_replace("_"," ",$data[$v]['stringValue']) ?></li>
+                                        <li class="list-group-item"><?= ($v == 'entity_matricule') ? 'ref: ' . $data[$v]['stringValue'] : str_replace("_"," ", $v) . ": " . $data[$v]['stringValue'] ?></li>
                                     <?php } ?>
                                 </ul>
                             </div>
