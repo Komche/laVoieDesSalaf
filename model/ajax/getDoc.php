@@ -44,6 +44,8 @@
 
             <?php
 
+            }else {
+                echo("<p> Document non trouvé </p>");
             }
             ?>
     </div>

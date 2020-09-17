@@ -454,7 +454,7 @@ $(document).ready(function() {
     $('#submitForm').submit(function(e) {
         if ($_GET['action']=='searchView' && $('#searchView').val()!='') {
             $.ajax({
-                url: "https://checker.akoybiz.com/model/ajax/geDoc.php?sDoc="+$('#searchView').val(),
+                url: "https://checker.akoybiz.com/model/ajax/getDoc.php?sDoc="+$('#searchView').val(),
                 type: "GET",
                 dataType: "html",
                 success: function (result) {
