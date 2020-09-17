@@ -33,11 +33,10 @@ ob_start();
           $value = $value['fields'];
           // if ($key == 'imgpath') {
           unset($value['model']);
-          unset($value['matricule']);
           unset($value['entity']);
-
-
-      ?>
+          
+          
+          ?>
           <div class="col-md-4">
             <div class="card m-b-30">
               <div class="card-header with-border">
@@ -48,6 +47,7 @@ ob_start();
                 <a href="https://checker.akoybiz.com/index.php?mat=<?= $value['matricule']['stringValue'] ?>" target="_blank" rel="noopener noreferrer">Voir plus</a>
                 <ul class="list-group">
                   <?php
+                  unset($value['matricule']);
                   unset($value['imgpath']);
                   unset($value['documentQrpath']);
                   $keys = array_keys($value);
