@@ -74,7 +74,7 @@ $keys = array_keys($document);
                                                 <?php
                                                 foreach ($keys as $k => $v) {
                                                 ?>
-                                                    <li> <b style="font-size: large;"><?= ($v == 'entity_matricule') ? 'ref: ' . $document[$v]['stringValue'] : $v . ": " . $document[$v]['stringValue'] ?></b></li>
+                                                    <li> <b style="font-size: large;"><?= ($v == 'entity_matricule') ? 'ref: ' . $document[$v]['stringValue'] : str_replace("_"," ",$v) . ": " . $document[$v]['stringValue'] ?></b></li>
                                                 <?php } ?>
                                                
                                             </ul>
