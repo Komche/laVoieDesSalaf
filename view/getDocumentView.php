@@ -68,7 +68,7 @@ $keys = array_keys($document);
                             <div class="invoice-billing">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="col-lg-offset-2 col-lg-4 col-lg-offset-2">
+                                        <div class="mr-5 col-lg-4 col-lg-offset-2">
 
                                             <div class="invoice-address">
                                                 <h2 class="mb-3"> <i style="color:mediumseagreen" class="fa fa-check-circle"></i> VERIFIE</h2>
