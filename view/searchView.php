@@ -20,8 +20,8 @@ ob_start();
   </div>
 </div>
 <div class="container container-margin">
-  <div id="#searchResult" class="row">
-    <div id="allDoc">
+  <div id="#searchResult" >
+    <div id="allDoc" class="row">
       <?php
       $data = file_get_contents(FIRESTORE_PATH . "documents");
       // var_dump(json_decode($data, true));
