@@ -15,7 +15,7 @@ if (isset($_SESSION['messages'])) {
     unset($_SESSION['messages']);
 }
 
-
+var_dump($_SESSION['user']);die;
 // $test = "hh";
 // //echo(Manager::print_var_name($test));  die();
 // $roles = new roles();
@@ -658,6 +658,8 @@ if (isset($_SESSION['user'])) {
             require_once("view/logout.php");
         } elseif ($action == 'homeView') {
             require_once("view/homeView.php");
+        } elseif ($action == 'searchView') {
+            require_once("view/searchView.php");
         }
     } elseif (empty($_GET['mat'])) {
         require_once("view/homeView.php");
