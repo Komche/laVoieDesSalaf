@@ -171,8 +171,10 @@ function getModel(uniqueId) {
                     if (i!="model_name" && i != 'entity' && i != 'uniqueId') {
                         param += element+", ";
                     }
-                    if (i == 'entity' || i == 'uniqueId') {
+                    if (i == 'entity') {
                         param += " "+i+": "+element+", ";
+                    }else if (i == 'uniqueId') {
+                        param += " model: "+element+", ";
                     }
 
                 });
@@ -198,6 +200,7 @@ function getModel(uniqueId) {
                 }
 
             });
+            param+=" entity_matricule";
             $('#body_model').html($dataModel);
             $('#param').append(param);
         },

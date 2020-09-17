@@ -289,7 +289,7 @@
             <!-- Start Footerbar -->
             <div class="footerbar">
                 <footer class="footer">
-                    <p class="mb-0">© 2020 checker | 2iSoft - Tout droit reserver.</p>
+                    <p class="mb-0">© 2020 checker | 2iSoft - Tous droits reservés.</p>
                 </footer>
             </div>
             <!-- End Footerbar -->
