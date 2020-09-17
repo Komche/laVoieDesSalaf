@@ -453,7 +453,7 @@ function hidePleaseWait() {
 $('#button-addon2').on('click', function() {
     if ($_GET['action']=='searchView' && $('#searchView').val()!='') {
         $.ajax({
-            url: "https://checker.akoybiz.com/model/ajax/geDoc.php",
+            url: "https://checker.akoybiz.com/model/ajax/geDoc.php?sDoc="+$('#searchView').val(),
             type: "GET",
             dataType: "html",
             success: function (result) {
