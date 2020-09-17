@@ -202,7 +202,7 @@ ob_start();
                 <table id="table_model" class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>Clé du model</th>
+                      <th>Propriété du model</th>
                       <th>Action</th>
                     </tr>
                   </thead>

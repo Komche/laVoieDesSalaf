@@ -39,7 +39,7 @@ function addTableRowModel() {
     <form >
             <td>
             <div class="form-group">
-                <input type="text" required class="form-control" id="model_key" name="model_key" placeholder="la cle du model">
+                <input type="text" required class="form-control" id="model_key" name="model_key" placeholder="la propriété du model">
             </div>
            
             
