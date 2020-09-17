@@ -462,11 +462,13 @@ $(document).ready(function() {
                     console.log(result, "res");
                     hidePleaseWait();
                     $("#allDoc").toggle();
+                    $("#searchDoc").toggle();
                     $("#searchDoc").html(result);
                 },
                 error: function (xhr, resp, text) {
                     hidePleaseWait();
                     $("#allDoc").toggle();
+                    $("#searchDoc").toggle();
                     $("#searchDoc").html("<p> Document non trouvé </p>");
                     //  error to console
                     console.log(xhr, resp, text);
