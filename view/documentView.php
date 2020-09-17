@@ -152,7 +152,7 @@ ob_start();
                 ?>
                       <div class="form-group">
                         <label for="<?= $value->stringValue ?>"><?= ucfirst($value->stringValue) ?></label>
-                        <input value="" type="<?= strpos($value->stringValue, 'date') ? "date": 'text' ?>" required class="form-control" id="<?= $value->stringValue ?>" name="<?= $value->stringValue ?>" placeholder="Veuillez entrer <?= $value->stringValue ?>">
+                        <input value="" type="<?= (strpos($value->stringValue, 'date') !== false) ? "date": 'text' ?>" required class="form-control" id="<?= $value->stringValue ?>" name="<?= $value->stringValue ?>" placeholder="Veuillez entrer <?= $value->stringValue ?>">
                       </div>
 
                 <?php }
