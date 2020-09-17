@@ -152,7 +152,7 @@ if (isset($_SESSION['user'])) {
 
                 $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
                 $firestoreClient->addDocument("model/" . $data['model'] . "/document", $data, $data['matricule']);
-                $firestoreClient->addDocument("document", $data, $data['matricule']);
+                $firestoreClient->addDocument("documents", $data, $data['matricule']);
                 $res = addData($document, 'document');
 
                 // Manager::showError($res);
@@ -791,7 +791,7 @@ if (isset($_SESSION['user'])) {
             echo json_encode($tempm); return;
             $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
             $firestoreClient->setDocument("model/" . $data['model'] . "/document/" . $document['matricule'], $data, true);
-            $firestoreClient->setDocument("document/" . $document['matricule'], $data, true);
+            $firestoreClient->setDocument("documents/" . $document['matricule'], $data, true);
             $res = addData($document, 'document');
 
             // Manager::showError($res);
