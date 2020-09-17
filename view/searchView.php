@@ -23,7 +23,7 @@ ob_start();
   <div id="#searchResult" class="row">
     <div id="allDoc">
       <?php
-      $data = file_get_contents(FIRESTORE_PATH . "/documents");
+      $data = file_get_contents(FIRESTORE_PATH . "documents");
       // var_dump(json_decode($data, true));
       $data = json_decode($data, true)['documents'];
       if (is_array($data) || is_object($data)) {
