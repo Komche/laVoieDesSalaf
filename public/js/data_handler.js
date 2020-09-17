@@ -453,16 +453,21 @@ function hidePleaseWait() {
 $(document).ready(function() {
     $('#submitForm').submit(function(e) {
         if ($_GET['action']=='searchView' && $('#searchView').val()!='') {
+            showPleaseWait();
             $.ajax({
                 url: "https://checker.akoybiz.com/model/ajax/getDoc.php?sDoc="+$('#searchView').val(),
                 type: "GET",
                 dataType: "html",
                 success: function (result) {
                     console.log(result, "res");
+                    hidePleaseWait();
                     $("#allDoc").toggle();
                     $("#searchDoc").html(result);
                 },
                 error: function (xhr, resp, text) {
+                    hidePleaseWait();
+                    $("#allDoc").toggle();
+                    $("#searchDoc").html("<p> Document non trouvé </p>");
                     //  error to console
                     console.log(xhr, resp, text);
                 }
