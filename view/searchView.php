@@ -47,7 +47,7 @@ ob_start();
                 <a href="https://checker.akoybiz.com/index.php?mat=<?= $value['matricule']['stringValue'] ?>" target="_blank" rel="noopener noreferrer">Voir plus</a>
                 <ul class="list-group">
                   <?php
-                  unset($value['matricule']);
+                  // unset($value['matricule']);
                   unset($value['imgpath']);
                   unset($value['documentQrpath']);
                   $keys = array_keys($value);
@@ -55,7 +55,7 @@ ob_start();
 
 
                   ?>
-                    <li class="list-group-item"><?= ($v == 'entity_matricule') ? 'ref: ' . $value[$v]['stringValue'] : $v . ": " . $value[$v]['stringValue'] ?></li>
+                    <li class="list-group-item"><?= ($v == 'entity_matricule') ? 'ref: ' . str_replace("_"," ", $value[$v]['stringValue']) : $v . ": " . str_replace("_"," ", $value[$v]['stringValue']) ?></li>
                   <?php } ?>
                 </ul>
               </div>
