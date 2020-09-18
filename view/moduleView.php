@@ -2,6 +2,11 @@
 $role = 1;
 if (isset($_GET['role'])) extract($_GET);
 $title = "Module";
+$module_data = array();
+if (!empty($_GET['modif'])) {
+  $title = "Modifier module";
+  $module_data = Manager::getData('module', 'id', $_GET['modif'])['data'];
+}
 ob_start();
 ?>
 <div class="breadcrumbbar">
@@ -35,23 +40,42 @@ ob_start();
             <div class="card-body">
               <div class="form-group">
                 <label for="name">Nom du module</label>
-                <input type="text" required class="form-control" id="name" name="name" placeholder="Le nom du module">
+                <input type="text" value="<?= (!empty($_GET['modif']) ? $module_data['name'] : '') ?>" required class="form-control" id="name" name="name" placeholder="Le nom du module">
               </div>
               <div class="form-group">
-                <label for="name">icon</label>
-                <input type="text" class="form-control" id="icon" name="icon" placeholder="icon sous-format fontawsome (facultatif)">
+                <label for="icon">icon</label>
+                <input type="text" value="<?= (!empty($_GET['modif']) ? $module_data['icon'] : '') ?>" class="form-control" id="icon" name="icon" placeholder="icon sous-format fontawsome (facultatif)">
               </div>
               <div class="form-group">
                 <label for="description">Description</label>
-                <textarea required class="form-control" id="description" name="description" placeholder="description du module"></textarea>
+                <textarea value="<?= (!empty($_GET['modif']) ? $module_data['description'] : '') ?>" required class="form-control" id="description" name="description" placeholder="description du module"></textarea>
               </div>
               <div class="form-group">
                 <label for="is_menu">Menu</label>
                 <select class="form-control" id="is_menu" name="is_menu">
-                  <option value="1">Oui</option>
-                  <option value="0">Non</option>
+                  <option <?= (!empty($_GET['modif']) ? (($module_data['is_menu'] == '1') ? 'selected' : '') : '') ?> value="1">Oui</option>
+                  <option <?= (!empty($_GET['modif']) ? (($module_data['is_menu'] == '0') ? 'selected' : '') : '') ?> value="0">Non</option>
                 </select>
               </div>
+              <?php if (!empty($_GET['modif'])) : ?>
+                <div class="form-group">
+                  <label for="sub_module">Sous menu de</label>
+                  <select class="form-control" id="sub_module" name="sub_module">
+                    <?php
+                    $data = Manager::getData("module", 'sub_module', NULL, true)['data'];
+                    if (is_array($data) || is_object($data)) {
+                      foreach ($data as $key => $value) {
+
+                    ?>
+                        <option <?= (!empty($_GET['modif']) ? (($module_data['sub_module'] == $value['id']) ? 'selected' : '') : '') ?> value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                    <?php
+
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              <?php endif; ?>
             </div>
             <!-- /.card-body -->
 
@@ -60,7 +84,7 @@ ob_start();
               <p></p>
               <?php
               if (isset($_SESSION['messages'])) {
-                echo Manager::messages($_SESSION['messages'], 'alert-danger');
+                echo Manager::messages($_SESSION['messages'], $_SESSION['type']);
               }
               ?>
             </div>
@@ -98,7 +122,7 @@ ob_start();
                       <td><?= $value['description'] ?></td>
                       <td>
                         <?php if (!isset($_GET['role'])) : ?>
-                          <a class="btn btn-primary">
+                          <a href="index.php?action=module&modif=<?= $value['id'] ?>" class="btn btn-primary">
                             <i class="fa fa-edit white"></i>
                           </a>
                           <a href="index.php?action=permission&module=<?= $value['id'] ?>" class="btn btn-primary">

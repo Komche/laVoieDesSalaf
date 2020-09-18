@@ -45,6 +45,18 @@ function addData($data, $table)
     }
 }
 
+function update($table, $data, $property, $val)
+{
+    $res = Manager::updateData($data, $table, $property, $val);
+    // var_dump($res);   die('ok');
+    if ($res['error']) {
+        return $res['message'];
+    }else {
+        return 1;
+    }
+    
+}
+
 function insert($table) {
     $manager = new Manager();
     return $manager->insert($table);

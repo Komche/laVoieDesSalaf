@@ -51,13 +51,24 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'module') {
             if (!empty($_POST)) {
                 $data = $_POST;
-                $res = addData($data, 'module');
+                $res = 0;
+                if (!empty($_GET['modif'])) {
+                    $res = update('module', $data, 'id', $_GET['modif']);
+                }else {
+                    
+                    $res = addData($data, 'module');
+                }
 
                 // Manager::showError($res);
 
                 if ($res != 1) {
                     $_SESSION['messages'] = $res;
+                    $_SESSION['type'] = 0;
+                }else {
+                    $_SESSION['messages'] = "Enregistrement réussis";
+                    $_SESSION['type'] = 1;
                 }
+                // die('ok '.$_SESSION['type']);
             }
             require_once("view/moduleView.php");
         } elseif ($action == 'entite') {

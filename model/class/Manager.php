@@ -254,9 +254,11 @@ class Manager
 
     public static function messages($msg, $type_alerte)
     {
-        $font = ($type_alerte=='alert-success') ? 'fa-check' : 'fa-ban';
+    
+        $type = ($type_alerte==1) ? 'alert-success' : 'alert-danger';
+        $font = ($type=='alert-success') ? 'fa-check' : 'fa-ban';
         // die(var_dump($msg));
-        echo  '<div class="alert ' . $type_alerte . ' alert-dismissible">
+        echo  '<div class="alert ' . $type . ' alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         <h4><i class="icon fa '.$font.'"></i> Checker!</h4>
         ' . $msg . '
@@ -630,9 +632,9 @@ class Manager
 
             $req = self::bdd()->prepare($sql);
             if ($req->execute($value)) {
-                self::throwError(200, "Enregistrement modifié avec succès");
+               return self::throwError(200, "Enregistrement modifié avec succès");
             } else {
-                self::throwError(503, "modification échouée", true);
+               return self::throwError(503, "modification échouée", true);
             }
         }
     }
