@@ -34,7 +34,7 @@
                                         <div class="form-head" style="background-color: #bdd6d6;">
                                             <a href="index.html" class="logo"><img src="public/img/Logo2.png" class="img-fluid" alt="logo"></a>
                                         </div>                                        
-                                        <h4 class="text-primary my-4">Log in !</h4>
+                                        <h4 class="text-primary my-4">Se connecter !</h4>
                                         <div class="form-group">
                                             <input type="tel" name="phone_number" id="phone_number" class="form-control" placeholder="N° de téléphone" required>
                                         </div>

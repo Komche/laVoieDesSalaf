@@ -2,7 +2,7 @@
 $title = "Pays";
 if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
   $title = "Modifier du pays";
-  $datas = Manager::getData("pays", "idpays", $_GET['modif'])['data'];
+  $datas = Manager::getData("country", "id", $_GET['modif'])['data'];
 }
 ob_start();
 ?>
