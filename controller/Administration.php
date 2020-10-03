@@ -20,6 +20,7 @@ include_once('model/database/cannonces.php');
 include_once('model/database/cactualites.php');
 include_once('model/database/clivres.php');
 include_once('model/database/statuts.php');
+include_once('model/database/langues.php');
 
 
 function addData($data, $table)
