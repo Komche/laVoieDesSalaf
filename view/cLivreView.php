@@ -1,8 +1,8 @@
 <?php
-$title = "Catégorie actulaite";
+$title = "Catégorie livre";
 if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
-  $title = "Modifier catégorie actulaite";
-  $datas = Manager::getData("cactualites", "id", $_GET['modif'])['data'];
+  $title = "Modifier catégorie livre";
+  $datas = Manager::getData("clivres", "id", $_GET['modif'])['data'];
 }
 ob_start();
 ?>
@@ -71,8 +71,8 @@ ob_start();
                 <th>Action</th>
               </tr>
               <?php
-              $cactualite = new cactualites();
-              $data = Manager::getDatas($cactualite)->all();
+              $clivre = new clivres();
+              $data = Manager::getDatas($clivre)->all();
               // Manager::showError($data);
               if (is_array($data) || is_object($data)) {
                 foreach ($data as $value) {
@@ -82,7 +82,7 @@ ob_start();
                   <tr>
                     <td><?= $value['titre'] ?></td>
                     <td>
-                      <a href="index.php?action=cactualite&modif=<?= $value['id'] ?>" class="btn btn-primary">
+                      <a href="index.php?action=clivre&modif=<?= $value['id'] ?>" class="btn btn-primary">
                         <i class="fa fa-edit"></i>
                       </a>
                     </td>

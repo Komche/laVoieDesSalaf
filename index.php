@@ -166,6 +166,28 @@ if (isset($_SESSION['user'])) {
                 }
             }
             require_once("view/cActualiteView.php");
+        } elseif ($action == 'clivre') { //View livre
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
+                if (!empty($_POST)) {
+                    $data = $_POST;
+                    //var_dump($data);
+                    //die();
+                    $res = Manager::updateData($data, 'clivres', 'id', $_GET['modif']);
+                    if ($res['code'] = 200) {
+                        header('Location: index.php?action=clivre');
+                    }
+                }
+            } else { // Ajout Ville
+                if (!empty($_POST)) {
+                    $data = $_POST;
+                    $clivre = new clivres($data);
+                    //var_dump($clivre); die;
+                    $res = insert($clivre);
+
+                    $_SESSION['messages'] = $res;
+                }
+            }
+            require_once("view/cLivreView.php");
         } elseif ($action == 'filiere') { //View Filiere
             if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une Filiere
                 if (!empty($_POST)) {
