@@ -35,7 +35,7 @@ ob_start();
         <form role="form" method="post">
           <div class="card-body">
             <div class="form-group">
-              <label for="titre">Nom du cannonce</label>
+              <label for="titre">Libelle</label>
               <input type="text" required class="form-control" id="titre" name="titre" value="<?= (!empty($_GET['modif'])) ? $datas['titre'] : "" ?>" placeholder="veuille saisir le titre">
             </div>
             
