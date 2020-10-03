@@ -12,12 +12,12 @@ class Manager
 
     public static function database()
     {
-        $dbname = 'akoybizc_checker';
+        $dbname = 'akoybizc_iniger';
         $user = 'akoybizc_komche';
         $pass = '@damoukomche2019';
         $host = 'localhost';
         if ($_SERVER["SERVER_NAME"] == 'localhost') {
-            $dbname = 'checker';
+            $dbname = 'iniger';
             $user = 'root';
             $pass = '';
             $host = 'localhost';
@@ -34,12 +34,12 @@ class Manager
 
     public static function bdd()
     {
-        $dbname = 'akoybizc_checker';
+        $dbname = 'akoybizc_iniger';
         $user = 'akoybizc_komche';
         $pass = '@damoukomche2019';
         $host = 'localhost';
         if ($_SERVER["SERVER_NAME"] == 'localhost') {
-            $dbname = 'checker';
+            $dbname = 'iniger';
             $user = 'root';
             $pass = '';
             $host = 'localhost';
@@ -260,7 +260,7 @@ class Manager
         // die(var_dump($msg));
         echo  '<div class="alert ' . $type . ' alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa '.$font.'"></i> Checker!</h4>
+        <h4><i class="icon fa '.$font.'"></i> iniger!</h4>
         ' . $msg . '
       </div>';
     }

@@ -2,7 +2,7 @@ host = $(location).attr('hostname');
 protocol = $(location).attr('protocol');
 folder = '';
 if (host == 'localhost') {
-    folder = '/checker';
+    folder = '/IslamNiger';
 }
 customUrl = protocol + '//' + host + folder + '/index.php?action=';
 myurl = protocol + '//' + host + folder + '/api/object/';
@@ -22,7 +22,7 @@ if ($_GET['uniqueId']!='') {
 
 $('#inputSearch').on('click', function () { 
     if ($_GET['action'] != 'searchView') {
-        window.location.replace("https://checker.akoybiz.com/index.php?action=searchView");
+        window.location.replace("https://IslamNiger.akoybiz.com/index.php?action=searchView");
     }
 });
 getPermission();
@@ -458,7 +458,7 @@ $(document).ready(function() {
         if ($_GET['action']=='searchView' && $('#inputSearch').val()!='') {
             showPleaseWait();
             $.ajax({
-                url: "https://checker.akoybiz.com/model/ajax/getDoc.php?sDoc="+$('#inputSearch').val(),
+                url: "https://IslamNiger.akoybiz.com/model/ajax/getDoc.php?sDoc="+$('#inputSearch').val(),
                 type: "GET",
                 dataType: "html",
                 success: function (result) {

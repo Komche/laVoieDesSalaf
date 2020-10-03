@@ -23,7 +23,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <a href="https://checker.akoybiz.com/index.php?mat=<?= $data['matricule']['stringValue'] ?>" target="_blank" rel="noopener noreferrer">Voir plus</a>
+                                <a href="https://IslamNiger.akoybiz.com/index.php?mat=<?= $data['matricule']['stringValue'] ?>" target="_blank" rel="noopener noreferrer">Voir plus</a>
                                 <ul class="list-group">
                                     <?php
                                     // unset($data['matricule']);

@@ -202,8 +202,8 @@ ob_start();
               <div class="card-body">
 
 
-                <img style="width: 100%;" src="http://checker.akoybiz.com/<?= $value['imgpath']['stringValue'] ?>" alt="">
-                <a href="http://checker.akoybiz.com/<?= $value['imgpath']['stringValue'] ?>" target="_blank" rel="noopener noreferrer">Télécharger</a>
+                <img style="width: 100%;" src="http://IslamNiger.akoybiz.com/<?= $value['imgpath']['stringValue'] ?>" alt="">
+                <a href="http://IslamNiger.akoybiz.com/<?= $value['imgpath']['stringValue'] ?>" target="_blank" rel="noopener noreferrer">Télécharger</a>
                 <ul class="list-group">
                   <?php
                   unset($value['imgpath']);

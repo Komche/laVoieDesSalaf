@@ -27,7 +27,7 @@
                     <!-- Start col -->
                     <div class="col-md-8 col-lg-6">
                         <div class="text-center">
-                            <!-- <img src="public/img/Logo2.png" class="img-fluid error-logo" alt="logo"> -->
+                            <!-- <img src="public/img/logoIslamNiger.png" class="img-fluid error-logo" alt="logo"> -->
                             <img src="public/img/error.jpg" class="img-fluid error-image" alt="404">
                             <h4 class="error-subtitle mb-4">Oops! page non trouver</h4>
                             <p class="mb-4">On a pas trouver la page que vous cherche</p>

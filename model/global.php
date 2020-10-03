@@ -4,7 +4,7 @@ $folder = '';
 define ('HOST', "http://" . $_SERVER ['HTTP_HOST']); // get the hostname
 
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
-    $folder = '/checker';
+    $folder = '/IslamNiger';
 }
 
 define('ROOT_PATH', HOST . "$folder");

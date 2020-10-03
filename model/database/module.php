@@ -7,6 +7,7 @@ class module {
 	 public $description;
 	 public $action_url;
 	 public $sub_module;
+	 public $is_menu;
 	 public $module=array();
 
 
@@ -21,7 +22,7 @@ class module {
                     return $this->module;
                 }
 
-                public function role($id, $name, $icon, $description, $action_url, $sub_module)
+                public function role($id, $name, $icon, $description, $action_url, $sub_module, $is_menu)
                     {
                         $this->id = $id;
 $this->name = $name;
@@ -29,6 +30,7 @@ $this->icon = $icon;
 $this->description = $description;
 $this->action_url = $action_url;
 $this->sub_module = $sub_module;
+$this->is_menu = $is_menu;
 
                     }
                 
@@ -53,6 +55,7 @@ $this->setIcon($d['icon']);
 $this->setDescription($d['description']);
 $this->setAction_url($d['action_url']);
 $this->setSub_module($d['sub_module']);
+$this->setIs_menu($d['is_menu']);
 $this->module =$data; 
  return $this;
                                 }
@@ -81,6 +84,7 @@ $this->setIcon($d['icon']);
 $this->setDescription($d['description']);
 $this->setAction_url($d['action_url']);
 $this->setSub_module($d['sub_module']);
+$this->setIs_menu($d['is_menu']);
 $this->module =$data; 
  return $this;
                                 }
@@ -109,6 +113,7 @@ $this->setIcon($d['icon']);
 $this->setDescription($d['description']);
 $this->setAction_url($d['action_url']);
 $this->setSub_module($d['sub_module']);
+$this->setIs_menu($d['is_menu']);
 $this->module =$data; 
  return $this;
                                 }
@@ -137,6 +142,7 @@ $this->setIcon($d['icon']);
 $this->setDescription($d['description']);
 $this->setAction_url($d['action_url']);
 $this->setSub_module($d['sub_module']);
+$this->setIs_menu($d['is_menu']);
 $this->module =$data; 
  return $this;
                                 }
@@ -165,6 +171,7 @@ $this->setIcon($d['icon']);
 $this->setDescription($d['description']);
 $this->setAction_url($d['action_url']);
 $this->setSub_module($d['sub_module']);
+$this->setIs_menu($d['is_menu']);
 $this->module =$data; 
  return $this;
                                 }
@@ -193,12 +200,42 @@ $this->setIcon($d['icon']);
 $this->setDescription($d['description']);
 $this->setAction_url($d['action_url']);
 $this->setSub_module($d['sub_module']);
+$this->setIs_menu($d['is_menu']);
 $this->module =$data; 
  return $this;
                                 }
                             
                         } else {
                             return $this->sub_module;
+                        }
+                        
+                    }
+                    /**
+                    * Get the value of is_menu
+                    */ 
+                    public function getIs_menu($is_menu=null)
+                    {
+                        if ($is_menu != null && is_array($this->module) && count($this->module)!=0) {
+                            $table_name = strtolower(get_class($this));
+                            $query = "SELECT * FROM $table_name WHERE is_menu = ?";
+                            $req = Manager::bdd()->prepare($query);
+                            $req->execute([$is_menu]);
+                            $data = "";
+                            if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
+$d=$data[0];
+$this->setId($d['id']);
+$this->setName($d['name']);
+$this->setIcon($d['icon']);
+$this->setDescription($d['description']);
+$this->setAction_url($d['action_url']);
+$this->setSub_module($d['sub_module']);
+$this->setIs_menu($d['is_menu']);
+$this->module =$data; 
+ return $this;
+                                }
+                            
+                        } else {
+                            return $this->is_menu;
                         }
                         
                     }
@@ -267,6 +304,17 @@ $this->module =$data;
                    public function setSub_module($sub_module)
                    {
                     $this->sub_module = $sub_module;
+               
+                       return $this;
+                   }
+                    /**
+                    * Set the value of is_menu
+                    *
+                    * @return  self
+                    */ 
+                   public function setIs_menu($is_menu)
+                   {
+                    $this->is_menu = $is_menu;
                
                        return $this;
                    }

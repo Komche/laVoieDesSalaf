@@ -91,7 +91,7 @@
             <div class="sidebar">
                 <!-- Start Logobar -->
                 <div class="logobar">
-                    <a href="index.php" class="logo logo-large"><img src="public/img/Logo2.png" class="img-fluid" alt="logo"></a>
+                    <a href="index.php" class="logo logo-large"><img src="public/img/logoIslamNiger.png" class="img-fluid" alt="logo"></a>
                     <a href="index.php" class="logo logo-small"><img src="public/img/Logo.png" class="img-fluid" alt="logo"></a>
                 </div>
                 <!-- End Logobar -->
@@ -289,7 +289,7 @@
             <!-- Start Footerbar -->
             <div class="footerbar">
                 <footer class="footer">
-                    <p class="mb-0">© 2020 checker | 2iSoft - Tous droits reservés.</p>
+                    <p class="mb-0">© 2020 IslamNiger | 2iSoft - Tous droits reservés.</p>
                 </footer>
             </div>
             <!-- End Footerbar -->

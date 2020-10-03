@@ -16,6 +16,10 @@ include_once('model/database/exercice.php');
 include_once('model/database/niveau.php');
 include_once('model/database/exercice_membre.php');
 include_once('model/database/country.php');
+include_once('model/database/cannonces.php');
+include_once('model/database/cactualites.php');
+include_once('model/database/clivres.php');
+include_once('model/database/statuts.php');
 
 
 function addData($data, $table)

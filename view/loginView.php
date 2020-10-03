@@ -31,8 +31,8 @@
                             <div class="card">
                                 <div class="card-body">
                                     <form action="#" method="POST">
-                                        <div class="form-head" style="background-color: #bdd6d6;">
-                                            <a href="index.html" class="logo"><img src="public/img/Logo2.png" class="img-fluid" alt="logo"></a>
+                                        <div class="form-head">
+                                            <a href="index.html" class="logo"><img src="public/img/logoIslamNiger.png" class="img-fluid" alt="logo"></a>
                                         </div>                                        
                                         <h4 class="text-primary my-4">Se connecter !</h4>
                                         <div class="form-group">
