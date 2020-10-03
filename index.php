@@ -210,6 +210,28 @@ if (isset($_SESSION['user'])) {
                 }
             }
             require_once("view/langueView.php");
+        } elseif ($action == 'statut') { //View livre
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
+                if (!empty($_POST)) {
+                    $data = $_POST;
+                    //var_dump($data);
+                    //die();
+                    $res = Manager::updateData($data, 'statuts', 'id', $_GET['modif']);
+                    if ($res['code'] = 200) {
+                        header('Location: index.php?action=statut');
+                    }
+                }
+            } else { // Ajout Ville
+                if (!empty($_POST)) {
+                    $data = $_POST;
+                    $statut = new statuts($data);
+                    //var_dump($statut); die;
+                    $res = insert($statut);
+
+                    $_SESSION['messages'] = $res;
+                }
+            }
+            require_once("view/statutView.php");
         } elseif ($action == 'filiere') { //View Filiere
             if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une Filiere
                 if (!empty($_POST)) {

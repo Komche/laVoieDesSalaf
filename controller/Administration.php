@@ -21,6 +21,7 @@ include_once('model/database/cactualites.php');
 include_once('model/database/clivres.php');
 include_once('model/database/statuts.php');
 include_once('model/database/langues.php');
+include_once('model/database/cfikr.php');
 
 
 function addData($data, $table)

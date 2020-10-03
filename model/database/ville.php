@@ -1,8 +1,8 @@
 
 <?php 
 class ville {
-	 public $idVille;
-	 public $nomVille;
+	 public $id;
+	 public $tittre;
 	 public $country;
 	 public $ville=array();
 
@@ -18,10 +18,10 @@ class ville {
                     return $this->ville;
                 }
 
-                public function role($idVille, $nomVille, $country)
+                public function role($id, $tittre, $country)
                     {
-                        $this->idVille = $idVille;
-$this->nomVille = $nomVille;
+                        $this->id = $id;
+$this->tittre = $tittre;
 $this->country = $country;
 
                     }
@@ -29,52 +29,52 @@ $this->country = $country;
 
 
                     /**
-                    * Get the value of idVille
+                    * Get the value of id
                     */ 
-                    public function getIdVille($idVille=null)
+                    public function getId($id=null)
                     {
-                        if ($idVille != null && is_array($this->ville) && count($this->ville)!=0) {
+                        if ($id != null && is_array($this->ville) && count($this->ville)!=0) {
                             $table_name = strtolower(get_class($this));
-                            $query = "SELECT * FROM $table_name WHERE idVille = ?";
+                            $query = "SELECT * FROM $table_name WHERE id = ?";
                             $req = Manager::bdd()->prepare($query);
-                            $req->execute([$idVille]);
+                            $req->execute([$id]);
                             $data = "";
                             if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
 $d=$data[0];
-$this->setIdVille($d['idVille']);
-$this->setNomVille($d['nomVille']);
+$this->setId($d['id']);
+$this->setTittre($d['tittre']);
 $this->setCountry($d['country']);
 $this->ville =$data; 
  return $this;
                                 }
                             
                         } else {
-                            return $this->idVille;
+                            return $this->id;
                         }
                         
                     }
                     /**
-                    * Get the value of nomVille
+                    * Get the value of tittre
                     */ 
-                    public function getNomVille($nomVille=null)
+                    public function getTittre($tittre=null)
                     {
-                        if ($nomVille != null && is_array($this->ville) && count($this->ville)!=0) {
+                        if ($tittre != null && is_array($this->ville) && count($this->ville)!=0) {
                             $table_name = strtolower(get_class($this));
-                            $query = "SELECT * FROM $table_name WHERE nomVille = ?";
+                            $query = "SELECT * FROM $table_name WHERE tittre = ?";
                             $req = Manager::bdd()->prepare($query);
-                            $req->execute([$nomVille]);
+                            $req->execute([$tittre]);
                             $data = "";
                             if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
 $d=$data[0];
-$this->setIdVille($d['idVille']);
-$this->setNomVille($d['nomVille']);
+$this->setId($d['id']);
+$this->setTittre($d['tittre']);
 $this->setCountry($d['country']);
 $this->ville =$data; 
  return $this;
                                 }
                             
                         } else {
-                            return $this->nomVille;
+                            return $this->tittre;
                         }
                         
                     }
@@ -91,8 +91,8 @@ $this->ville =$data;
                             $data = "";
                             if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
 $d=$data[0];
-$this->setIdVille($d['idVille']);
-$this->setNomVille($d['nomVille']);
+$this->setId($d['id']);
+$this->setTittre($d['tittre']);
 $this->setCountry($d['country']);
 $this->ville =$data; 
  return $this;
@@ -106,24 +106,24 @@ $this->ville =$data;
 
 
                     /**
-                    * Set the value of idVille
+                    * Set the value of id
                     *
                     * @return  self
                     */ 
-                   public function setIdVille($idVille)
+                   public function setId($id)
                    {
-                    $this->idVille = $idVille;
+                    $this->id = $id;
                
                        return $this;
                    }
                     /**
-                    * Set the value of nomVille
+                    * Set the value of tittre
                     *
                     * @return  self
                     */ 
-                   public function setNomVille($nomVille)
+                   public function setTittre($tittre)
                    {
-                    $this->nomVille = $nomVille;
+                    $this->tittre = $tittre;
                
                        return $this;
                    }
