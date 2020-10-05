@@ -142,7 +142,7 @@ ob_start();
             <div class="card-header with-border">
               <i class="fa fa-server"></i>
               <h3 class="card-title" id="modelName"></h3>
-              <a onclick="addTableRowModel()" style="float: right" class="btn btn-primary">
+              <a onclick="addTableRowModel()" style="float: right" class="btn btn-success">
                 <i class="fa fa-plus white"></i>
               </a>
             </div>
@@ -170,7 +170,7 @@ ob_start();
 
                         </td>
                         <td>
-                          <button type="button" onclick="addModel()" class="btn btn-primary">
+                          <button type="button" onclick="addModel()" class="btn btn-success">
                             <i class="fa  fa-check-square white"></i>
                             Valider
                           </button>
@@ -192,7 +192,7 @@ ob_start();
             <div class="card-header with-border">
               <i class="fa fa-server"></i>
               <h3 class="card-title" id="modelName"></h3>
-              <a onclick="addTableRowModel()" style="float: right" class="btn btn-primary">
+              <a onclick="addTableRowModel()" style="float: right" class="btn btn-success">
                 <i class="fa fa-plus white"></i>
               </a>
             </div>
@@ -220,7 +220,7 @@ ob_start();
 
                         </td>
                         <td>
-                          <button type="button" onclick="addModel()" class="btn btn-primary">
+                          <button type="button" onclick="addModel()" class="btn btn-success">
                             <i class="fa  fa-check-square white"></i>
                             Valider
                           </button>

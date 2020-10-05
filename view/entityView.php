@@ -60,7 +60,7 @@ ob_start();
 
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Valider</button>
+            <button type="submit" class="btn btn-success">Valider</button>
             <p></p>
             <?php
             if (isset($_SESSION['messages'])) {
@@ -103,7 +103,7 @@ ob_start();
                     <td><?= $value['email'] ?></td>
                     <td><?= $value['bp'] ?></td>
                     <td>
-                      <a class="btn btn-primary">
+                      <a class="btn btn-success">
                         <i class="fa fa-edit white"></i>
                       </a>
                     </td>

@@ -41,7 +41,7 @@ ob_start();
             
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Valider</button>
+            <button type="submit" class="btn btn-success">Valider</button>
             <p></p>
             <?php
             if (!empty($_SESSION['messages'])) {
@@ -81,7 +81,7 @@ ob_start();
                   <tr>
                     <td><?= $value['name'] ?></td>
                     <td>
-                      <a href="index.php?action=pays&modif=<?= $value['id'] ?>" class="btn btn-primary">
+                      <a href="index.php?action=pays&modif=<?= $value['id'] ?>" class="btn btn-success">
                         <i class="fa fa-edit"></i>
                       </a>
                     </td>

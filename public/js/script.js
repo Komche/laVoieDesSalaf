@@ -24,7 +24,7 @@ function addTableRow() {
             </div>
             </td>
             <td>
-            <button type="button" onclick="addData('module')" class="btn btn-primary">
+            <button type="button" onclick="addData('module')" class="btn btn-success">
                 <i class="fa  fa-check-square white"></i>
                 Valider
             </button>
@@ -47,7 +47,7 @@ function addTableRowModel() {
             
             
             <td>
-            <button type="button" onclick="addModel('module')" class="btn btn-primary">
+            <button type="button" onclick="addModel('module')" class="btn btn-success">
                 <i class="fa  fa-check-square white"></i>
                 Valider
             </button>

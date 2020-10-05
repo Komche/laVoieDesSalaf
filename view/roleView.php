@@ -40,7 +40,7 @@ ob_start();
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Valider</button>
+            <button type="submit" class="btn btn-success">Valider</button>
             <p></p>
             <?php
             if (!empty($_SESSION['messages'])) {
@@ -82,10 +82,10 @@ ob_start();
                     <td><?= $value['name'] ?></td>
                     <td><?= $value['description'] ?></td>
                     <td>
-                      <a class="btn btn-primary">
+                      <a class="btn btn-success">
                         <i class="fa fa-edit white"></i>
                       </a>
-                      <a href="index.php?action=module&role=<?= $value['id'] ?>" class="btn btn-primary">
+                      <a href="index.php?action=module&role=<?= $value['id'] ?>" class="btn btn-success">
                         <i class="fa fa-plus"></i>
                       </a>
                     </td>

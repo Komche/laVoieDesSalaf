@@ -122,7 +122,7 @@ $keys = array_keys($document);
                                     </div>
                                     <div class="col-md-6">
                                         <div class="invoice-footer-btn">
-                                            <a href="javascript:window.print()" class="btn btn-primary-rgba py-1 font-16"><i class="feather icon-printer mr-2"></i>Print</a>
+                                            <a href="javascript:window.print()" class="btn btn-success-rgba py-1 font-16"><i class="feather icon-printer mr-2"></i>Print</a>
                                             <!-- <a href="#" class="btn btn-success-rgba py-1 font-16"><i class="feather icon-send mr-2"></i>Submit</a> -->
                                         </div>
                                     </div>

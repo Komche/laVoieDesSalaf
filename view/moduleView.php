@@ -80,7 +80,7 @@ ob_start();
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Valider</button>
+              <button type="submit" class="btn btn-success">Valider</button>
               <p></p>
               <?php
               if (isset($_SESSION['messages'])) {
@@ -122,10 +122,10 @@ ob_start();
                       <td><?= $value['description'] ?></td>
                       <td>
                         <?php if (!isset($_GET['role'])) : ?>
-                          <a href="index.php?action=module&modif=<?= $value['id'] ?>" class="btn btn-primary">
+                          <a href="index.php?action=module&modif=<?= $value['id'] ?>" class="btn btn-success">
                             <i class="fa fa-edit white"></i>
                           </a>
-                          <a href="index.php?action=permission&module=<?= $value['id'] ?>" class="btn btn-primary">
+                          <a href="index.php?action=permission&module=<?= $value['id'] ?>" class="btn btn-success">
                             <i class="fa fa-plus"></i>
                           </a>
                         <?php else : ?>

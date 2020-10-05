@@ -29,7 +29,7 @@ ob_start();
         $module = Manager::getData("module", "action_url", "showUser")['data']['id'];
         if (haveAction($_SESSION['user']['roleId'], $module)) :
         ?>
-          <a href="index.php?action=showUser" class="btn btn-primary-rgba"><i class="fa fa-eye"></i> Liste des Utilisateur</a>
+          <a href="index.php?action=showUser" class="btn btn-success-rgba"><i class="fa fa-eye"></i> Liste des Utilisateur</a>
         <?php endif ?>
       </div>
     </div>
@@ -146,7 +146,7 @@ ob_start();
         <!-- /.box-body -->
 
 
-        <button type="submit" class="btn btn-primary">Valider</button>
+        <button type="submit" class="btn btn-success">Valider</button>
         <p></p>
         <?php
         if (isset($_SESSION['messages'])) {

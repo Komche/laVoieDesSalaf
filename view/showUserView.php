@@ -21,7 +21,7 @@ ob_start();
         $module = Manager::getData("module", "action_url", "addUser")['data']['id'];
         if (haveAction($_SESSION['user']['roleId'], $module)) :
         ?>
-          <a href="index.php?action=addUser" class="btn btn-primary-rgba"><i class="fa fa-plus"></i> Ajouter</a>
+          <a href="index.php?action=addUser" class="btn btn-success-rgba"><i class="fa fa-plus"></i> Ajouter</a>
         <?php endif ?>
       </div>
     </div>
@@ -81,7 +81,7 @@ ob_start();
                   <td><?= Manager::getData('type_agent', 'id', $value['type_agent'])['data']['label'] ?></td>
                   <td><?= Manager::getData('roles', 'id', $value['role'])['data']['name'] ?></td>
                   <td>
-                    <a href="index.php?action=addUser&modif=<?= $value['id'] ?>" class="btn btn-primary">
+                    <a href="index.php?action=addUser&modif=<?= $value['id'] ?>" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                   </td>
@@ -95,7 +95,7 @@ ob_start();
                   <td><?= Manager::getData('type_agent', 'id', $value['type_agent'])['data']['label'] ?></td>
                   <td><?= Manager::getData('roles', 'id', $value['role'])['data']['name'] ?></td>
                   <td>
-                  <a href="index.php?action=addUser&modif=<?= $value['id'] ?>" class="btn btn-primary">
+                  <a href="index.php?action=addUser&modif=<?= $value['id'] ?>" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                   </td>

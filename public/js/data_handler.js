@@ -137,7 +137,7 @@ function getPermission() {
                 <td>` + v.name + `</td>
                 <td>` + v.description + `</td>
                 <td>
-                  <a class="btn btn-primary">
+                  <a class="btn btn-success">
                     <i class="fa fa-edit white"></i>
                   </a>
                 </td>
@@ -189,7 +189,7 @@ function getModel(uniqueId) {
                                 <tr>
                                 <td>` + element + `</td>
                                 <td>
-                                <a class="btn btn-primary">
+                                <a class="btn btn-success">
                                     <i class="fa fa-edit white"></i>
                                 </a>
                                 </td>
@@ -395,7 +395,7 @@ function addTablRow() {
             </div>
             </td>
             <td>
-            <button type="button" onclick="addData('action')" class="btn btn-primary">
+            <button type="button" onclick="addData('action')" class="btn btn-success">
                 <i class="fa  fa-check-square white"></i>
                 Valider
             </button>

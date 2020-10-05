@@ -2,7 +2,7 @@
 $title = "Villes";
 if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
   $title = "Modifier la ville";
-  $datas = Manager::getData("ville", "idVille", $_GET['modif'])['data'];
+  $datas = Manager::getData("ville", "id", $_GET['modif'])['data'];
 }
 ob_start();
 ?>
@@ -35,8 +35,8 @@ ob_start();
         <form role="form" method="post">
           <div class="card-body">
             <div class="form-group">
-              <label for="nomVille">Nom de la ville</label>
-              <input type="text" required class="form-control" id="nomVille" name="nomVille" value="<?= (!empty($_GET['modif'])) ? $datas['nomVille'] : "" ?>" placeholder="ville">
+              <label for="titre">Nom de la ville</label>
+              <input type="text" required class="form-control" id="titre" name="titre" value="<?= (!empty($_GET['modif'])) ? $datas['titre'] : "" ?>" placeholder="ville">
             </div>
             <div class="form-group">
               <label for="country">Pays</label>
@@ -57,7 +57,7 @@ ob_start();
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Valider</button>
+            <button type="submit" class="btn btn-success">Valider</button>
             <p></p>
             <?php
             if (!empty($_SESSION['messages'])) {
@@ -95,9 +95,9 @@ ob_start();
 
               ?>
                   <tr>
-                    <td><?= $value['nomVille'] ?></td>
+                    <td><?= $value['titre'] ?></td>
                     <td>
-                      <a href="index.php?action=ville&modif=<?= $value['idVille'] ?>" class="btn btn-primary">
+                      <a href="index.php?action=ville&modif=<?= $value['id'] ?>" class="btn btn-success">
                         <i class="fa fa-edit"></i>
                       </a>
                     </td>

@@ -31,7 +31,7 @@
                             <img src="public/img/error.jpg" class="img-fluid error-image" alt="404">
                             <h4 class="error-subtitle mb-4">Oops! page non trouver</h4>
                             <p class="mb-4">On a pas trouver la page que vous cherche</p>
-                            <a href="index.php" class="btn btn-primary font-16"><i class="feather icon-home mr-2"></i> Retourner à la page d'accuiel</a>
+                            <a href="index.php" class="btn btn-success font-16"><i class="feather icon-home mr-2"></i> Retourner à la page d'accuiel</a>
                         </div>
                     </div>
                     <!-- End col -->

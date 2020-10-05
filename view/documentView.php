@@ -161,7 +161,7 @@ ob_start();
                 ?>
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Valider</button>
+                <button type="submit" class="btn btn-success">Valider</button>
                 <p></p>
                 <?php
                 if (isset($_SESSION['messages'])) {

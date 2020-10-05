@@ -6,7 +6,7 @@ ob_start();
   <div class="col-md-12">
 
     <!-- Profile Image -->
-    <div class="box box-primary">
+    <div class="box box-success">
       <div class="box-body box-profile">
         <img class="profile-user-img img-responsive img-circle" src="<?= !empty($_SESSION['user']['photo']) ? $_SESSION['user']['photo'] : 'public/vendor/dist/img/avatar.png' ?>" alt="User profile picture">
 
@@ -23,7 +23,7 @@ ob_start();
           </li>
         </ul>
 
-        <!--<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
+        <!--<a href="#" class="btn btn-success btn-block"><b>Follow</b></a>-->
       </div>
       <!-- /.box-body -->
     </div>

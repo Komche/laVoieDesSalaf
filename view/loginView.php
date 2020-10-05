@@ -34,7 +34,7 @@
                                         <div class="form-head">
                                             <a href="index.html" class="logo"><img src="public/img/logoIslamNiger.png" class="img-fluid" alt="logo"></a>
                                         </div>                                        
-                                        <h4 class="text-primary my-4">Se connecter !</h4>
+                                        <h4 class="text-success my-4">Se connecter !</h4>
                                         <div class="form-group">
                                             <input type="tel" name="phone_number" id="phone_number" class="form-control" placeholder="N° de téléphone" required>
                                         </div>
@@ -60,7 +60,7 @@
                                         <h6 class="text-muted">OR</h6>
                                     </div>
                                     <div class="social-login text-center">
-                                        <button type="submit" class="btn btn-primary-rgba font-18"><i class="mdi mdi-facebook mr-2"></i>Facebook</button>
+                                        <button type="submit" class="btn btn-success-rgba font-18"><i class="mdi mdi-facebook mr-2"></i>Facebook</button>
                                         <button type="submit" class="btn btn-danger-rgba font-18"><i class="mdi mdi-google mr-2"></i>Google</button>
                                     </div>
                                     <p class="mb-0 mt-3">Don't have a account? <a href="user-register.html">Sign up</a></p> -->
