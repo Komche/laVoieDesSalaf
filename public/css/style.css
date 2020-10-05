@@ -3,5 +3,6 @@
 }
 
 .container-margin {
-    margin: 20px 0 50px 0;
+    position: relative;
+    bottom: 20px;
 }

@@ -2,7 +2,7 @@
 <?php 
 class ville {
 	 public $id;
-	 public $tittre;
+	 public $titre;
 	 public $country;
 	 public $ville=array();
 
@@ -18,10 +18,10 @@ class ville {
                     return $this->ville;
                 }
 
-                public function role($id, $tittre, $country)
+                public function role($id, $titre, $country)
                     {
                         $this->id = $id;
-$this->tittre = $tittre;
+$this->titre = $titre;
 $this->country = $country;
 
                     }
@@ -42,7 +42,7 @@ $this->country = $country;
                             if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
 $d=$data[0];
 $this->setId($d['id']);
-$this->setTittre($d['tittre']);
+$this->setTitre($d['titre']);
 $this->setCountry($d['country']);
 $this->ville =$data; 
  return $this;
@@ -54,27 +54,27 @@ $this->ville =$data;
                         
                     }
                     /**
-                    * Get the value of tittre
+                    * Get the value of titre
                     */ 
-                    public function getTittre($tittre=null)
+                    public function getTitre($titre=null)
                     {
-                        if ($tittre != null && is_array($this->ville) && count($this->ville)!=0) {
+                        if ($titre != null && is_array($this->ville) && count($this->ville)!=0) {
                             $table_name = strtolower(get_class($this));
-                            $query = "SELECT * FROM $table_name WHERE tittre = ?";
+                            $query = "SELECT * FROM $table_name WHERE titre = ?";
                             $req = Manager::bdd()->prepare($query);
-                            $req->execute([$tittre]);
+                            $req->execute([$titre]);
                             $data = "";
                             if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
 $d=$data[0];
 $this->setId($d['id']);
-$this->setTittre($d['tittre']);
+$this->setTitre($d['titre']);
 $this->setCountry($d['country']);
 $this->ville =$data; 
  return $this;
                                 }
                             
                         } else {
-                            return $this->tittre;
+                            return $this->titre;
                         }
                         
                     }
@@ -92,7 +92,7 @@ $this->ville =$data;
                             if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
 $d=$data[0];
 $this->setId($d['id']);
-$this->setTittre($d['tittre']);
+$this->setTitre($d['titre']);
 $this->setCountry($d['country']);
 $this->ville =$data; 
  return $this;
@@ -117,13 +117,13 @@ $this->ville =$data;
                        return $this;
                    }
                     /**
-                    * Set the value of tittre
+                    * Set the value of titre
                     *
                     * @return  self
                     */ 
-                   public function setTittre($tittre)
+                   public function setTitre($titre)
                    {
-                    $this->tittre = $tittre;
+                    $this->titre = $titre;
                
                        return $this;
                    }

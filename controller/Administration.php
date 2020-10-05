@@ -22,6 +22,8 @@ include_once('model/database/clivres.php');
 include_once('model/database/statuts.php');
 include_once('model/database/langues.php');
 include_once('model/database/cfikr.php');
+include_once('model/database/auteurs.php');
+include_once('model/database/fikrs.php');
 
 
 function addData($data, $table)

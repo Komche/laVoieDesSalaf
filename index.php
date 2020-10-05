@@ -254,84 +254,32 @@ if (isset($_SESSION['user'])) {
                 }
             }
             require_once("view/cFikrView.php");
-        } elseif ($action == 'filiere') { //View Filiere
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une Filiere
+        } elseif ($action == 'auteur') { //View livre
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
                 if (!empty($_POST)) {
                     $data = $_POST;
                     //var_dump($data);
                     //die();
-                    $res = Manager::updateData($data, 'filiere', 'id_filiere', $_GET['modif']);
+                    $res = Manager::updateData($data, 'cfikr', 'id', $_GET['modif']);
                     if ($res['code'] = 200) {
-                        header('Location: index.php?action=filiere');
+                        header('Location: index.php?action=cfikr');
                     }
                 }
-            } else { // Ajout Filiere
-                if (!empty($_POST)) {
+            } else { // Ajout auteur
+                if (!empty($_POST) && !empty($_FILES)) {
+                    
                     $data = $_POST;
-                    $filiere = new filiere($data);
-                    //var_dump($filiere); die;
-                    $res = insert($filiere);
+                    $file = new Files();
+                    $lid = $file->uploadFilePicture($_FILES['photo']);
+                    $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    $auteur = new auteurs($data);
+                    // var_dump($auteur); die;
+                    $res = insert($auteur);
 
                     $_SESSION['messages'] = $res;
                 }
             }
-            require_once("view/filiereView.php");
-        } elseif ($action == 'bureau') {
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une Bureau
-                if (!empty($_POST)) {
-                    $data = $_POST;
-                    //var_dump($data);
-                    //die();
-                    $res = Manager::updateData($data, 'bureau', 'idBureau', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=bureau');
-                    }
-                }
-            } else { // Ajout Bureau
-                if (!empty($_POST)) {
-                    $data = $_POST;
-                    $bureau = new bureau($data);
-                    // var_dump($bureau); die;
-                    $res = insert($bureau);
-
-                    $_SESSION['messages'] = $res;
-                }
-            }
-            require_once("view/bureauView.php");
-        } elseif ($action == 'exercice') {
-            if (!empty($_POST)) {
-                $data = $_POST;
-                $file = new Files();
-                $data['pv_exercice'] = $file->uploadFilePicture($_FILES['pv_exercice']);
-                $exercice = new exercice($data);
-                //var_dump($exercice); die;
-                $res = insert($exercice);
-
-                $_SESSION['messages'] = $res;
-            }
-            require_once("view/exerciceView.php");
-        } elseif ($action == 'etablissement') {
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une Etablissement
-                if (!empty($_POST)) {
-                    $data = $_POST;
-                    //var_dump($data);
-                    //die();
-                    $res = Manager::updateData($data, 'etablissement', 'idEtablissement', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=etablissement');
-                    }
-                }
-            } else { // Ajout Etablissement
-                if (!empty($_POST)) {
-                    $data = $_POST;
-                    $etablissement = new etablissement($data);
-                    //var_dump($etablissement); die;
-                    $res = insert($etablissement);
-
-                    $_SESSION['messages'] = $res;
-                }
-            }
-            require_once("view/etablissementView.php");
+            require_once("view/auteurView.php");
         } elseif ($action == 'type') {
             if (!empty($_POST)) {
                 $data = $_POST;

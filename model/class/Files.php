@@ -63,7 +63,7 @@ class Files
                 // Manager::showError($this);
                 //$res = self::addoNTable($url, $res);
                 //$res = self::correct($res);
-                if ($res['error']) {
+                if ($res['code']==0 || $res['error']) {
                     return 'Erreur lors de l\'jout de la photo';
                 } else {
                     return $res['lastId'];
