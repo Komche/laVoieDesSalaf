@@ -280,6 +280,32 @@ if (isset($_SESSION['user'])) {
                 }
             }
             require_once("view/auteurView.php");
+        } elseif ($action == 'ajouter-fikr') { //View livre
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
+                if (!empty($_POST)) {
+                    $data = $_POST;
+                    //var_dump($data);
+                    //die();
+                    $res = Manager::updateData($data, 'cfikr', 'id', $_GET['modif']);
+                    if ($res['code'] = 200) {
+                        header('Location: index.php?action=cfikr');
+                    }
+                }
+            } else { // Ajout auteur
+                if (!empty($_POST) && !empty($_FILES)) {
+                    
+                    $data = $_POST;
+                    $file = new Files();
+                    $lid = $file->uploadFilePicture($_FILES['photo']);
+                    $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    $fikr = new fikrs($data);
+                    // var_dump($fikr); die;
+                    $res = insert($fikr);
+
+                    $_SESSION['messages'] = $res;
+                }
+            }
+            require_once("view/fikrsView.php");
         } elseif ($action == 'type') {
             if (!empty($_POST)) {
                 $data = $_POST;
