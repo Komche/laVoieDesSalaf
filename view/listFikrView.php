@@ -65,7 +65,7 @@ ob_start();
                     <td><?= $value['grade'] ." ". $value['nom'] ." ". $value['prenom'] ?></td>
                     <td><?= $value['vt'] ?></td>
                     <td><?= $value['lt'] ?></td>
-                    <td><img src="<?= $value['file_url'] ?>" alt="img"></td>
+                    <td><img src="<?= $value['file_url'] ?>" width="50" alt="img"></td>
                     <td>
                       <a href="index.php?action=fikr&modif=<?= $value['id'] ?>" class="btn btn-success">
                         <i class="fa fa-edit"></i>

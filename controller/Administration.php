@@ -219,6 +219,19 @@ function getMatricule()
 
 }
 
+function getFontAwsomeByFileType($type)
+{
+    if (strpos($type,"image")!==false) {
+        return 'fa-file-image-o';
+    }elseif (strpos($type, "audio")!==false) {
+        return 'fa-file-audio-o';
+    }elseif (strpos($type, "video")!==false) {
+        return 'fa-file-video-o';
+    }else {
+        return 'fa-file-o';
+    }
+}
+
 // source: https://stackoverflow.com/a/4356295/9928098
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_';

@@ -379,6 +379,9 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'consulter-fikr') {
 
             require_once("view/listFikrView.php");
+        } elseif ($action == 'donnee') {
+
+            require_once("view/listDataView.php");
         } elseif ($action == 'addData') {
 
             require_once("view/addDataView.php");
