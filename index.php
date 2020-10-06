@@ -50,8 +50,8 @@ if (isset($_SESSION['user'])) {
                 $res = 0;
                 if (!empty($_GET['modif'])) {
                     $res = update('module', $data, 'id', $_GET['modif']);
-                }else {
-                    
+                } else {
+
                     $res = addData($data, 'module');
                 }
 
@@ -60,7 +60,7 @@ if (isset($_SESSION['user'])) {
                 if ($res != 1) {
                     $_SESSION['messages'] = $res;
                     $_SESSION['type'] = 0;
-                }else {
+                } else {
                     $_SESSION['messages'] = "Enregistrement réussis";
                     $_SESSION['type'] = 1;
                 }
@@ -267,7 +267,7 @@ if (isset($_SESSION['user'])) {
                 }
             } else { // Ajout auteur
                 if (!empty($_POST) && !empty($_FILES)) {
-                    
+
                     $data = $_POST;
                     $file = new Files();
                     $lid = $file->uploadFilePicture($_FILES['photo']);
@@ -293,7 +293,7 @@ if (isset($_SESSION['user'])) {
                 }
             } else { // Ajout auteur
                 if (!empty($_POST) && !empty($_FILES)) {
-                    
+
                     $data = $_POST;
                     $file = new Files();
                     $lid = $file->uploadFilePicture($_FILES['photo']);
@@ -379,12 +379,31 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'consulter-fikr') {
 
             require_once("view/listFikrView.php");
-        } elseif ($action == 'showUser') {
+        } elseif ($action == 'addData') {
 
-            require_once("view/showUserView.php");
-        } elseif ($action == 'showMember') {
-
-            require_once("view/showMemberView.php");
+            require_once("view/addDataView.php");
+        } elseif ($action == 'sendData') {
+            $result = array();
+            if (!empty($_FILES)) {
+                $count = count($_FILES['chemin']['name']);
+                for ($i = 0; $i < $count; $i++) {
+                    $file = new Files();
+                    $res = $file->uploadFileArray($_FILES['chemin'], $i);
+                    if (is_numeric($res['lastId']) && !empty($_POST['fikr'])) {
+                        $d['titre'] = $_FILES['chemin']['name'][$i];
+                        $d['fikr'] = $_POST['fikr'];
+                        $d['date'] = date("F d Y H:i:s.", filectime($res['src']));
+                        $d['chemin'] = $res['lastId'];
+                        $data = new datas($d);
+                        //var_dump($data); die;
+                        $result[$i] = insert($data);
+                        // die($res['src']);
+                    }
+                }
+                echo json_encode($result);
+            }else {
+                echo json_encode(['code'=>0, 'message'=>'echec']);
+            }
         } elseif ($action == 'listeMembreSympathisant') { //View Liste des membres Sympathisants
 
             require_once("view/showMemberSympView.php");
@@ -482,7 +501,7 @@ if (isset($_SESSION['user'])) {
                 }
             }
 
-           
+
             $document['entity'] = $data['entity'];
             $document['matricule'] = generateRandomString();
             $document['entity_matricule'] = $data['entity_matricule'];
@@ -500,13 +519,13 @@ if (isset($_SESSION['user'])) {
             ))->setBackgroundColor('#fff');
 
             $imageData = $bobj->getPngData();
-            $timestamp = time()."_".$document['entity_matricule'];
+            $timestamp = time() . "_" . $document['entity_matricule'];
 
             file_put_contents($targetPath . $timestamp . '.png', $imageData);
 
             $data['imgpath'] = $targetPath . $timestamp . '.png';
             $data['documentQrpath'] = "https://IslamNiger.akoybiz.com/index.php?mat=" . $document['matricule'];
-            
+
             $tempdoc = $data;
             unset($tempdoc['documentQrpath']);
             unset($tempdoc['imgpath']);
@@ -514,24 +533,24 @@ if (isset($_SESSION['user'])) {
             unset($tempdoc['matricule']);
             unset($tempdoc['model']);
             $m = file_get_contents(FIRESTORE_PATH . "model/" . $data['model']);
-            $m = json_decode($m, true)['fields']; 
+            $m = json_decode($m, true)['fields'];
             $tempm = array();
             if (is_array($m) || is_object($m)) {
                 foreach ($m as $key => $value) {
                     $tempm[] = $key;
-                    if ($key != 'model_name' && $key != "uniqueId"){
+                    if ($key != 'model_name' && $key != "uniqueId") {
                         if (!in_array($key, $tempdoc)) {
                             http_response_code(404);
                             $msg['code'] = 404;
                             $msg['msg'] = "un des champs manque";
                             echo json_encode($msg);
-                            return;   
+                            return;
                         }
                     }
                 }
             }
             foreach ($tempdoc as $key => $value) {
-                if(!in_array($key, $tempm)) {
+                if (!in_array($key, $tempm)) {
                     http_response_code(404);
                     $msg['code'] = 404;
                     $msg['msg'] = "Il semble que vous essayer d'ajouter un champs qui n'existe pas";
@@ -539,7 +558,8 @@ if (isset($_SESSION['user'])) {
                     return;
                 }
             }
-            echo json_encode($tempm); return;
+            echo json_encode($tempm);
+            return;
             $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
             $firestoreClient->setDocument("model/" . $data['model'] . "/document/" . $document['matricule'], $data, true);
             $firestoreClient->setDocument("documents/" . $document['matricule'], $data, true);

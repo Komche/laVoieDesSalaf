@@ -1,24 +1,27 @@
 <html lang="fr" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Orbiter is a bootstrap minimal &amp; clean admin template">
-        <meta name="keywords" content="admin, admin panel, admin template, admin dashboard, responsive, bootstrap 4, ui kits, ecommerce, web app, crm, cms, html, sass support, scss">
-        <meta name="author" content="Themesbox">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title><?= $title ?></title>
-        <!-- Fevicon -->
-        <link rel="shortcut icon" href="public/img/favicon.ico">
-        <!-- Start css -->
-        <!-- Switchery css -->
-        <link href="public/vendor/plugins/switchery/switchery.min.css" rel="stylesheet">
-        <link href="public/vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="public/vendor/css/icons.css" rel="stylesheet" type="text/css">
-        <link href="public/vendor/css/flag-icon.min.css" rel="stylesheet" type="text/css">
-        <link href="public/vendor/css/style.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="public/css/style.css">
-        <script src="public/vendor/js/jquery.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Orbiter is a bootstrap minimal &amp; clean admin template">
+    <meta name="keywords" content="admin, admin panel, admin template, admin dashboard, responsive, bootstrap 4, ui kits, ecommerce, web app, crm, cms, html, sass support, scss">
+    <meta name="author" content="Themesbox">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title><?= $title ?></title>
+    <!-- Fevicon -->
+    <link rel="shortcut icon" href="public/img/favicon.ico">
+    <!-- Start css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+    <link href="public/vendor/plugins/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">
+    <link href="public/vendor/css/fileinput.min.css" rel="stylesheet" type="text/css">
+    <!-- Switchery css -->
+    <link href="public/vendor/plugins/switchery/switchery.min.css" rel="stylesheet">
+    <link href="public/vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="public/vendor/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="public/vendor/css/flag-icon.min.css" rel="stylesheet" type="text/css">
+    <link href="public/vendor/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="public/css/style.css">
+    <script src="public/vendor/js/jquery.min.js"></script>
     <!-- End css -->
 </head>
 
@@ -92,7 +95,7 @@
                 <!-- Start Logobar -->
                 <div class="logobar">
                     <a href="index.php" class="logo logo-large"><img src="public/img/logoIslamNiger.png" class="img-fluid" alt="logo"></a>
-                    <a href="index.php" class="logo logo-small"><img src="public/img/Logo.png" class="img-fluid" alt="logo"></a>
+                    <a href="index.php" class="logo logo-small"><img src="public/img/logoIslamNiger.png" class="img-fluid" alt="logo"></a>
                 </div>
                 <!-- End Logobar -->
                 <!-- Start Navigationbar -->
@@ -144,7 +147,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="mobile-logobar">
-                            <a href="index.php" class="mobile-logo"><img src="public/vendor/images/logo.svg" class="img-fluid" alt="logo"></a>
+                            <a href="index.php" class="mobile-logo"><img src="public/img/logoIslamNiger.png" class="img-fluid" alt="logo"></a>
                         </div>
                         <div class="mobile-togglebar">
                             <ul class="list-inline mb-0">
@@ -324,20 +327,48 @@
     <script src="public/vendor/plugins/datatables/responsive.bootstrap4.min.js"></script>
     <script src="public/vendor/js/custom/custom-table-datatable.js"></script>
     <script src="public/vendor/js/jquery.serializeObject.js"></script>
-    <!-- Core js -->
+
+    <script src="public/vendor/plugins/dropzone/dist/dropzone.js"></script>
+    <script src="public/vendor/js/fileinput.min.js"></script>
+    <script src="public/vendor/js/theme.min.js"></script>
+    <script src="public/vendor/js/fr.js"></script>
+    <script src="public/vendor/js/piexif.min.js"></script>
+    <script src="public/vendor/js/sortable.min.js"></script>
     <!-- Core js -->
     <script src="public/vendor/js/core.js"></script>
-
+    <!-- Core js -->
     <!-- my js -->
     <script src="public/js/script.js"></script>
     <script src="public/js/data_handler.js"></script>
     <!-- End js -->
     <script>
-        $(document).ready(function () { 
+        $(document).ready(function() {
             $('.searchable').select2();
+            <?php if (!empty($_GET['fikr'])) : ?>
+                $("#chemin").fileinput({
+                    showRemove: true,
+                    showPreview: true,
 
-            
-         })
+                    uploadUrl: "index.php?action=sendData", // server upload action
+                    uploadAsync: false,
+                    uploadExtraData: function() {
+                        return {
+                            fikr: <?= $_GET['fikr'] ?>
+                        };
+                    }
+                }).on('filebatchpreupload', function(event, data, id, index) {
+                    $('#kv-success-2').html('<h4>Statut</h4><ul></ul>').hide();
+                }).on('filebatchuploadsuccess', function(event, data) {
+                    var out = '';
+                    $.each(data.files, function(key, file) {
+                        var fname = file.name;
+                        out = out + '<li>' + 'Fichier ajouter # ' + (key + 1) + ' - ' + fname + ' successfully.' + '</li>';
+                    });
+                    $('#kv-success-2 ul').append(out);
+                    $('#kv-success-2').fadeIn('slow');
+                });
+            <?php endif ?>
+        })
         $(function() {
             $('#example1').DataTable()
             $('#example2').DataTable({

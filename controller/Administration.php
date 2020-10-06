@@ -24,6 +24,7 @@ include_once('model/database/langues.php');
 include_once('model/database/cfikr.php');
 include_once('model/database/auteurs.php');
 include_once('model/database/fikrs.php');
+include_once('model/database/datas.php');
 
 
 function addData($data, $table)
