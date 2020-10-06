@@ -376,9 +376,9 @@ if (isset($_SESSION['user'])) {
                 }
             }
             require_once("view/addPlanView.php");
-        } elseif ($action == 'voir-plan') {
+        } elseif ($action == 'consulter-fikr') {
 
-            require_once("view/showPlanView.php");
+            require_once("view/listFikrView.php");
         } elseif ($action == 'showUser') {
 
             require_once("view/showUserView.php");
