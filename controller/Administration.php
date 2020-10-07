@@ -25,6 +25,7 @@ include_once('model/database/cfikr.php');
 include_once('model/database/auteurs.php');
 include_once('model/database/fikrs.php');
 include_once('model/database/datas.php');
+include_once('model/database/annonces.php');
 
 
 function addData($data, $table)

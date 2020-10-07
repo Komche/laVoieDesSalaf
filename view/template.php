@@ -16,12 +16,16 @@
     <link href="public/vendor/css/fileinput.min.css" rel="stylesheet" type="text/css">
     <!-- Switchery css -->
     <link href="public/vendor/plugins/switchery/switchery.min.css" rel="stylesheet">
+    <!-- Summernote css -->
+    <link href="public/vendor/plugins/summernote/summernote-bs4.css" rel="stylesheet">
+    <!-- Code Mirror css -->
+    <link href="public/vendor/plugins/code-mirror/codemirror.css" rel="stylesheet">
     <link href="public/vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="public/vendor/css/icons.css" rel="stylesheet" type="text/css">
     <link href="public/vendor/css/flag-icon.min.css" rel="stylesheet" type="text/css">
     <link href="public/vendor/css/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="public/css/style.css">
-    <script src="public/vendor/js/jquery.min.js"></script>
+    
     <!-- End css -->
 </head>
 
@@ -301,6 +305,7 @@
     </div>
     <!-- End Containerbar -->
     <!-- Start js -->
+    <script src="public/vendor/js/jquery.min.js"></script>
     <script src="public/vendor/js/popper.min.js"></script>
     <script src="public/vendor/js/bootstrap.min.js"></script>
     <script src="public/vendor/js/modernizr.min.js"></script>
@@ -334,6 +339,16 @@
     <script src="public/vendor/js/fr.js"></script>
     <script src="public/vendor/js/piexif.min.js"></script>
     <script src="public/vendor/js/sortable.min.js"></script>
+
+    <!-- Summernote JS -->
+    <script src="public/vendor/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- Code Mirror JS -->
+    <script src="public/vendor/plugins/code-mirror/codemirror.js"></script>
+    <script src="public/vendor/plugins/code-mirror/htmlmixed.js"></script>
+    <script src="public/vendor/plugins/code-mirror/css.js"></script>
+    <script src="public/vendor/plugins/code-mirror/javascript.js"></script>
+    <script src="public/vendor/plugins/code-mirror/xml.js"></script>
+    <script src="public/vendor/js/custom/custom-form-editor.js"></script>
     <!-- Core js -->
     <script src="public/vendor/js/core.js"></script>
     <!-- Core js -->
@@ -368,6 +383,14 @@
                     $('#kv-success-2').fadeIn('slow');
                 });
             <?php endif ?>
+
+            console.log($('.note-editable'), "ok");
+
+            $('.note-editable').bind('DOMSubtreeModified', function() {
+                console.log($(this).html(), 'ok');
+                $('#description').val($(this).html());
+
+            });
         })
         $(function() {
             $('#example1').DataTable()

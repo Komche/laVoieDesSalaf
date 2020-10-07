@@ -8,7 +8,7 @@ class fikrs {
 	 public $auteur;
 	 public $ville;
 	 public $date_ajout;
-	 public $langue_id;
+	 public $langue;
 	 public $photo;
 	 public $fikrs=array();
 
@@ -24,7 +24,7 @@ class fikrs {
                     return $this->fikrs;
                 }
 
-                public function role($id, $titre, $livre, $cfikr, $auteur, $ville, $date_ajout, $langue_id, $photo)
+                public function role($id, $titre, $livre, $cfikr, $auteur, $ville, $date_ajout, $langue, $photo)
                     {
                         $this->id = $id;
 $this->titre = $titre;
@@ -33,7 +33,7 @@ $this->cfikr = $cfikr;
 $this->auteur = $auteur;
 $this->ville = $ville;
 $this->date_ajout = $date_ajout;
-$this->langue_id = $langue_id;
+$this->langue = $langue;
 $this->photo = $photo;
 
                     }
@@ -60,7 +60,7 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
@@ -91,7 +91,7 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
@@ -122,7 +122,7 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
@@ -153,7 +153,7 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
@@ -184,7 +184,7 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
@@ -215,7 +215,7 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
@@ -246,7 +246,7 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
@@ -258,15 +258,15 @@ $this->fikrs =$data;
                         
                     }
                     /**
-                    * Get the value of langue_id
+                    * Get the value of langue
                     */ 
-                    public function getLangue_id($langue_id=null)
+                    public function getLangue($langue=null)
                     {
-                        if ($langue_id != null && is_array($this->fikrs) && count($this->fikrs)!=0) {
+                        if ($langue != null && is_array($this->fikrs) && count($this->fikrs)!=0) {
                             $table_name = strtolower(get_class($this));
-                            $query = "SELECT * FROM $table_name WHERE langue_id = ?";
+                            $query = "SELECT * FROM $table_name WHERE langue = ?";
                             $req = Manager::bdd()->prepare($query);
-                            $req->execute([$langue_id]);
+                            $req->execute([$langue]);
                             $data = "";
                             if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
 $d=$data[0];
@@ -277,14 +277,14 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
                                 }
                             
                         } else {
-                            return $this->langue_id;
+                            return $this->langue;
                         }
                         
                     }
@@ -308,7 +308,7 @@ $this->setCfikr($d['cfikr']);
 $this->setAuteur($d['auteur']);
 $this->setVille($d['ville']);
 $this->setDate_ajout($d['date_ajout']);
-$this->setLangue_id($d['langue_id']);
+$this->setLangue($d['langue']);
 $this->setPhoto($d['photo']);
 $this->fikrs =$data; 
  return $this;
@@ -399,13 +399,13 @@ $this->fikrs =$data;
                        return $this;
                    }
                     /**
-                    * Set the value of langue_id
+                    * Set the value of langue
                     *
                     * @return  self
                     */ 
-                   public function setLangue_id($langue_id)
+                   public function setLangue($langue)
                    {
-                    $this->langue_id = $langue_id;
+                    $this->langue = $langue;
                
                        return $this;
                    }

@@ -7,7 +7,7 @@ class annonces {
 	 public $auteur;
 	 public $date;
 	 public $lieu;
-	 public $category_id;
+	 public $cannonces;
 	 public $photo;
 	 public $annonces=array();
 
@@ -23,7 +23,7 @@ class annonces {
                     return $this->annonces;
                 }
 
-                public function role($id, $titre, $description, $auteur, $date, $lieu, $category_id, $photo)
+                public function role($id, $titre, $description, $auteur, $date, $lieu, $cannonces, $photo)
                     {
                         $this->id = $id;
 $this->titre = $titre;
@@ -31,7 +31,7 @@ $this->description = $description;
 $this->auteur = $auteur;
 $this->date = $date;
 $this->lieu = $lieu;
-$this->category_id = $category_id;
+$this->cannonces = $cannonces;
 $this->photo = $photo;
 
                     }
@@ -57,7 +57,7 @@ $this->setDescription($d['description']);
 $this->setAuteur($d['auteur']);
 $this->setDate($d['date']);
 $this->setLieu($d['lieu']);
-$this->setCategory_id($d['category_id']);
+$this->setCannonces($d['cannonces']);
 $this->setPhoto($d['photo']);
 $this->annonces =$data; 
  return $this;
@@ -87,7 +87,7 @@ $this->setDescription($d['description']);
 $this->setAuteur($d['auteur']);
 $this->setDate($d['date']);
 $this->setLieu($d['lieu']);
-$this->setCategory_id($d['category_id']);
+$this->setCannonces($d['cannonces']);
 $this->setPhoto($d['photo']);
 $this->annonces =$data; 
  return $this;
@@ -117,7 +117,7 @@ $this->setDescription($d['description']);
 $this->setAuteur($d['auteur']);
 $this->setDate($d['date']);
 $this->setLieu($d['lieu']);
-$this->setCategory_id($d['category_id']);
+$this->setCannonces($d['cannonces']);
 $this->setPhoto($d['photo']);
 $this->annonces =$data; 
  return $this;
@@ -147,7 +147,7 @@ $this->setDescription($d['description']);
 $this->setAuteur($d['auteur']);
 $this->setDate($d['date']);
 $this->setLieu($d['lieu']);
-$this->setCategory_id($d['category_id']);
+$this->setCannonces($d['cannonces']);
 $this->setPhoto($d['photo']);
 $this->annonces =$data; 
  return $this;
@@ -177,7 +177,7 @@ $this->setDescription($d['description']);
 $this->setAuteur($d['auteur']);
 $this->setDate($d['date']);
 $this->setLieu($d['lieu']);
-$this->setCategory_id($d['category_id']);
+$this->setCannonces($d['cannonces']);
 $this->setPhoto($d['photo']);
 $this->annonces =$data; 
  return $this;
@@ -207,7 +207,7 @@ $this->setDescription($d['description']);
 $this->setAuteur($d['auteur']);
 $this->setDate($d['date']);
 $this->setLieu($d['lieu']);
-$this->setCategory_id($d['category_id']);
+$this->setCannonces($d['cannonces']);
 $this->setPhoto($d['photo']);
 $this->annonces =$data; 
  return $this;
@@ -219,15 +219,15 @@ $this->annonces =$data;
                         
                     }
                     /**
-                    * Get the value of category_id
+                    * Get the value of cannonces
                     */ 
-                    public function getCategory_id($category_id=null)
+                    public function getCannonces($cannonces=null)
                     {
-                        if ($category_id != null && is_array($this->annonces) && count($this->annonces)!=0) {
+                        if ($cannonces != null && is_array($this->annonces) && count($this->annonces)!=0) {
                             $table_name = strtolower(get_class($this));
-                            $query = "SELECT * FROM $table_name WHERE category_id = ?";
+                            $query = "SELECT * FROM $table_name WHERE cannonces = ?";
                             $req = Manager::bdd()->prepare($query);
-                            $req->execute([$category_id]);
+                            $req->execute([$cannonces]);
                             $data = "";
                             if ($data = $req->fetchAll(PDO::FETCH_ASSOC)) {
 $d=$data[0];
@@ -237,14 +237,14 @@ $this->setDescription($d['description']);
 $this->setAuteur($d['auteur']);
 $this->setDate($d['date']);
 $this->setLieu($d['lieu']);
-$this->setCategory_id($d['category_id']);
+$this->setCannonces($d['cannonces']);
 $this->setPhoto($d['photo']);
 $this->annonces =$data; 
  return $this;
                                 }
                             
                         } else {
-                            return $this->category_id;
+                            return $this->cannonces;
                         }
                         
                     }
@@ -267,7 +267,7 @@ $this->setDescription($d['description']);
 $this->setAuteur($d['auteur']);
 $this->setDate($d['date']);
 $this->setLieu($d['lieu']);
-$this->setCategory_id($d['category_id']);
+$this->setCannonces($d['cannonces']);
 $this->setPhoto($d['photo']);
 $this->annonces =$data; 
  return $this;
@@ -347,13 +347,13 @@ $this->annonces =$data;
                        return $this;
                    }
                     /**
-                    * Set the value of category_id
+                    * Set the value of cannonces
                     *
                     * @return  self
                     */ 
-                   public function setCategory_id($category_id)
+                   public function setCannonces($cannonces)
                    {
-                    $this->category_id = $category_id;
+                    $this->cannonces = $cannonces;
                
                        return $this;
                    }
