@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mar. 06 oct. 2020 à 21:55
+-- Généré le :  mer. 07 oct. 2020 à 18:28
 -- Version du serveur :  10.1.30-MariaDB
 -- Version de PHP :  7.2.1
 
@@ -48,13 +48,23 @@ CREATE TABLE `actualites` (
 CREATE TABLE `annonces` (
   `id` int(11) NOT NULL,
   `titre` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
   `auteur` varchar(255) NOT NULL,
-  `date` date NOT NULL,
+  `type_annonce` varchar(20) NOT NULL,
+  `date_annonce` date NOT NULL,
   `lieu` varchar(255) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `photo` int(11) NOT NULL
+  `cannonce` int(11) NOT NULL,
+  `photo` int(11) NOT NULL,
+  `users` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `annonces`
+--
+
+INSERT INTO `annonces` (`id`, `titre`, `description`, `auteur`, `type_annonce`, `date_annonce`, `lieu`, `cannonce`, `photo`, `users`) VALUES
+(1, 'Séminaire de formation', 'Assalamu aleykum&nbsp;<b style=\"color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium;\">nous avons l\'honneur à vous inviter à notre&nbsp;</b><i style=\"color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-weight: bold;\">séminaire de formation.</i><span style=\"color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium;\">&nbsp;Merci!</span>', 'AEMN', 'Annonce', '2020-10-10', 'Quartier wadata', 8, 45, 8),
+(2, 'Sermon du Vendredi', 'Assalamu aleykum warahmatullah', 'Salaf', 'Actualité', '2020-10-09', 'Mosquée de Imam Malik', 8, 44, 8);
 
 -- --------------------------------------------------------
 
@@ -78,7 +88,7 @@ CREATE TABLE `auteurs` (
 
 INSERT INTO `auteurs` (`id`, `nom`, `prenom`, `statut`, `ville`, `description`, `photo`) VALUES
 (1, 'Muhammad Awal', 'Maishago', 4, 3, 'Éminent Savant du Nigéria', 3),
-(2, 'Ahmad Tijjani ', 'Yussuf', 4, 1, 'Sheick de Bauchi ', 4);
+(2, 'Ahmad Tijjani ', 'Yussuf', 4, 1, 'Sheick de Bauchi respecter', 4);
 
 -- --------------------------------------------------------
 
@@ -459,7 +469,7 @@ CREATE TABLE `fikrs` (
 
 INSERT INTO `fikrs` (`id`, `titre`, `livre`, `cfikr`, `auteur`, `ville`, `date_ajout`, `langue`, `photo`) VALUES
 (1, 'Tawhidi', 'Ousoul Thalatha', 8, 2, 1, '2020-10-05', 1, 6),
-(2, 'Sira', 'Sira des compagnons ', 8, 1, 5, '2020-10-05', 2, 28);
+(2, 'yhguyLa Sira', 'Sira des compagnons ', 8, 1, 5, '0000-00-00', 2, 28);
 
 -- --------------------------------------------------------
 
@@ -509,7 +519,22 @@ INSERT INTO `files` (`id`, `file_name`, `file_url`, `file_type`, `file_size`) VA
 (27, 'Capture d’écran de 2020-10-06 17-17-50.png', 'public/img/2020.10.06.19.47.24Capture d’écran de 2020-10-06 17-17-50.png', 'image/png', 1673385),
 (28, 'maishago.jpg', 'public/img/2020.10.06.21.25.43maishago.jpg', 'image/jpeg', 210322),
 (29, 'WhatsApp Audio 2020-09-01 at 07.24.52.mp3', 'public/img/2020.10.06.21.31.27WhatsApp Audio 2020-09-01 at 07.24.52.mp3', 'audio/mpeg', 2316909),
-(30, 'VID-20191007-WA0006.mp4', 'public/img/2020.10.06.21.40.24VID-20191007-WA0006.mp4', 'video/mp4', 590070);
+(30, 'VID-20191007-WA0006.mp4', 'public/img/2020.10.06.21.40.24VID-20191007-WA0006.mp4', 'video/mp4', 590070),
+(31, 'WhatsApp Image 2020-06-21 at 13.12.38.jpeg', 'public/img/2020.10.07.08.49.26WhatsApp Image 2020-06-21 at 13.12.38.jpeg', 'image/jpeg', 169141),
+(32, 'WhatsApp Image 2020-06-21 at 13.12.38.jpeg', 'public/img/2020.10.07.08.49.54WhatsApp Image 2020-06-21 at 13.12.38.jpeg', 'image/jpeg', 169141),
+(33, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.11.55.43WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(34, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.30.41WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(35, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.31.45WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(36, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.32.23WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(37, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.33.18WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(38, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.34.30WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(39, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.35.33WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(40, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.36.03WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(41, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.36.37WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(42, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.37.18WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(43, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.38.28WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(44, 'WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'public/img/2020.10.07.12.38.54WhatsApp Image 2020-09-10 at 19.25.17.jpeg', 'image/jpeg', 587344),
+(45, 'Tijjani.png', 'public/img/2020.10.07.13.28.50Tijjani.png', 'image/png', 408044);
 
 -- --------------------------------------------------------
 
@@ -595,7 +620,10 @@ INSERT INTO `module` (`id`, `name`, `icon`, `description`, `action_url`, `sub_mo
 (56, 'Consulter les fikr', NULL, 'listes des fikr', 'consulter-fikr', 53, 0),
 (57, 'addData', 'fa-drivers-license-o', 'ajouter des donnée de fikr', 'addData', NULL, 0),
 (58, 'sendData', 'fa-drivers-license-o', 'pour uploader des datas', 'sendData', NULL, 0),
-(59, 'Données', NULL, 'les données des fikrs', 'donnee', 53, 0);
+(59, 'Données', NULL, 'les données des fikrs', 'donnee', 53, 0),
+(60, 'Annonce', 'fa-newspaper-o', 'Gérer les annonces', NULL, NULL, 1),
+(61, 'Ajouter annonce', NULL, 'ajout Annonce', 'ajouter-annonce', 60, 0),
+(62, 'Consulter', NULL, 'Consulter les annonces', 'consulter-annonce', 60, 0);
 
 -- --------------------------------------------------------
 
@@ -640,7 +668,10 @@ INSERT INTO `module_role` (`id`, `role_id`, `module`) VALUES
 (64, 1, 56),
 (65, 1, 57),
 (66, 1, 58),
-(67, 1, 59);
+(67, 1, 59),
+(68, 1, 60),
+(69, 1, 61),
+(70, 1, 62);
 
 -- --------------------------------------------------------
 
@@ -804,8 +835,9 @@ ALTER TABLE `actualites`
 --
 ALTER TABLE `annonces`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`),
-  ADD KEY `photo` (`photo`);
+  ADD KEY `category_id` (`cannonce`),
+  ADD KEY `photo` (`photo`),
+  ADD KEY `users` (`users`);
 
 --
 -- Index pour la table `auteurs`
@@ -955,7 +987,7 @@ ALTER TABLE `actualites`
 -- AUTO_INCREMENT pour la table `annonces`
 --
 ALTER TABLE `annonces`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `auteurs`
@@ -1009,7 +1041,7 @@ ALTER TABLE `fikrs`
 -- AUTO_INCREMENT pour la table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT pour la table `langues`
@@ -1021,13 +1053,13 @@ ALTER TABLE `langues`
 -- AUTO_INCREMENT pour la table `module`
 --
 ALTER TABLE `module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT pour la table `module_role`
 --
 ALTER TABLE `module_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT pour la table `regions`
@@ -1079,7 +1111,8 @@ ALTER TABLE `actualites`
 -- Contraintes pour la table `annonces`
 --
 ALTER TABLE `annonces`
-  ADD CONSTRAINT `annonces_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `cannonces` (`id`);
+  ADD CONSTRAINT `annonces_ibfk_1` FOREIGN KEY (`cannonce`) REFERENCES `cannonces` (`id`),
+  ADD CONSTRAINT `annonces_ibfk_2` FOREIGN KEY (`users`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `auteurs`
