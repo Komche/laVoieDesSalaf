@@ -306,20 +306,27 @@ if (isset($_SESSION['user-iniger'])) {
                 }
             }
             require_once("view/fikrsView.php");
-        } elseif ($action == 'ajouter-annonce') { //View livre
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
+        } elseif ($action == 'ajouter-annonce') { //View annonce
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une annonce
                 if (!empty($_POST)) {
                     $data = $_POST;
-                    //var_dump($data);
-                    //die();
-                    $res = Manager::updateData($data, 'cfikr', 'id', $_GET['modif']);
+                    if (!empty($_FILES['photo']['name'])) {
+                        $file = new Files();
+                        $lid = $file->uploadFilePicture($_FILES['photo']);
+                        $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    }else {
+                        unset($data['photo']);
+                    }
+                    // var_dump($data);
+                    // die();
+                    $res = Manager::updateData($data, 'annonces', 'id', $_GET['modif']);
                     if ($res['code'] = 200) {
-                        header('Location: index.php?action=cfikr');
+                        header('Location: index.php?action=consulter-annonce');
                     }
                 }
             } else { // Ajout annonce
-                if (!empty($_POST) && !empty($_FILES)) {
-                    
+                if (!empty($_POST) && !empty($_FILES['photo'])) {
+
                     $data = $_POST;
                     // var_dump($_POST); die;
                     $file = new Files();
@@ -433,8 +440,8 @@ if (isset($_SESSION['user-iniger'])) {
                     }
                 }
                 echo json_encode($result);
-            }else {
-                echo json_encode(['code'=>0, 'message'=>'echec']);
+            } else {
+                echo json_encode(['code' => 0, 'message' => 'echec']);
             }
         } elseif ($action == 'listeMembreSympathisant') { //View Liste des membres Sympathisants
 

@@ -2,7 +2,11 @@
 $title = "Annonce";
 if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
   $title = "Modifier annonce";
-  $datas = Manager::getData("annonces", "id", $_GET['modif'])['data'];
+  $sql = "SELECT file_url, auteur, a.titre titre, description, date_annonce, lieu,
+  type_annonce, c.titre ct, a.id, first_name, last_name, cannonce, users
+  FROM annonces a, cannonces c, files f, users u
+   WHERE a.cannonce = c.id AND a.photo = f.id AND a.users=u.id AND a.id=?";
+$datas = Manager::getSingleRecords($sql, [$_GET['modif']]);
 }
 ob_start();
 ?>
@@ -55,8 +59,8 @@ ob_start();
             <div class="form-group">
               <label for="type_annonce">Type</label>
               <select required class="form-control" name="type_annonce" id="type_annonce">
-                <option value="Annonce">Annonce</option>
-                <option value="Actualité">Actualité</option>
+                <option <?=  empty($_GET['modif'])? '' : ($datas['type_annonce'] == "Annonce" ? 'selected' : '')  ?> value="Annonce">Annonce</option>
+                <option <?=  empty($_GET['modif'])? '' : ($datas['type_annonce'] == "Actualité" ? 'selected' : '')  ?> value="Actualité">Actualité</option>
               </select>
             </div>
             <div class="form-group">
@@ -68,7 +72,7 @@ ob_start();
                   foreach ($cannonce as $key => $value) :
 
                 ?>
-                    <option value="<?= $value['id'] ?>"><?= $value['titre'] ?></option>
+                    <option <?=  empty($_GET['modif'])? '' : ($datas['cannonce'] == $value['id'] ? 'selected' : '')  ?> value="<?=  $value['id'] ?>"><?= $value['titre'] ?></option>
                 <?php
                   endforeach;
                 endif
@@ -77,12 +81,12 @@ ob_start();
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <div id="summernote">Assalamu aleykum</div>
+              <div id="summernote"><?= empty($_GET['modif'])? 'Assalamu aleykum' : $datas['description'] ?></div>
             </div>
 
           </div>
           <div class="form-group">
-            <img src="<?= (!empty($_GET['modif'])) ? $src : 'public/img/150x150.png' ?>" id="profile_img" style="height: 100px; border-radius: 50%" alt="">
+            <img src="<?= (!empty($_GET['modif'])) ? $datas['file_url'] : 'public/img/150x150.png' ?>" id="profile_img" style="height: 100px; border-radius: 50%" alt="">
             <!-- hidden file input to trigger with JQuery  -->
             <input type="file" name="photo" id="profile_input" value="" style="display: none;">
           </div>

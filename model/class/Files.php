@@ -13,11 +13,11 @@ class Files
 
 
     // upload's user profile profile picture and returns the name of the file
-    public function uploadFilePicture($file = null, $url = null, $i = null)
+    public function uploadFilePicture($file = null, $url = null)
     {
         //Manager::showError($file['profile_picture']);
         // if file was sent from signup form ...
-        if (!empty($file) && !empty($file['name']) && empty($i)) {
+        if (!empty($file) && !empty($file['name'])) {
             // Get image name
             $profile_picture = date("Y.m.d.H.i.s") . $file['name'];
             // define Where image will be stored
@@ -71,32 +71,6 @@ class Files
                 exit();
             } else {
                 return 'Erreur lors de l\'jout de la photo';
-            }
-        }elseif (empty($i)) {
-             // Get image name
-             $profile_picture = date("Y.m.d.H.i.s") . $file['name'];
-             // define Where image will be stored
-             $target = "public/img/" . $profile_picture;
-             // upload image to folder
-             //Manager::showError($file);
-            if (move_uploaded_file($file['tmp_name'][$i], $target)) {
-                // $url = API_ROOT_PATH . "/files";
-                $res = array();
-                $this->setFile_name($file['name'][$i]);
-                $this->setFile_url($target);
-                $this->setFile_type($file['type'][$i]);
-                $this->setFile_size($file['size'][$i]);
-                $manager = new Manager();
-                $res = $manager->insert($this);
-                // Manager::showError($this);
-                //$res = self::addoNTable($url, $res);
-                //$res = self::correct($res);
-                if ($res['code'] == 0 || $res['error']) {
-                    return 'Erreur lors de l\'jout de la photo';
-                } else {
-                    return $res['lastId'];
-                }
-                exit();
             }
         }
 
