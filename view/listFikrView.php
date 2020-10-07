@@ -28,61 +28,67 @@ ob_start();
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-          <table class="table table-bordered">
-            <tbody>
+          <div class="table-responsive">
+
+            <table class="table table-striped table-bordered" id="edit-fikr" >
+              <thead>
               <tr>
-                <th>Titre</th>
-                <th>Livre</th>
-                <th>Date</th>
-                <th>Type</th>
-                <th>Auteur</th>
-                <th>Ville</th>
-                <th>Langue</th>
-                <th>Image</th>
-                <th>Action</th>
-              </tr>
-              <?php
-              $sql = "SELECT file_url, nom, prenom, grade, fk.titre ft, v.titre vt, livre, date_ajout,
-              l.titre lt, cf.titre cft, fk.id
-              FROM statuts, fikrs fk
-              INNER JOIN files f ON fk.photo = f.id
-              INNER JOIN auteurs a ON fk.auteur = a.id
-              INNER JOIN langues l ON fk.langue = l.id
-              INNER JOIN cfikr cf ON fk.cfikr = cf.id
-              INNER JOIN ville v ON fk.ville = v.id WHERE a.statut = statuts.id";
-                $data = Manager::getMultiplesRecords($sql);
-              // Manager::showError($data);
-              if (is_array($data) || is_object($data)) {
-                foreach ($data as $value) {
-
-
-              ?>
-                  <tr>
-                    <td><?= $value['ft'] ?></td>
-                    <td><?= $value['livre'] ?></td>
-                    <td><?= $value['date_ajout'] ?></td>
-                    <td><?= $value['cft'] ?></td>
-                    <td><?= $value['grade'] ." ". $value['nom'] ." ". $value['prenom'] ?></td>
-                    <td><?= $value['vt'] ?></td>
-                    <td><?= $value['lt'] ?></td>
-                    <td><img src="<?= $value['file_url'] ?>" width="50" alt="img"></td>
-                    <td>
-                      <a href="index.php?action=fikr&modif=<?= $value['id'] ?>" class="btn btn-success">
-                        <i class="fa fa-edit"></i>
-                      </a>
-                      <a href="index.php?action=addData&fikr=<?= $value['id'] ?>" class="btn btn-primary">
-                        <i class="fa fa-plus"></i>
-                      </a>
-                    </td>
-                  </tr>
-              <?php
+                  <th>N°</th>
+                  <th>Titre</th>
+                  <th>Livre</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Auteur</th>
+                  <th>Ville</th>
+                  <th>Langue</th>
+                  <th>Image</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <?php
+                $sql = "SELECT file_url, nom, prenom, grade, fk.titre ft, v.titre vt, livre, date_ajout,
+                l.titre lt, cf.titre cft, fk.id
+                FROM statuts, fikrs fk
+                INNER JOIN files f ON fk.photo = f.id
+                INNER JOIN auteurs a ON fk.auteur = a.id
+                INNER JOIN langues l ON fk.langue = l.id
+                INNER JOIN cfikr cf ON fk.cfikr = cf.id
+                INNER JOIN ville v ON fk.ville = v.id WHERE a.statut = statuts.id";
+                  $data = Manager::getMultiplesRecords($sql);
+                // Manager::showError($data);
+                if (is_array($data) || is_object($data)) {
+                  foreach ($data as $value) {
+  
+  
+                ?>
+                    <tr>
+                      <td><?= $value['id'] ?></td>
+                      <td><?= $value['ft'] ?></td>
+                      <td><?= $value['livre'] ?></td>
+                      <td><?= strftime('%a %e %b %G', strtotime($value['date_ajout'])); ?></td>
+                      <td><?= $value['cft'] ?></td>
+                      <td><?= $value['grade'] ." ". $value['nom'] ." ". $value['prenom'] ?></td>
+                      <td><?= $value['vt'] ?></td>
+                      <td><?= $value['lt'] ?></td>
+                      <td><img src="<?= $value['file_url'] ?>" width="50" alt="img"></td>
+                      <td>
+                        
+                        <a href="index.php?action=addData&fikr=<?= $value['id'] ?>" class="btn btn-primary">
+                          <i class="fa fa-plus"></i>
+                        </a>
+                      </td>
+                    </tr>
+                <?php
+                  }
+                } else {
+                  Manager::messages('Aucune donnée trouvé', 'alert-warning');
                 }
-              } else {
-                Manager::messages('Aucune donnée trouvé', 'alert-warning');
-              }
-              ?>
-            </tbody>
-          </table>
+                ?>
+              </tbody>
+            </table>
+          </div>
         </div>
         <!-- /.card-body -->
         <div class="card-footer clearfix">

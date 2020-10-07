@@ -262,7 +262,7 @@ if (isset($_SESSION['user-iniger'])) {
                         $file = new Files();
                         $lid = $file->uploadFilePicture($_FILES['photo']);
                         $data['photo'] = is_numeric($lid) ? $lid : 0;
-                    }else {
+                    } else {
                         unset($data['photo']);
                     }
                     //var_dump($data);
@@ -321,7 +321,7 @@ if (isset($_SESSION['user-iniger'])) {
                         $file = new Files();
                         $lid = $file->uploadFilePicture($_FILES['photo']);
                         $data['photo'] = is_numeric($lid) ? $lid : 0;
-                    }else {
+                    } else {
                         unset($data['photo']);
                     }
                     // var_dump($data);
@@ -417,7 +417,21 @@ if (isset($_SESSION['user-iniger'])) {
             }
             require_once("view/addPlanView.php");
         } elseif ($action == 'consulter-fikr') {
-
+            
+            $input = filter_input_array(INPUT_POST);
+            if (!empty($input)) {
+                header('Content-Type: application/json');
+                $data = $input;
+                if (!empty($data['action']=='edit')) {
+                    unset($data['action']);
+                    $res = Manager::updateData($data, 'fikrs', 'id', $data['id']);
+                } else {
+                    unset($data['photo']);
+                }
+                // var_dump($data);
+                die();
+               
+            }
             require_once("view/listFikrView.php");
         } elseif ($action == 'consulter-annonce') {
 

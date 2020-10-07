@@ -18,7 +18,7 @@ ob_start();
 
   </div>
 </div>
-<div class="container container-margin">
+<div class="container container-margin" style="margin-bottom: 200px;">
   <div class="row">
     <!-- Start col -->
     <div class="col-md-12 col-lg-12 col-xl-12">
@@ -35,6 +35,31 @@ ob_start();
           </form>
           <div id="kv-error-2" style="margin-top:10px;display:none"></div>
           <div id="kv-success-2" class="alert alert-success" style="margin-top:10px;display:none"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <?php
+            $sql = "SELECT f.titre ft, d.titre dt, file_url, file_size, file_type FROM datas d, fikrs f, files fi
+     WHERE d.chemin=fi.id AND d.fikr = f.id AND d.fikr=?";
+            $data = Manager::getMultiplesRecords($sql, [$_GET['fikr']]);
+            if (is_array($data)) :
+              foreach ($data as $key => $value) :
+            ?>
+                <div class="col-md-2">
+                  <a href="<?= $value['file_url'] ?>">
+                    <span class="align-self-center mr-3 action-icon badge badge-secondary-inverse"><i class="fa <?= getFontAwsomeByFileType($value['file_type']) ?> fa-2x"></i></span>
+                    <p><?= $value['dt'] ?></p>
+                  </a>
+                </div>
+            <?php
+              endforeach;
+            endif;
+            ?>
+          </div>
         </div>
       </div>
     </div>

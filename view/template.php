@@ -26,7 +26,7 @@
     <link href="public/vendor/css/flag-icon.min.css" rel="stylesheet" type="text/css">
     <link href="public/vendor/css/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="public/css/style.css">
-    
+
     <!-- End css -->
 </head>
 
@@ -343,18 +343,12 @@
 
     <!-- Summernote JS -->
     <script src="public/vendor/plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- Code Mirror JS -->
-    <script src="public/vendor/plugins/code-mirror/codemirror.js"></script>
-    <script src="public/vendor/plugins/code-mirror/htmlmixed.js"></script>
-    <script src="public/vendor/plugins/code-mirror/css.js"></script>
-    <script src="public/vendor/plugins/code-mirror/javascript.js"></script>
-    <script src="public/vendor/plugins/code-mirror/xml.js"></script>
-    <script src="public/vendor/js/custom/custom-form-editor.js"></script>
 
-     <!-- X-editable js -->
-     <script src="public/vendor/plugins/bootstrap-xeditable/js/bootstrap-editable.min.js"></script>
+
+    <!-- X-editable js -->
+    <script src="public/vendor/plugins/tabledit/jquery.tabledit.js"></script>
+    <!-- <script src="public/vendor/js/custom/custom-table-editable.js"></script> -->
     <script src="public/vendor/plugins/moment/moment.js"></script>
-    <script src="public/vendor/js/custom/custom-form-xeditable.js"></script>
     <!-- Core js -->
     <script src="public/vendor/js/core.js"></script>
     <!-- Core js -->
@@ -365,6 +359,143 @@
     <script>
         $(document).ready(function() {
             $('.searchable').select2();
+            <?php
+            $type = "";
+            $auteur = "";
+            $ville = "";
+            $langue = "";
+            $data = Manager::getData('cfikr')['data'];
+            $data_auteur = Manager::getData('auteurs')['data'];
+            $data_ville = Manager::getData('ville')['data'];
+            $data_langue = Manager::getData('langues')['data'];
+            if (is_array($data) || is_object($data)) {
+
+                $t = count($data) - 1;
+                $i = 0;
+                foreach ($data as  $value) {
+                    if ($t != 0) {
+                        if ($i == 0) {
+
+                            $type .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
+                        } elseif ($i < $t) {
+                            $type .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
+                        } else {
+                            $type .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                        }
+                    } else {
+                        $type .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                    }
+                    $i++;
+                }
+                // die($type);
+            }
+            if (is_array($data_auteur) || is_object($data_auteur)) {
+
+                $t = count($data_auteur) - 1;
+                $i = 0;
+                foreach ($data_auteur as  $value) {
+                    if ($t != 0) {
+                        if ($i == 0) {
+
+                            $auteur .= '{"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '",';
+                        } elseif ($i < $t) {
+                            $auteur .= '"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '",';
+                        } else {
+                            $auteur .= '"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '"}';
+                        }
+                    } else {
+                        $auteur .= '{"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '"}';
+                    }
+                    $i++;
+                }
+                // die($type);
+            }
+            if (is_array($data_ville) || is_object($data_ville)) {
+
+                $t = count($data_ville) - 1;
+                $i = 0;
+                foreach ($data_ville as  $value) {
+                    if ($t != 0) {
+                        if ($i == 0) {
+
+                            $ville .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
+                        } elseif ($i < $t) {
+                            $ville .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
+                        } else {
+                            $ville .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                        }
+                    } else {
+                        $ville .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                    }
+                    $i++;
+                }
+                // die($type);
+            }
+            if (is_array($data_langue) || is_object($data_langue)) {
+
+                $t = count($data_langue) - 1;
+                $i = 0;
+                foreach ($data_langue as  $value) {
+                    if ($t != 0) {
+                        if ($i == 0) {
+
+                            $langue .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
+                        } elseif ($i < $t) {
+                            $langue .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
+                        } else {
+                            $langue .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                        }
+                    } else {
+                        $langue .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                    }
+                    $i++;
+                }
+                // die($type);
+            }
+            ?>
+            console.log(<?php echo $type ?>);
+
+            $('#edit-fikr').Tabledit({
+                url: 'index.php?action=consulter-fikr',
+                deleteButton: false,
+                hideIdentifier: true,
+                columns: {
+                    identifier: [0, 'id'],
+                    editable: [
+                        [1, 'titre'],
+                        [2, 'livre'],
+                        [3, 'date_ajout'],
+                        [4, 'cfikr', '<?= $type ?>'],
+                        [5, 'auteur', '<?= $auteur ?>'],
+                        [6, 'ville', '<?= $ville ?>'],
+                        [7, 'langue', '<?= $langue ?>']
+                    ]
+                },
+               
+                onDraw: function() {
+                    console.log('onDraw()');
+                },
+                onSuccess: function(data, textStatus, jqXHR) {
+                    console.log('onSuccess(data, textStatus, jqXHR)');
+                    console.log(data);
+                    console.log(textStatus);
+                    console.log(jqXHR);
+                },
+                onFail: function(jqXHR, textStatus, errorThrown) {
+                    console.log('onFail(jqXHR, textStatus, errorThrown)');
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                },
+                onAlways: function() {
+                    console.log('onAlways()');
+                },
+                onAjax: function(action, serialize) {
+                    console.log('onAjax(action, serialize)');
+                    console.log(action);
+                    console.log(serialize);
+                }
+            });
             <?php if (!empty($_GET['fikr'])) : ?>
                 $("#chemin").fileinput({
                     showRemove: true,
