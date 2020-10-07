@@ -8,11 +8,11 @@ ob_start();
     <!-- Profile Image -->
     <div class="box box-success">
       <div class="box-body box-profile">
-        <img class="profile-user-img img-responsive img-circle" src="<?= !empty($_SESSION['user']['photo']) ? $_SESSION['user']['photo'] : 'public/vendor/dist/img/avatar.png' ?>" alt="User profile picture">
+        <img class="profile-user-img img-responsive img-circle" src="<?= !empty($_SESSION['user-iniger']['photo']) ? $_SESSION['user-iniger']['photo'] : 'public/vendor/dist/img/avatar.png' ?>" alt="User profile picture">
 
-        <h3 class="profile-username text-center"><?= $_SESSION['user']['first_name'] . ' ' . $_SESSION['user']['last_name'] . ' ('.$_SESSION['user']['role'] .')' ?></h3>
+        <h3 class="profile-username text-center"><?= $_SESSION['user-iniger']['first_name'] . ' ' . $_SESSION['user-iniger']['last_name'] . ' ('.$_SESSION['user-iniger']['role'] .')' ?></h3>
 
-        <p class="text-muted text-center"><?= $_SESSION['user']['type_agent']  ?></p>
+        <p class="text-muted text-center"><?= $_SESSION['user-iniger']['type_agent']  ?></p>
 
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">

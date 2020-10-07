@@ -2,8 +2,8 @@
 $title = "Document";
 $uniqueID = "";
 $mat = generateRandomString();
-if (!empty($_SESSION['user']['entity'])) {
-  $uniqueID = $_SESSION['user']['entity']['uniqueId'];
+if (!empty($_SESSION['user-iniger']['entity'])) {
+  $uniqueID = $_SESSION['user-iniger']['entity']['uniqueId'];
 } elseif (!empty($_GET['uniqueID'])) {
   $uniqueID = $_GET['uniqueID'];
 }
@@ -35,7 +35,7 @@ ob_start();
   </div>
 </div>
 <br>
-<?php if ($_SESSION['user']['roleId'] == 1  && empty($uniqueID) && empty($_GET['uniqueId'])) : ?>
+<?php if ($_SESSION['user-iniger']['roleId'] == 1  && empty($uniqueID) && empty($_GET['uniqueId'])) : ?>
   <div class="container">
     <div class="row">
       <div class="col-md-12">

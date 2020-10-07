@@ -108,7 +108,7 @@
 
                         <?php
                         $sql = "SELECT * FROM module_role mr, module m WHERE mr.module = m.id AND m.is_menu=1 AND mr.role_id = ? ";
-                        $res = Manager::getMultiplesRecords($sql, [$_SESSION['user']['roleId']]);
+                        $res = Manager::getMultiplesRecords($sql, [$_SESSION['user-iniger']['roleId']]);
                         // $res = $res['data'];
                         $thisSMenu = array();
                         foreach ($res as $key => $value) {
@@ -123,7 +123,7 @@
                                 //print_r($sMenu); die;
                                 if (is_array($sMenu) || is_object($sMenu)) {
                                     foreach ($sMenu as $key => $smValue) {
-                                        if (haveAction($_SESSION['user']['roleId'], $smValue['id'])) {
+                                        if (haveAction($_SESSION['user-iniger']['roleId'], $smValue['id'])) {
                                             $thisSMenu["index.php?action=" . $smValue['action_url']] = $smValue['name'];
                                         }
                                     }
@@ -253,11 +253,11 @@
                                 <li class="list-inline-item">
                                     <div class="profilebar">
                                         <div class="dropdown">
-                                            <a class="dropdown-toggle" href="#" role="button" id="profilelink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?= !empty($_SESSION['user']['photo']) ? $_SESSION['user']['photo'] : 'public/img/avatar.png' ?>" class="img-fluid" alt="profile"><span class="feather icon-chevron-down live-icon"></span></a>
+                                            <a class="dropdown-toggle" href="#" role="button" id="profilelink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?= !empty($_SESSION['user-iniger']['photo']) ? $_SESSION['user-iniger']['photo'] : 'public/img/avatar.png' ?>" class="img-fluid" alt="profile"><span class="feather icon-chevron-down live-icon"></span></a>
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profilelink">
                                                 <div class="dropdown-item">
                                                     <div class="profilename">
-                                                        <h5><?= $_SESSION['user']['first_name'] . ' ' . $_SESSION['user']['last_name'] ?></h5>
+                                                        <h5><?= $_SESSION['user-iniger']['first_name'] . ' ' . $_SESSION['user-iniger']['last_name'] ?></h5>
                                                     </div>
                                                 </div>
                                                 <div class="userbox">
@@ -386,6 +386,7 @@
 
             console.log($('.note-editable'), "ok");
 
+            $('#description').val($('.note-editable').html());
             $('.note-editable').bind('DOMSubtreeModified', function() {
                 console.log($(this).html(), 'ok');
                 $('#description').val($(this).html());

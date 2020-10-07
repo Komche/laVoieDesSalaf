@@ -19,7 +19,7 @@ ob_start();
       <div class="widgetbar">
         <?php
         $module = Manager::getData("module", "action_url", "addUser")['data']['id'];
-        if (haveAction($_SESSION['user']['roleId'], $module)) :
+        if (haveAction($_SESSION['user-iniger']['roleId'], $module)) :
         ?>
           <a href="index.php?action=addUser" class="btn btn-success-rgba"><i class="fa fa-plus"></i> Ajouter</a>
         <?php endif ?>

@@ -27,7 +27,7 @@ ob_start();
       <div class="widgetbar">
         <?php
         $module = Manager::getData("module", "action_url", "showUser")['data']['id'];
-        if (haveAction($_SESSION['user']['roleId'], $module)) :
+        if (haveAction($_SESSION['user-iniger']['roleId'], $module)) :
         ?>
           <a href="index.php?action=showUser" class="btn btn-success-rgba"><i class="fa fa-eye"></i> Liste des Utilisateur</a>
         <?php endif ?>

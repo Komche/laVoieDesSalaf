@@ -11,7 +11,7 @@ if (isset($_SESSION['messages'])) {
     unset($_SESSION['messages']);
 }
 
-// var_dump($_SESSION['user']);die;
+// var_dump($_SESSION['user-iniger']);die;
 // $test = "hh";
 // //echo(Manager::print_var_name($test));  die();
 // $roles = new roles();
@@ -19,15 +19,15 @@ if (isset($_SESSION['messages'])) {
 // Manager::update($roles, "id", 11);
 //var_dump(Manager::getDatas(new ville())->getIdVille(3)); die;
 
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['user-iniger'])) {
     getModules();
     if (!empty($_GET['action'])) {
         extract($_GET);
         global $title;
-        $_SESSION['user']['prevTitle']  = $title;
+        $_SESSION['user-iniger']['prevTitle']  = $title;
         $sql = "SELECT id FROM module WHERE action_url=?";
         $module = Manager::getSingleRecords($sql, [$action])['id'];
-        if (!haveAction($_SESSION['user']['roleId'], $module)) {
+        if (!haveAction($_SESSION['user-iniger']['roleId'], $module)) {
             require('view/notFoundView.php');
             return;
         }
@@ -318,10 +318,10 @@ if (isset($_SESSION['user'])) {
                     }
                 }
             } else { // Ajout annonce
-                // var_dump($_POST); die;
                 if (!empty($_POST) && !empty($_FILES)) {
-
+                    
                     $data = $_POST;
+                    // var_dump($_POST); die;
                     $file = new Files();
                     $lid = $file->uploadFilePicture($_FILES['photo']);
                     $data['photo'] = is_numeric($lid) ? $lid : 0;
@@ -405,6 +405,9 @@ if (isset($_SESSION['user'])) {
         } elseif ($action == 'consulter-fikr') {
 
             require_once("view/listFikrView.php");
+        } elseif ($action == 'consulter-annonce') {
+
+            require_once("view/listAnnonceView.php");
         } elseif ($action == 'donnee') {
 
             require_once("view/listDataView.php");

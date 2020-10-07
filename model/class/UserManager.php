@@ -77,18 +77,18 @@ class UserManager  extends Manager
 
             $res = $res['data'];
             if (password_verify($data['password_'], $res['password_'])) {
-                $_SESSION['user']['id'] = $res['id'];
-                $_SESSION['user']['first_name'] = $res['first_name'];
-                $_SESSION['user']['last_name'] = $res['last_name'];
-                $_SESSION['user']['matricule'] = $res['matricule'];
-                $_SESSION['user']['phone_number'] = $res['phone_number'];
-                $_SESSION['user']['role'] = self::getData('roles', 'id', $res['role'])['data']['name'];
-                $_SESSION['user']['roleId'] = self::getData('roles', 'id', $res['role'])['data']['id'];
-                $_SESSION['user']['type_agent'] = self::getData('type_agent', 'id', $res['type_agent'])['data']['label'];
-                $_SESSION['user']['photo'] = self::getData('files', 'id', $res['photo'])['data']['file_url'];
+                $_SESSION['user-iniger']['id'] = $res['id'];
+                $_SESSION['user-iniger']['first_name'] = $res['first_name'];
+                $_SESSION['user-iniger']['last_name'] = $res['last_name'];
+                $_SESSION['user-iniger']['matricule'] = $res['matricule'];
+                $_SESSION['user-iniger']['phone_number'] = $res['phone_number'];
+                $_SESSION['user-iniger']['role'] = self::getData('roles', 'id', $res['role'])['data']['name'];
+                $_SESSION['user-iniger']['roleId'] = self::getData('roles', 'id', $res['role'])['data']['id'];
+                $_SESSION['user-iniger']['type_agent'] = self::getData('type_agent', 'id', $res['type_agent'])['data']['label'];
+                $_SESSION['user-iniger']['photo'] = self::getData('files', 'id', $res['photo'])['data']['file_url'];
                 if (!empty($res['entity'])) {
                     $entity = $res = self::getData('entity', 'id_entity', $res['entity'])['data'];
-                    $_SESSION['user']['entity'] = $entity;
+                    $_SESSION['user-iniger']['entity'] = $entity;
                 }
                 return 1;
             } else {
@@ -111,15 +111,15 @@ class UserManager  extends Manager
         } else {
 
             $res = $res['data'];
-            $_SESSION['user']['id'] = $res['id'];
-            $_SESSION['user']['first_name'] = $res['first_name'];
-            $_SESSION['user']['last_name'] = $res['last_name'];
-            $_SESSION['user']['matricule'] = $res['matricule'];
-            $_SESSION['user']['phone_number'] = $res['phone_number'];
-            $_SESSION['user']['role'] = self::getData('roles', 'id', $res['role'])['data']['name'];
-            $_SESSION['user']['roleId'] = self::getData('roles', 'id', $res['role'])['data']['id'];
-            $_SESSION['user']['type_agent'] = self::getData('type_agent', 'id', $res['type_agent'])['data']['label'];
-            $_SESSION['user']['photo'] = self::getData('files', 'id', $res['photo'])['data']['file_url'];
+            $_SESSION['user-iniger']['id'] = $res['id'];
+            $_SESSION['user-iniger']['first_name'] = $res['first_name'];
+            $_SESSION['user-iniger']['last_name'] = $res['last_name'];
+            $_SESSION['user-iniger']['matricule'] = $res['matricule'];
+            $_SESSION['user-iniger']['phone_number'] = $res['phone_number'];
+            $_SESSION['user-iniger']['role'] = self::getData('roles', 'id', $res['role'])['data']['name'];
+            $_SESSION['user-iniger']['roleId'] = self::getData('roles', 'id', $res['role'])['data']['id'];
+            $_SESSION['user-iniger']['type_agent'] = self::getData('type_agent', 'id', $res['type_agent'])['data']['label'];
+            $_SESSION['user-iniger']['photo'] = self::getData('files', 'id', $res['photo'])['data']['file_url'];
             return 1;
         }
     }

@@ -3,8 +3,8 @@ $title = "Model";
 $module = 1;
 $uniqueID = "";
 if (isset($_GET['module'])) extract($_GET);
-if (!empty($_SESSION['user']['entity'])) {
-  $uniqueID = $_SESSION['user']['entity']['uniqueId'];
+if (!empty($_SESSION['user-iniger']['entity'])) {
+  $uniqueID = $_SESSION['user-iniger']['entity']['uniqueId'];
 } elseif (!empty($_GET['uniqueID'])) {
   $uniqueID = $_GET['uniqueID'];
 }
@@ -50,7 +50,7 @@ ob_start();
   </div>
 </div>
 <br>
-<?php if ($_SESSION['user']['roleId'] == 1  && empty($uniqueID) && empty($_GET['uniqueId'])) : ?>
+<?php if ($_SESSION['user-iniger']['roleId'] == 1  && empty($uniqueID) && empty($_GET['uniqueId'])) : ?>
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -95,7 +95,7 @@ ob_start();
   <div class="container">
     <div class="row">
       <?php
-      // var_dump($_SESSION['user']['entity']);
+      // var_dump($_SESSION['user-iniger']['entity']);
       $data = Manager::getData("model", "entity", $uniqueID,  true)['data'];
       if ((is_array($data) || is_object($data)) && empty($_GET['uniqueId'])) :
 

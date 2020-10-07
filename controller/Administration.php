@@ -80,11 +80,11 @@ function setActionUrl($name)
 
 function getModules()
 {
-    $res = Manager::getData('module_role', 'role_id', $_SESSION['user']['roleId']);
-    $_SESSION['user']['roles']['modules'] = $res;
+    $res = Manager::getData('module_role', 'role_id', $_SESSION['user-iniger']['roleId']);
+    $_SESSION['user-iniger']['roles']['modules'] = $res;
     $sql ="select action_url from module where sub_module=?";
     $res = Manager::getMultiplesRecords($sql, [$res['data']['module']]);
-    $_SESSION['user']['roles']['modules_action'] = $res;
+    $_SESSION['user-iniger']['roles']['modules_action'] = $res;
 }
 
 function getActions($moduleId)

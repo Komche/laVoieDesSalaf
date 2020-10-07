@@ -41,6 +41,7 @@ ob_start();
             <div class="form-group">
               <label for="auteur">Auteur</label>
               <input type="text" required class="form-control" id="auteur" name="auteur" value="<?= (!empty($_GET['modif'])) ? $datas['auteur'] : "" ?>" placeholder="veuillez saisir le nom de l'auteur">
+              <input type="hidden" required class="form-control" id="users" name="users" value="<?= (!empty($_GET['modif'])) ? $datas['users'] : $_SESSION['user-iniger']['id'] ?>" placeholder="veuillez saisir le nom de l'auteur">
             </div>
             <div class="form-group">
               <label for="lieu">Lieu</label>
