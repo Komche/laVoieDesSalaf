@@ -297,7 +297,7 @@
             <!-- Start Footerbar -->
             <div class="footerbar">
                 <footer class="footer">
-                    <p class="mb-0">© 2020 IslamNiger | 2iSoft - Tous droits reservés.</p>
+                    <p class="mb-0">© 2020 IslamNiger - Tous droits reservés.</p>
                 </footer>
             </div>
             <!-- End Footerbar -->
