@@ -3,10 +3,11 @@ global $title;
 $title = "Auteur";
 if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
   $title = "Modifier auteur";
-  $datas = Manager::getData("users", "id", $_GET['modif'])['data'];
-  //var_dump($datas);
-  //die();
-  $src = Manager::getData("files", "id", $datas['photo'])['data']['file_url'];
+  $sql = "SELECT file_url, nom, prenom, description, grade, titre, a.id, statut, ville FROM auteurs a
+      LEFT JOIN files f ON a.photo = f.id
+      LEFT JOIN statuts s ON a.statut = s.id
+      LEFT JOIN ville v ON a.ville = v.id WHERE a.id=?";
+        $datas = Manager::getSingleRecords($sql, [$_GET['modif']]);
 }
 ob_start();
 ?>
@@ -55,7 +56,7 @@ ob_start();
               <div class="input-group-prepend">
                 <span class="input-group-text">Description</span>
               </div>
-              <textarea required class="form-control" name="description" id="description" placeholder="Veuillez décrire l'auteur"></textarea>
+              <textarea required class="form-control" name="description" id="description" placeholder="Veuillez décrire l'auteur"><?= (!empty($_GET['modif'])) ? $datas['description'] : "" ?></textarea>
             </div>
 
             <div class="input-group mb-3">
@@ -69,7 +70,7 @@ ob_start();
                 if (is_array($data) || is_object($data)) {
                   foreach ($data as $value) {
                 ?>
-                    <option <?= (!empty($_GET['modif'])) ? (($value['id'] == $datas['statuts']) ? "selected" : "") : "" ?> value="<?= $value['id'] ?>"><?= $value['grade'] ?></option>
+                    <option <?= (!empty($_GET['modif'])) ? (($value['id'] == $datas['statut']) ? "selected" : "") : "" ?> value="<?= $value['id'] ?>"><?= $value['grade'] ?></option>
                 <?php
                   }
                 } else {
@@ -98,7 +99,7 @@ ob_start();
               </select>
             </div>
             <div class="input-group mb-3" style="text-align: center;">
-              <img src="<?= (!empty($_GET['modif'])) ? $src : 'public/img/150x150.png' ?>" id="profile_img" style="height: 100px; border-radius: 50%" alt="">
+              <img src="<?= (!empty($_GET['modif'])) ? $datas['file_url'] : 'public/img/150x150.png' ?>" id="profile_img" style="height: 100px; border-radius: 50%" alt="">
               <!-- hidden file input to trigger with JQuery  -->
               <input type="file" name="photo" id="profile_input" value="" style="display: none;">
             </div>
@@ -124,7 +125,7 @@ ob_start();
       <div class="row">
 
         <?php
-        $sql = "SELECT file_url, nom, prenom, description, grade, titre FROM auteurs a
+        $sql = "SELECT file_url, nom, prenom, description, grade, titre, a.id FROM auteurs a
       LEFT JOIN files f ON a.photo = f.id
       LEFT JOIN statuts s ON a.statut = s.id
       LEFT JOIN ville v ON a.ville = v.id";
@@ -144,7 +145,7 @@ ob_start();
 
                 </div>
                 <div class="card-footer text-center">
-
+                <a href="index.php?action=auteur&modif=<?=  $value['id']?>" class="btn btn-primary-rgba">Modifier<i class="feather icon-edit ml-2"></i></a>
                 </div>
               </div>
             </div>

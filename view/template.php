@@ -20,6 +20,7 @@
     <link href="public/vendor/plugins/summernote/summernote-bs4.css" rel="stylesheet">
     <!-- Code Mirror css -->
     <link href="public/vendor/plugins/code-mirror/codemirror.css" rel="stylesheet">
+    <link href="public/vendor/plugins/bootstrap-xeditable/css/bootstrap-editable.css" rel="stylesheet" type="text/css">
     <link href="public/vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="public/vendor/css/icons.css" rel="stylesheet" type="text/css">
     <link href="public/vendor/css/flag-icon.min.css" rel="stylesheet" type="text/css">
@@ -349,6 +350,11 @@
     <script src="public/vendor/plugins/code-mirror/javascript.js"></script>
     <script src="public/vendor/plugins/code-mirror/xml.js"></script>
     <script src="public/vendor/js/custom/custom-form-editor.js"></script>
+
+     <!-- X-editable js -->
+     <script src="public/vendor/plugins/bootstrap-xeditable/js/bootstrap-editable.min.js"></script>
+    <script src="public/vendor/plugins/moment/moment.js"></script>
+    <script src="public/vendor/js/custom/custom-form-xeditable.js"></script>
     <!-- Core js -->
     <script src="public/vendor/js/core.js"></script>
     <!-- Core js -->

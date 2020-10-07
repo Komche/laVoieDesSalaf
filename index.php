@@ -199,7 +199,7 @@ if (isset($_SESSION['user-iniger'])) {
                         header('Location: index.php?action=langue');
                     }
                 }
-            } else { // Ajout Ville
+            } else { // Ajout livre
                 if (!empty($_POST)) {
                     $data = $_POST;
                     $langue = new langues($data);
@@ -258,11 +258,18 @@ if (isset($_SESSION['user-iniger'])) {
             if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
                 if (!empty($_POST)) {
                     $data = $_POST;
+                    if (!empty($_FILES['photo']['name'])) {
+                        $file = new Files();
+                        $lid = $file->uploadFilePicture($_FILES['photo']);
+                        $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    }else {
+                        unset($data['photo']);
+                    }
                     //var_dump($data);
                     //die();
-                    $res = Manager::updateData($data, 'cfikr', 'id', $_GET['modif']);
+                    $res = Manager::updateData($data, 'auteurs', 'id', $_GET['modif']);
                     if ($res['code'] = 200) {
-                        header('Location: index.php?action=cfikr');
+                        header('Location: index.php?action=auteur');
                     }
                 }
             } else { // Ajout auteur
