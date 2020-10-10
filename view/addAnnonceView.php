@@ -48,13 +48,17 @@ ob_start();
               <input type="hidden" required class="form-control" id="users" name="users" value="<?= (!empty($_GET['modif'])) ? $datas['users'] : $_SESSION['user-iniger']['id'] ?>" placeholder="veuillez saisir le nom de l'auteur">
             </div>
             <div class="form-group">
-              <label for="lieu">Lieu</label>
+              <label for="lieu">Lieu de l'évènement</label>
               <input type="text" required class="form-control" id="lieu" name="lieu" value="<?= (!empty($_GET['modif'])) ? $datas['lieu'] : "" ?>" placeholder="veuillez saisir le lieu">
-              <input type="hidden" required class="form-control" id="description" name="description" value="<?= (!empty($_GET['modif'])) ? $datas['lieu'] : "" ?>" placeholder="veuillez saisir le lieu">
+              <input type="hidden" required class="form-control" id="description" name="description" value="<?= (!empty($_GET['modif'])) ? $datas['lieu'] : "" ?>" placeholder="veuillez saisir le lieu de l'évènement">
             </div>
             <div class="form-group">
-              <label for="date_annonce">Date</label>
-              <input type="date" required class="form-control" id="date_annonce" name="date_annonce" value="<?= (!empty($_GET['modif'])) ? $datas['date_annonce'] : "" ?>" placeholder="veuillez saisir la date">
+              <label for="date_event">Date de l'évènement</label>
+              <input type="date" required class="form-control" id="date_event" name="date_event" value="<?= (!empty($_GET['modif'])) ? $datas['date_event'] : "" ?>" placeholder="veuillez saisir la date de l'évènement">
+            </div>
+            <div class="form-group">
+              <label for="time_event">Heure de l'évènement</label>
+              <input type="time" required class="form-control" id="time_event" name="time_event" value="<?= (!empty($_GET['modif'])) ? $datas['time_event'] : "" ?>" placeholder="L'heure de l'évènement">
             </div>
             <div class="form-group">
               <label for="type_annonce">Type</label>
