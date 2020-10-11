@@ -343,6 +343,7 @@
 
     <!-- Summernote JS -->
     <script src="public/vendor/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="public/vendor/js/custom/custom-form-editor.js"></script>
 
 
     <!-- X-editable js -->
@@ -360,6 +361,7 @@
         $(document).ready(function() {
             $('.searchable').select2();
             <?php
+            if(!empty($_GET['action']=='consulter-fikr')):
             $type = "";
             $auteur = "";
             $ville = "";
@@ -496,7 +498,10 @@
                     console.log(serialize);
                 }
             });
-            <?php if (!empty($_GET['fikr'])) : ?>
+            
+            <?php 
+            endif;
+            if (!empty($_GET['fikr'])) : ?>
                 $("#chemin").fileinput({
                     showRemove: true,
                     showPreview: true,
