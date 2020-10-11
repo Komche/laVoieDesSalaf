@@ -255,7 +255,7 @@ class Manager
     public static function messages($msg, $type_alerte)
     {
     
-        $type = ($type_alerte==1) ? 'alert-success' : 'alert-danger';
+        $type = ($type_alerte=='alert-success') ? 'alert-success' : 'alert-danger';
         $font = ($type=='alert-success') ? 'fa-check' : 'fa-ban';
         // die(var_dump($msg));
         echo  '<div class="alert ' . $type . ' alert-dismissible">

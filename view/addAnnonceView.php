@@ -95,6 +95,7 @@ ob_start();
             <p></p>
             <?php
             if (!empty($_SESSION['messages'])) {
+              // Manager::showError($_SESSION['messages']['code']);
               if ($_SESSION['messages']['code'] == 1) {
                 echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
               } else {
