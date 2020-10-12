@@ -26,7 +26,7 @@ ob_start();
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" method="post">
+        <form  id="roleForm" method="post">
           <div class="card-body">
             <div class="form-group">
               <label for="name">Nom du role</label>
@@ -40,8 +40,10 @@ ob_start();
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-success">Valider</button>
-            <p></p>
+            <button type="submit" onclick="postData('roleForm', 'role')" class="btn btn-success">Valider</button>
+            <p id="postMessage">
+
+            </p>
             <?php
             if (!empty($_SESSION['messages'])) {
               if ($_SESSION['messages']['code'] == 1) {

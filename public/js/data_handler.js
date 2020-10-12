@@ -453,8 +453,44 @@ function hidePleaseWait() {
     $("#pleaseWaitDialog").modal("hide");
 }
 
-function postDat() {
-
+function postData(formId, action) {
+    $('#'+formId).submit(function(e) {
+        showPleaseWait();
+        var data = $('#'+formId).serializeObject();
+   
+        var formData = JSON.stringify(data);
+        $.ajax({
+            url: customUrl + action,
+            type: "POST",
+            contentType: 'application/json',
+            dataType: "html",
+            data: formData,
+            success: function (result) {
+                console.log(result, "res");
+                hidePleaseWait();
+                $('#postMessage').html(result);
+            },
+            error: function (xhr, resp, text) {
+                //  error to console
+                console.log(xhr, resp, text);
+                hidePleaseWait();
+                $('#postMessage').html(`<div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-warning"></i> iniger!</h4>
+                Erreur !
+              </div>`);
+            }
+        });
+        // Now you can use formData.get('foo'), for example.
+        // Don't forget e.preventDefault() if you want to stop normal form .submission
+        console.log(formData, 'oui');
+        return false;
+    });
+    // document.querySelector('#'+formId).addEventListener('submit', (e) => {
+        
+    //   });
+    // var formData = new FormData(document.querySelector('#'+formId));
+    
 }
 
 $(document).ready(function() {
