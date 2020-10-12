@@ -10,7 +10,16 @@ $useragent = $_SERVER['HTTP_USER_AGENT'];
 if (isset($_SESSION['messages'])) {
     unset($_SESSION['messages']);
 }
-
+if(empty($_SESSION['laguage'])) $_SESSION['laguage'] = 'fr';
+if (!empty($_GET['langue'])) {
+    $_SESSION['laguage'] = $_GET['langue'];
+    if (isset($_SERVER["HTTP_REFERER"])) {
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
+    }
+}
+$lang = json_decode(file_get_contents("public/traduction.json"),true);
+if(!empty($lang)) $GLOBALS['lang'] = $lang[$_SESSION['laguage']];
+// Manager::showError($_SESSION['laguage']);
 // var_dump($_SESSION['user-iniger']);die;
 // $test = "hh";
 // //echo(Manager::print_var_name($test));  die();
@@ -346,6 +355,34 @@ if (isset($_SESSION['user-iniger'])) {
                 }
             }
             require_once("view/addAnnonceView.php");
+        } elseif ($action == 'traduction') { //View annonce
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une annonce
+                if (!empty($_POST)) {
+                    $data = $_POST;
+                    if (!empty($_FILES['photo']['name'])) {
+                        $file = new Files();
+                        $lid = $file->uploadFilePicture($_FILES['photo']);
+                        $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    } else {
+                        unset($data['photo']);
+                    }
+                    // var_dump($data);
+                    // die();
+                    $res = Manager::updateData($data, 'annonces', 'id', $_GET['modif']);
+                    if ($res['code'] = 200) {
+                        header('Location: index.php?action=consulter-annonce');
+                    }
+                }
+            } else { // Ajout annonce
+                if (!empty($_POST)) {
+                    $data = json_decode(file_get_contents("public/traduction.json"), true);
+                    $data[strtolower($_POST['langue'])][$_POST['key']] = $_POST['value'];
+                    
+                    file_put_contents("public/traduction.json", json_encode($data), FILE_USE_INCLUDE_PATH);
+                    // $_SESSION['messages'] = $res;
+                }
+            }
+            require_once("view/addTradutionView.php");
         } elseif ($action == 'type') {
             if (!empty($_POST)) {
                 $data = $_POST;
@@ -417,12 +454,12 @@ if (isset($_SESSION['user-iniger'])) {
             }
             require_once("view/addPlanView.php");
         } elseif ($action == 'consulter-fikr') {
-            
+
             $input = filter_input_array(INPUT_POST);
             if (!empty($input)) {
                 header('Content-Type: application/json');
                 $data = $input;
-                if (!empty($data['action']=='edit')) {
+                if (!empty($data['action'] == 'edit')) {
                     unset($data['action']);
                     $res = Manager::updateData($data, 'fikrs', 'id', $data['id']);
                 } else {
@@ -430,7 +467,6 @@ if (isset($_SESSION['user-iniger'])) {
                 }
                 // var_dump($data);
                 die();
-               
             }
             require_once("view/listFikrView.php");
         } elseif ($action == 'consulter-annonce') {
