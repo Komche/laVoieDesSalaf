@@ -302,9 +302,12 @@
 
             <!-- End Breadcrumbbar -->
             <!-- Start Contentbar -->
+            <div id="contentData">
+
             <?php
             echo $content;
             ?>
+            </div>
             <!-- End Contentbar -->
             <!-- Start Footerbar -->
             <div class="footerbar">
