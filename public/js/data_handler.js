@@ -493,6 +493,30 @@ function postData(formId, action) {
     
 }
 
+function getHTML (action) { 
+    showPleaseWait();
+            $.ajax({
+                url: customUrl+action,
+                type: "GET",
+                dataType: "html",
+                success: function (result) {
+                    console.log(result, "res");
+                    hidePleaseWait();
+                    // $("#allDoc").toggle();
+                    // $("#searchDoc").toggle();
+                    $("#contentData").html(result);
+                },
+                error: function (xhr, resp, text) {
+                    hidePleaseWait();
+                    // $("#allDoc").toggle();
+                    // $("#searchDoc").toggle();
+                    $("#contentData").html("<p> Document non trouvé </p>");
+                    //  error to console
+                    console.log(xhr, resp, text);
+                }
+            });
+ }
+
 $(document).ready(function() {
     $('#submitForm').submit(function(e) {
             showPleaseWait();

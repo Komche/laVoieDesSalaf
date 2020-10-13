@@ -87,7 +87,7 @@ ob_start();
                       <a class="btn btn-success">
                         <i class="fa fa-edit white"></i>
                       </a>
-                      <a href="index.php?action=module&role=<?= $value['id'] ?>" class="btn btn-success">
+                      <a href="javascript:void()" onclick="getHTML('module&role=<?= $value['id'] ?>')" class="btn btn-success">
                         <i class="fa fa-plus"></i>
                       </a>
                     </td>

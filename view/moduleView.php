@@ -7,7 +7,7 @@ if (!empty($_GET['modif'])) {
   $title = "Modifier module";
   $module_data = Manager::getData('module', 'id', $_GET['modif'])['data'];
 }
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -159,7 +159,24 @@ ob_start();
     </div>
   </div>
 </div>
+
+<script>
+  $('input:checkbox.module_is_checked').each(function (i, v) {
+    $mr = getDataWith2Param('module_role', 'module', $(v).val(), 'role_id', <?= $_GET['role'] ?>);
+
+    $mr.done(function ($mr) {
+        if (!$mr.error) {
+            $(v).attr('checked', true);
+        }
+    });
+
+    $mr.fail(function ($mr) {
+        $(v).attr('checked', false);
+
+    });
+});
+</script>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>
