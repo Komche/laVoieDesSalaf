@@ -63,8 +63,9 @@ if (isset($_SESSION['user-iniger'])) {
             }
             require_once("view/roleView.php");
         } elseif ($action == 'module') {
-            if (!empty($_POST)) {
-                $data = $_POST;
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($input)) {
+                $data = $input;
                 $res = 0;
                 if (!empty($_GET['modif'])) {
                     $res = update('module', $data, 'id', $_GET['modif']);
@@ -82,6 +83,14 @@ if (isset($_SESSION['user-iniger'])) {
                     $_SESSION['messages'] = "Enregistrement réussis";
                     $_SESSION['type'] = 1;
                 }
+                if (!empty($_SESSION['messages'])) {
+                    if ($_SESSION['type'] == 1) {
+                        echo Manager::messages($_SESSION['messages'], 'alert-success');
+                    } else {
+                        echo Manager::messages($_SESSION['messages'], 'alert-danger');
+                    }
+                }
+                die;
                 // die('ok '.$_SESSION['type']);
             }
             require_once("view/moduleView.php");

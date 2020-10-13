@@ -36,7 +36,7 @@ if (!empty($_GET['modif'])) {
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form role="form" method="post">
+          <form id="permissionForm" role="form" method="post">
             <div class="card-body">
               <div class="form-group">
                 <label for="name">Nom du module</label>
@@ -48,7 +48,7 @@ if (!empty($_GET['modif'])) {
               </div>
               <div class="form-group">
                 <label for="description">Description</label>
-                <textarea value="<?= (!empty($_GET['modif']) ? $module_data['description'] : '') ?>" required class="form-control" id="description" name="description" placeholder="description du module"></textarea>
+                <textarea required class="form-control" id="description" name="description" placeholder="description du module"><?= (!empty($_GET['modif']) ? $module_data['description'] : '') ?></textarea>
               </div>
               <div class="form-group">
                 <label for="is_menu">Menu</label>
@@ -57,7 +57,7 @@ if (!empty($_GET['modif'])) {
                   <option <?= (!empty($_GET['modif']) ? (($module_data['is_menu'] == '0') ? 'selected' : '') : '') ?> value="0">Non</option>
                 </select>
               </div>
-              <?php if (!empty($_GET['modif'])) : ?>
+              <?php if (!empty($_GET['modif']) && !empty($module_data['sub_module'])) : ?>
                 <div class="form-group">
                   <label for="sub_module">Sous menu de</label>
                   <select class="form-control" id="sub_module" name="sub_module">
@@ -80,8 +80,10 @@ if (!empty($_GET['modif'])) {
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-success">Valider</button>
-              <p></p>
+              <button type="submit" onclick="postData('permissionForm', 'module'<?= (!empty($_GET['modif']) ? ', '.$module_data['id'] : '') ?>)" class="btn btn-success">Valider</button>
+              <p id="postMessage">
+
+            </p>
               <?php
               if (isset($_SESSION['messages'])) {
                 echo Manager::messages($_SESSION['messages'], $_SESSION['type']);
@@ -122,10 +124,10 @@ if (!empty($_GET['modif'])) {
                       <td><?= $value['description'] ?></td>
                       <td>
                         <?php if (!isset($_GET['role'])) : ?>
-                          <a href="index.php?action=module&modif=<?= $value['id'] ?>" class="btn btn-success">
+                          <a href="javascript:void()" onclick="getHTML('module&modif=<?= $value['id'] ?>')" class="btn btn-success">
                             <i class="fa fa-edit white"></i>
                           </a>
-                          <a href="index.php?action=permission&module=<?= $value['id'] ?>" class="btn btn-success">
+                          <a href="javascript:void()" onclick="getHTML('permission&module=<?= $value['id'] ?>')" class="btn btn-success">
                             <i class="fa fa-plus"></i>
                           </a>
                         <?php else : ?>

@@ -37,7 +37,9 @@ ob_start();
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-success">Valider</button>
-            <p></p>
+            <p id="postMessage">
+
+            </p>
             <?php
             if (isset($_SESSION['messages'])) {
               echo Manager::messages($_SESSION['messages'], 'alert-danger');

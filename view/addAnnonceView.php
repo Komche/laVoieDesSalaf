@@ -96,7 +96,9 @@ ob_start();
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-success">Valider</button>
-            <p></p>
+            <p id="postMessage">
+
+            </p>
             <?php
             if (!empty($_SESSION['messages'])) {
               // Manager::showError($_SESSION['messages']['code']);

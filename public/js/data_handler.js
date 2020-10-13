@@ -121,10 +121,14 @@ function getModuleRole() {
 
 }
 
-function getPermission() {
-    console.log("perm");
+function getPermission(module) {
+    console.log("perm", module);
 
     $permision = getDatas('module', 'sub_module', $_GET['module']);
+    if (module != "") {
+        $permision = getDatas('module', 'sub_module', module);
+        
+    }
     //console.log("module", $permision);
 
     $permision.done(function ($permision) {
@@ -221,7 +225,7 @@ function setActionUrl(name) {
     return name;
 }
 
-function addData(table) {
+function addData(table, module) {
     var go;
     var data = $('#add_permission').serializeObject();
     data.action_url = setActionUrl(data.name);
@@ -239,7 +243,7 @@ function addData(table) {
             success: function (result) {
                 console.log(result);
 
-                getPermission();
+                getPermission(module);
             },
             error: function (xhr, resp, text) {
                 //  error to console
@@ -453,14 +457,55 @@ function hidePleaseWait() {
     $("#pleaseWaitDialog").modal("hide");
 }
 
-function postData(formId, action) {
+function postData(formId, action, id) {
     $('#'+formId).submit(function(e) {
         showPleaseWait();
         var data = $('#'+formId).serializeObject();
    
         var formData = JSON.stringify(data);
+        if (id != '') {
+            putData(formData, customUrl + action+'&modif='+id);
+        }else{
+            $.ajax({
+                url: customUrl + action,
+                type: "POST",
+                contentType: 'application/json',
+                dataType: "html",
+                data: formData,
+                success: function (result) {
+                    console.log(result, "res");
+                    hidePleaseWait();
+                    $('#postMessage').html(result);
+                },
+                error: function (xhr, resp, text) {
+                    //  error to console
+                    console.log(xhr, resp, text);
+                    hidePleaseWait();
+                    $('#postMessage').html(`<div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-warning"></i> iniger!</h4>
+                    Erreur !
+                  </div>`);
+                }
+            });
+        }
+       
+        // Now you can use formData.get('foo'), for example.
+        // Don't forget e.preventDefault() if you want to stop normal form .submission
+        console.log(formData, 'oui');
+        return false;
+    });
+    // document.querySelector('#'+formId).addEventListener('submit', (e) => {
+        
+    //   });
+    // var formData = new FormData(document.querySelector('#'+formId));
+    
+}
+function putData(formData, modifUrl) {
+    console.log(modifUrl);
+    
         $.ajax({
-            url: customUrl + action,
+            url: modifUrl,
             type: "POST",
             contentType: 'application/json',
             dataType: "html",
@@ -483,9 +528,7 @@ function postData(formId, action) {
         });
         // Now you can use formData.get('foo'), for example.
         // Don't forget e.preventDefault() if you want to stop normal form .submission
-        console.log(formData, 'oui');
-        return false;
-    });
+    
     // document.querySelector('#'+formId).addEventListener('submit', (e) => {
         
     //   });

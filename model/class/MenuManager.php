@@ -41,7 +41,7 @@ class MenuManager
     public function setmSousMenu($mSousMenu = [])
     {
         foreach ($mSousMenu as $key => $value) {
-            $this->mSousMenu .= '<li><a href="' . $key . '">' . $value . '</a></li>';
+            $this->mSousMenu .= '<li><a href="javascript:void()" onclick="getHTML(\'' . $key . '\')">' . $value . '</a></li>';
         }
     }
 
