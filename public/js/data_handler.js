@@ -20,11 +20,11 @@ if ($_GET['uniqueId']!='') {
     getModel($_GET['uniqueId']);
 }
 
-$('#inputSearch').on('click', function () { 
-    if ($_GET['action'] != 'searchView') {
-        window.location.replace("https://IslamNiger.akoybiz.com/index.php?action=searchView");
-    }
-});
+// $('#inputSearch').on('click', function () { 
+//     if ($_GET['action'] != 'searchView') {
+//         window.location.replace("index.php?action=searchView&data="+$(this).val());
+//     }
+// });
 getPermission();
 $('input:checkbox.module_is_checked').each(function (i, v) {
     $mr = getDataWith2Param('module_role', 'module', $(v).val(), 'role_id', $_GET['role']);
@@ -453,31 +453,33 @@ function hidePleaseWait() {
     $("#pleaseWaitDialog").modal("hide");
 }
 
+function postDat() {
+
+}
+
 $(document).ready(function() {
     $('#submitForm').submit(function(e) {
-        if ($_GET['action']=='searchView' && $('#inputSearch').val()!='') {
             showPleaseWait();
             $.ajax({
-                url: "https://IslamNiger.akoybiz.com/model/ajax/getDoc.php?sDoc="+$('#inputSearch').val(),
+                url: customUrl+"searchView&data="+$('#inputSearch').val(),
                 type: "GET",
                 dataType: "html",
                 success: function (result) {
                     console.log(result, "res");
                     hidePleaseWait();
-                    $("#allDoc").toggle();
-                    $("#searchDoc").toggle();
-                    $("#searchDoc").html(result);
+                    // $("#allDoc").toggle();
+                    // $("#searchDoc").toggle();
+                    $("#contentData").html(result);
                 },
                 error: function (xhr, resp, text) {
                     hidePleaseWait();
-                    $("#allDoc").toggle();
-                    $("#searchDoc").toggle();
-                    $("#searchDoc").html("<p> Document non trouvé </p>");
+                    // $("#allDoc").toggle();
+                    // $("#searchDoc").toggle();
+                    $("#contentData").html("<p> Document non trouvé </p>");
                     //  error to console
                     console.log(xhr, resp, text);
                 }
             });
-        }
         return false;
     });
 });

@@ -10,7 +10,16 @@ $useragent = $_SERVER['HTTP_USER_AGENT'];
 if (isset($_SESSION['messages'])) {
     unset($_SESSION['messages']);
 }
-
+if(empty($_SESSION['laguage'])) $_SESSION['laguage'] = 'fr';
+if (!empty($_GET['langue'])) {
+    $_SESSION['laguage'] = $_GET['langue'];
+    if (isset($_SERVER["HTTP_REFERER"])) {
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
+    }
+}
+$lang = json_decode(file_get_contents("public/traduction.json"),true);
+if(!empty($lang)) $GLOBALS['lang'] = $lang[$_SESSION['laguage']];
+// Manager::showError($_SESSION['laguage']);
 // var_dump($_SESSION['user-iniger']);die;
 // $test = "hh";
 // //echo(Manager::print_var_name($test));  die();
@@ -346,6 +355,34 @@ if (isset($_SESSION['user-iniger'])) {
                 }
             }
             require_once("view/addAnnonceView.php");
+        } elseif ($action == 'traduction') { //View annonce
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une annonce
+                if (!empty($_POST)) {
+                    $data = $_POST;
+                    if (!empty($_FILES['photo']['name'])) {
+                        $file = new Files();
+                        $lid = $file->uploadFilePicture($_FILES['photo']);
+                        $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    } else {
+                        unset($data['photo']);
+                    }
+                    // var_dump($data);
+                    // die();
+                    $res = Manager::updateData($data, 'annonces', 'id', $_GET['modif']);
+                    if ($res['code'] = 200) {
+                        header('Location: index.php?action=consulter-annonce');
+                    }
+                }
+            } else { // Ajout annonce
+                if (!empty($_POST)) {
+                    $data = json_decode(file_get_contents("public/traduction.json"), true);
+                    $data[strtolower($_POST['langue'])][$_POST['key']] = $_POST['value'];
+                    
+                    file_put_contents("public/traduction.json", json_encode($data), FILE_USE_INCLUDE_PATH);
+                    // $_SESSION['messages'] = $res;
+                }
+            }
+            require_once("view/addTradutionView.php");
         } elseif ($action == 'type') {
             if (!empty($_POST)) {
                 $data = $_POST;
@@ -417,12 +454,12 @@ if (isset($_SESSION['user-iniger'])) {
             }
             require_once("view/addPlanView.php");
         } elseif ($action == 'consulter-fikr') {
-            
+
             $input = filter_input_array(INPUT_POST);
             if (!empty($input)) {
                 header('Content-Type: application/json');
                 $data = $input;
-                if (!empty($data['action']=='edit')) {
+                if (!empty($data['action'] == 'edit')) {
                     unset($data['action']);
                     $res = Manager::updateData($data, 'fikrs', 'id', $data['id']);
                 } else {
@@ -430,7 +467,6 @@ if (isset($_SESSION['user-iniger'])) {
                 }
                 // var_dump($data);
                 die();
-               
             }
             require_once("view/listFikrView.php");
         } elseif ($action == 'consulter-annonce') {
@@ -487,7 +523,7 @@ if (isset($_SESSION['user-iniger'])) {
         } elseif ($action == 'homeView') {
             require_once("view/homeView.php");
         } elseif ($action == 'searchView') {
-            require_once("view/searchView.php");
+            require_once("view/searchDataView.php");
         }
     } elseif (empty($_GET['mat'])) {
         require_once("view/homeView.php");
@@ -514,133 +550,7 @@ if (isset($_SESSION['user-iniger'])) {
         }
     }
     require('view/loginView.php');
-} elseif (!empty($_GET['api'])) {
-    if ($_GET['api'] == 'addDocument') {
-        http_response_code(404);
-        $msg['code'] = 404;
-        $msg['msg'] = "Données non renseigner";
-        if ($_SERVER['REQUEST_METHOD'] != "POST") {
-            http_response_code(405);
-            $msg['code'] = 405;
-            $msg['msg'] = "La methoded doit être post";
-            echo json_encode($msg);
-            return;
-        }
-        $data = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-        if (!empty($data)) {
-            if (empty($data['entity']) || empty($data['entity_matricule']) || empty($data['model'])) {
-                http_response_code(404);
-                $msg['code'] = 404;
-                $msg['msg'] = "Une des données obligatoire non renseigner";
-                echo json_encode($msg);
-                return;
-            }
-            $entity = Manager::getData("entity", "uniqueId", $data['entity']);
-            $model = Manager::getData("model", "uniqueId", $data['model']);
-            if (empty($entity['data'])) {
-                http_response_code(404);
-                $msg['code'] = 404;
-                $msg['msg'] = "L'entité n'existe pas";
-                echo json_encode($msg);
-                return;
-            }
-            if (empty($model['data'])) {
-                http_response_code(404);
-                $msg['code'] = 404;
-                $msg['msg'] = "Le model n'existe pas";
-                echo json_encode($msg);
-                return;
-            } else {
-                if ($model['data']['entity'] != $data['entity']) {
-
-                    http_response_code(404);
-                    $msg['code'] = 404;
-                    $msg['msg'] = "Ce modèle n'appartient pas à cette entité";
-                    echo json_encode($msg);
-                    return;
-                }
-            }
-
-
-            $document['entity'] = $data['entity'];
-            $document['matricule'] = generateRandomString();
-            $document['entity_matricule'] = $data['entity_matricule'];
-
-            $barcode = new \Com\Tecnick\Barcode\Barcode();
-            $targetPath = "public/img/documents/";
-            if (!is_dir($targetPath)) {
-                mkdir($targetPath, 0777, true);
-            }
-            $bobj = $barcode->getBarcodeObj('QRCODE,H', "https://IslamNiger.akoybiz.com/index.php?mat=" . $document['matricule'], -16, -16, 'black', array(
-                -2,
-                -2,
-                -2,
-                -2
-            ))->setBackgroundColor('#fff');
-
-            $imageData = $bobj->getPngData();
-            $timestamp = time() . "_" . $document['entity_matricule'];
-
-            file_put_contents($targetPath . $timestamp . '.png', $imageData);
-
-            $data['imgpath'] = $targetPath . $timestamp . '.png';
-            $data['documentQrpath'] = "https://IslamNiger.akoybiz.com/index.php?mat=" . $document['matricule'];
-
-            $tempdoc = $data;
-            unset($tempdoc['documentQrpath']);
-            unset($tempdoc['imgpath']);
-            unset($tempdoc['entity_matricule']);
-            unset($tempdoc['matricule']);
-            unset($tempdoc['model']);
-            $m = file_get_contents(FIRESTORE_PATH . "model/" . $data['model']);
-            $m = json_decode($m, true)['fields'];
-            $tempm = array();
-            if (is_array($m) || is_object($m)) {
-                foreach ($m as $key => $value) {
-                    $tempm[] = $key;
-                    if ($key != 'model_name' && $key != "uniqueId") {
-                        if (!in_array($key, $tempdoc)) {
-                            http_response_code(404);
-                            $msg['code'] = 404;
-                            $msg['msg'] = "un des champs manque";
-                            echo json_encode($msg);
-                            return;
-                        }
-                    }
-                }
-            }
-            foreach ($tempdoc as $key => $value) {
-                if (!in_array($key, $tempm)) {
-                    http_response_code(404);
-                    $msg['code'] = 404;
-                    $msg['msg'] = "Il semble que vous essayer d'ajouter un champs qui n'existe pas";
-                    echo json_encode($msg);
-                    return;
-                }
-            }
-            echo json_encode($tempm);
-            return;
-            $document['model'] = Manager::getData('model', 'uniqueId', $data['model'])['data']['id_model'];
-            $firestoreClient->setDocument("model/" . $data['model'] . "/document/" . $document['matricule'], $data, true);
-            $firestoreClient->setDocument("documents/" . $document['matricule'], $data, true);
-            $res = addData($document, 'document');
-
-            // Manager::showError($res);
-            if ($res != 1) {
-                http_response_code(200);
-                $msg['data'] = $data;
-                $msg['code'] = 200;
-                $msg['msg'] = "Document ajouter avec succès";
-            } else {
-                $msg['code'] = 404;
-                $msg['msg'] = "Ajout échouer";
-            }
-            echo json_encode($msg);
-        } else {
-            echo json_encode($msg);
-        }
-    }
-} else {
+}  else {
 
     if (!empty($_GET['mat'])) {
         require('view/getDocumentView.php');

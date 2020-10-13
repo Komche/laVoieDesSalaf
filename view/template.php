@@ -31,6 +31,7 @@
 </head>
 
 <body class="vertical-layout">
+    
     <!-- Start Infobar Setting Sidebar -->
     <div id="infobar-settings-sidebar" class="infobar-settings-sidebar">
         <div class="infobar-settings-sidebar-head d-flex w-100 justify-content-between">
@@ -197,7 +198,8 @@
                                     <div class="searchbar">
                                         <form id="submitForm">
                                             <div class="input-group">
-                                                <input id="inputSearch" type="search" class="form-control" placeholder="Recherche" aria-label="Search" aria-describedby="button-addon2">
+                                                
+                                                <input id="inputSearch" type="search" class="form-control" placeholder="<?= $GLOBALS['lang']['input-search'] ?? 'recherche' ?>" aria-label="Search" aria-describedby="button-addon2">
                                                 <div class="input-group-append">
                                                     <button class="btn" type="submit" id="button-addon2"><img src="public/vendor/images/svg-icon/search.svg" class="img-fluid" alt="search"></button>
                                                 </div>
@@ -219,20 +221,30 @@
                                 <li class="list-inline-item">
                                     <div class="notifybar">
                                         <div class="dropdown">
-                                            <a class="dropdown-toggle infobar-icon" href="#" role="button" id="notoficationlink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="public/vendor/images/svg-icon/notifications.svg" class="img-fluid" alt="notifications">
-                                                <span class="live-icon"></span></a>
+                                            <a class="dropdown-toggle infobar-icon" href="#" role="button" id="notoficationlink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-1x fa-language "></i>
+                                                <!-- <span class="live-icon"></span> --></a>
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notoficationlink">
                                                 <div class="notification-dropdown-title">
-                                                    <h4>Notifications</h4>
+                                                    <h4>Langues</h4>
                                                 </div>
                                                 <ul class="list-unstyled">
-                                                    <li class="media dropdown-item">
-                                                        <span class="action-icon badge badge-success-inverse"><i class="feather icon-file"></i></span>
-                                                        <div class="media-body">
-                                                            <h5 class="action-title">Nouveau doc</h5>
-                                                            <p><span class="timing">Mardi, 18h:40</span></p>
-                                                        </div>
-                                                    </li>
+                                                    <?php
+                                                    $langue = Manager::getData('langues')['data'];
+                                                    if (is_array($langue)) :
+                                                        foreach ($langue as $key => $value) :
+
+                                                    ?>
+                                                            <li class="media dropdown-item">
+                                                                <!-- <span class="action-icon badge badge-success-inverse"><i class="feather icon-file"></i></span> -->
+                                                                <div class="media-body">
+                                                                   <a href="index.php?langue=<?= strtolower($value['code']) ?>"> <h5 class="action-title"><?= $value['titre'] ?></h5></a>
+                                                                    <!-- <p><span class="timing">Mardi, 18h:40</span></p> -->
+                                                                </div>
+                                                            </li>
+                                                    <?php
+                                                        endforeach;
+                                                    endif
+                                                    ?>
                                                 </ul>
                                             </div>
                                         </div>
@@ -290,9 +302,12 @@
 
             <!-- End Breadcrumbbar -->
             <!-- Start Contentbar -->
+            <div id="contentData">
+
             <?php
             echo $content;
             ?>
+            </div>
             <!-- End Contentbar -->
             <!-- Start Footerbar -->
             <div class="footerbar">
@@ -361,145 +376,145 @@
         $(document).ready(function() {
             $('.searchable').select2();
             <?php
-            if(!empty($_GET['action']=='consulter-fikr')):
-            $type = "";
-            $auteur = "";
-            $ville = "";
-            $langue = "";
-            $data = Manager::getData('cfikr')['data'];
-            $data_auteur = Manager::getData('auteurs')['data'];
-            $data_ville = Manager::getData('ville')['data'];
-            $data_langue = Manager::getData('langues')['data'];
-            if (is_array($data) || is_object($data)) {
+            if (!empty($_GET['action'] == 'consulter-fikr')) :
+                $type = "";
+                $auteur = "";
+                $ville = "";
+                $langue = "";
+                $data = Manager::getData('cfikr')['data'];
+                $data_auteur = Manager::getData('auteurs')['data'];
+                $data_ville = Manager::getData('ville')['data'];
+                $data_langue = Manager::getData('langues')['data'];
+                if (is_array($data) || is_object($data)) {
 
-                $t = count($data) - 1;
-                $i = 0;
-                foreach ($data as  $value) {
-                    if ($t != 0) {
-                        if ($i == 0) {
+                    $t = count($data) - 1;
+                    $i = 0;
+                    foreach ($data as  $value) {
+                        if ($t != 0) {
+                            if ($i == 0) {
 
-                            $type .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
-                        } elseif ($i < $t) {
-                            $type .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
+                                $type .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
+                            } elseif ($i < $t) {
+                                $type .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
+                            } else {
+                                $type .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                            }
                         } else {
-                            $type .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                            $type .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
                         }
-                    } else {
-                        $type .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                        $i++;
                     }
-                    $i++;
+                    // die($type);
                 }
-                // die($type);
-            }
-            if (is_array($data_auteur) || is_object($data_auteur)) {
+                if (is_array($data_auteur) || is_object($data_auteur)) {
 
-                $t = count($data_auteur) - 1;
-                $i = 0;
-                foreach ($data_auteur as  $value) {
-                    if ($t != 0) {
-                        if ($i == 0) {
+                    $t = count($data_auteur) - 1;
+                    $i = 0;
+                    foreach ($data_auteur as  $value) {
+                        if ($t != 0) {
+                            if ($i == 0) {
 
-                            $auteur .= '{"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '",';
-                        } elseif ($i < $t) {
-                            $auteur .= '"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '",';
+                                $auteur .= '{"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '",';
+                            } elseif ($i < $t) {
+                                $auteur .= '"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '",';
+                            } else {
+                                $auteur .= '"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '"}';
+                            }
                         } else {
-                            $auteur .= '"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '"}';
+                            $auteur .= '{"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '"}';
                         }
-                    } else {
-                        $auteur .= '{"' . $value['id'] . '":"' . $value['nom'] . ' ' . $value['prenom'] . '"}';
+                        $i++;
                     }
-                    $i++;
+                    // die($type);
                 }
-                // die($type);
-            }
-            if (is_array($data_ville) || is_object($data_ville)) {
+                if (is_array($data_ville) || is_object($data_ville)) {
 
-                $t = count($data_ville) - 1;
-                $i = 0;
-                foreach ($data_ville as  $value) {
-                    if ($t != 0) {
-                        if ($i == 0) {
+                    $t = count($data_ville) - 1;
+                    $i = 0;
+                    foreach ($data_ville as  $value) {
+                        if ($t != 0) {
+                            if ($i == 0) {
 
-                            $ville .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
-                        } elseif ($i < $t) {
-                            $ville .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
+                                $ville .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
+                            } elseif ($i < $t) {
+                                $ville .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
+                            } else {
+                                $ville .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                            }
                         } else {
-                            $ville .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                            $ville .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
                         }
-                    } else {
-                        $ville .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                        $i++;
                     }
-                    $i++;
+                    // die($type);
                 }
-                // die($type);
-            }
-            if (is_array($data_langue) || is_object($data_langue)) {
+                if (is_array($data_langue) || is_object($data_langue)) {
 
-                $t = count($data_langue) - 1;
-                $i = 0;
-                foreach ($data_langue as  $value) {
-                    if ($t != 0) {
-                        if ($i == 0) {
+                    $t = count($data_langue) - 1;
+                    $i = 0;
+                    foreach ($data_langue as  $value) {
+                        if ($t != 0) {
+                            if ($i == 0) {
 
-                            $langue .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
-                        } elseif ($i < $t) {
-                            $langue .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
+                                $langue .= '{"' . $value['id'] . '":"' . $value['titre'] . '",';
+                            } elseif ($i < $t) {
+                                $langue .= '"' . $value['id'] . '":"' . $value['titre'] . '",';
+                            } else {
+                                $langue .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                            }
                         } else {
-                            $langue .= '"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                            $langue .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
                         }
-                    } else {
-                        $langue .= '{"' . $value['id'] . '":"' . $value['titre'] . '"}';
+                        $i++;
                     }
-                    $i++;
+                    // die($type);
                 }
-                // die($type);
-            }
             ?>
-            console.log(<?php echo $type ?>);
+                console.log(<?php echo $type ?>);
 
-            $('#edit-fikr').Tabledit({
-                url: 'index.php?action=consulter-fikr',
-                deleteButton: false,
-                hideIdentifier: true,
-                columns: {
-                    identifier: [0, 'id'],
-                    editable: [
-                        [1, 'titre'],
-                        [2, 'livre'],
-                        [3, 'date_ajout'],
-                        [4, 'cfikr', '<?= $type ?>'],
-                        [5, 'auteur', '<?= $auteur ?>'],
-                        [6, 'ville', '<?= $ville ?>'],
-                        [7, 'langue', '<?= $langue ?>']
-                    ]
-                },
-               
-                onDraw: function() {
-                    console.log('onDraw()');
-                },
-                onSuccess: function(data, textStatus, jqXHR) {
-                    console.log('onSuccess(data, textStatus, jqXHR)');
-                    console.log(data);
-                    console.log(textStatus);
-                    console.log(jqXHR);
-                },
-                onFail: function(jqXHR, textStatus, errorThrown) {
-                    console.log('onFail(jqXHR, textStatus, errorThrown)');
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                },
-                onAlways: function() {
-                    console.log('onAlways()');
-                },
-                onAjax: function(action, serialize) {
-                    console.log('onAjax(action, serialize)');
-                    console.log(action);
-                    console.log(serialize);
-                }
-            });
-            
-            <?php 
+                $('#edit-fikr').Tabledit({
+                    url: 'index.php?action=consulter-fikr',
+                    deleteButton: false,
+                    hideIdentifier: true,
+                    columns: {
+                        identifier: [0, 'id'],
+                        editable: [
+                            [1, 'titre'],
+                            [2, 'livre'],
+                            [3, 'date_ajout'],
+                            [4, 'cfikr', '<?= $type ?>'],
+                            [5, 'auteur', '<?= $auteur ?>'],
+                            [6, 'ville', '<?= $ville ?>'],
+                            [7, 'langue', '<?= $langue ?>']
+                        ]
+                    },
+
+                    onDraw: function() {
+                        console.log('onDraw()');
+                    },
+                    onSuccess: function(data, textStatus, jqXHR) {
+                        console.log('onSuccess(data, textStatus, jqXHR)');
+                        console.log(data);
+                        console.log(textStatus);
+                        console.log(jqXHR);
+                    },
+                    onFail: function(jqXHR, textStatus, errorThrown) {
+                        console.log('onFail(jqXHR, textStatus, errorThrown)');
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    onAlways: function() {
+                        console.log('onAlways()');
+                    },
+                    onAjax: function(action, serialize) {
+                        console.log('onAjax(action, serialize)');
+                        console.log(action);
+                        console.log(serialize);
+                    }
+                });
+
+            <?php
             endif;
             if (!empty($_GET['fikr'])) : ?>
                 $("#chemin").fileinput({
