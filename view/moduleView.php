@@ -7,6 +7,12 @@ if (!empty($_GET['modif'])) {
   $title = "Modifier module";
   $module_data = Manager::getData('module', 'id', $_GET['modif'])['data'];
 }
+$page = 1;
+$per_page = 4;
+if (!empty($_GET['page'])) {
+  extract($_GET);
+}
+$start_form = ($page - 1) * $per_page;
 // ob_start();
 ?>
 <div class="breadcrumbbar">
@@ -80,10 +86,10 @@ if (!empty($_GET['modif'])) {
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" onclick="postData('permissionForm', 'module'<?= (!empty($_GET['modif']) ? ', '.$module_data['id'] : '') ?>)" class="btn btn-success">Valider</button>
+              <button type="submit" onclick="postData('permissionForm', 'module'<?= (!empty($_GET['modif']) ? ', ' . $module_data['id'] : '') ?>)" class="btn btn-success">Valider</button>
               <p id="postMessage">
 
-            </p>
+              </p>
               <?php
               if (isset($_SESSION['messages'])) {
                 echo Manager::messages($_SESSION['messages'], $_SESSION['type']);
@@ -111,9 +117,10 @@ if (!empty($_GET['modif'])) {
                   <th>Action</th>
                 </tr>
                 <?php
-                $data = Manager::getData('module');
-                $data = $data['data'];
+                $sql = "SELECT * FROM module LIMIT $start_form, $per_page";
+                $data = Manager::getMultiplesRecords($sql);
                 if (is_array($data) || is_object($data)) {
+                  // var_dump($page, $sql);
                   foreach ($data as $value) {
 
                     //var_dump(Manager::getData('module', "id", $value['sub_module'])); die;
@@ -151,6 +158,49 @@ if (!empty($_GET['modif'])) {
                 ?>
               </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <?php
+                $sql = "SELECT COUNT(*) nb FROM module";
+                $total_row = Manager::getSingleRecords($sql)['nb'];
+                $total_page = ceil($total_row / $per_page);
+                
+
+
+
+                ?>
+                <li class="page-item <?= $page >= 2 ? '' : 'disabled' ?>">
+                  <a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $page - 1 ?>')" aria-label="Previous">
+                    <span aria-hidden="true">«</span>
+                    <span class="sr-only">Precedent</span>
+                  </a>
+                </li>
+                <?php
+                for ($i = 1; $i < $total_page; $i++) {
+                  if ($i == $page) {
+
+
+                ?>
+                    <li class="page-item active"><a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $i ?>')"><?= $i ?></a></li>
+                <?php
+                  }else {
+                ?>
+                <li class="page-item"><a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $i ?>')"><?= $i ?></a></li>
+                <?php
+                  
+                    
+                  }
+                }
+                ?>
+                <li class="page-item <?= $page < $total_page ? '' : 'disabled' ?>">
+                  <a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $page + 1 ?>')" aria-label="Next">
+                    <span aria-hidden="true">»</span>
+                    <span class="sr-only">Suivant</span>
+                  </a>
+                </li>
+               
+              </ul>
+            </nav>
           </form>
         </div>
         <!-- /.card-body -->
@@ -163,20 +213,20 @@ if (!empty($_GET['modif'])) {
 </div>
 
 <script>
-  $('input:checkbox.module_is_checked').each(function (i, v) {
+  $('input:checkbox.module_is_checked').each(function(i, v) {
     $mr = getDataWith2Param('module_role', 'module', $(v).val(), 'role_id', <?= $_GET['role'] ?>);
 
-    $mr.done(function ($mr) {
-        if (!$mr.error) {
-            $(v).attr('checked', true);
-        }
+    $mr.done(function($mr) {
+      if (!$mr.error) {
+        $(v).attr('checked', true);
+      }
     });
 
-    $mr.fail(function ($mr) {
-        $(v).attr('checked', false);
+    $mr.fail(function($mr) {
+      $(v).attr('checked', false);
 
     });
-});
+  });
 </script>
 <?php
 // $content = ob_get_clean();
