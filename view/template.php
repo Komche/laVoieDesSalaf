@@ -126,7 +126,7 @@
                                 if (is_array($sMenu) || is_object($sMenu)) {
                                     foreach ($sMenu as $key => $smValue) {
                                         if (haveAction($_SESSION['user-iniger']['roleId'], $smValue['id'])) {
-                                            $thisSMenu["index.php?action=" . $smValue['action_url']] = $smValue['name'];
+                                            $thisSMenu[$smValue['action_url']] = $smValue['name'];
                                         }
                                     }
                                 }
@@ -302,7 +302,7 @@
 
             <!-- End Breadcrumbbar -->
             <!-- Start Contentbar -->
-            <div id="contentData">
+            <div style="margin-bottom: 200px;" id="contentData">
 
             <?php
             echo $content;

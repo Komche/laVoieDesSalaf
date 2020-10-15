@@ -51,7 +51,7 @@ function addData($data, $table)
             return $res['message'];
         }
     }else {
-        return $res['message'];
+        return $res;
     }
 }
 

@@ -46,7 +46,9 @@ ob_start();
           </div>
           <div class="card-footer">
             <button type="submit" class="btn btn-success">Valider</button>
-            <p></p>
+            <p id="postMessage">
+
+            </p>
             <?php
             if (!empty($_SESSION['messages'])) {
               if ($_SESSION['messages']['code'] == 1) {

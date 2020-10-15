@@ -10,15 +10,15 @@ $useragent = $_SERVER['HTTP_USER_AGENT'];
 if (isset($_SESSION['messages'])) {
     unset($_SESSION['messages']);
 }
-if(empty($_SESSION['laguage'])) $_SESSION['laguage'] = 'fr';
+if (empty($_SESSION['laguage'])) $_SESSION['laguage'] = 'fr';
 if (!empty($_GET['langue'])) {
     $_SESSION['laguage'] = $_GET['langue'];
     if (isset($_SERVER["HTTP_REFERER"])) {
         header("Location: " . $_SERVER["HTTP_REFERER"]);
     }
 }
-$lang = json_decode(file_get_contents("public/traduction.json"),true);
-if(!empty($lang)) $GLOBALS['lang'] = $lang[$_SESSION['laguage']];
+$lang = json_decode(file_get_contents("public/traduction.json"), true);
+if (!empty($lang)) $GLOBALS['lang'] = $lang[$_SESSION['laguage']];
 // Manager::showError($_SESSION['laguage']);
 // var_dump($_SESSION['user-iniger']);die;
 // $test = "hh";
@@ -41,8 +41,9 @@ if (isset($_SESSION['user-iniger'])) {
             return;
         }
         if ($action == 'role') {
-            if (!empty($_POST)) {
-                $data = $_POST;
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($input)) {
+                $data = $input;
                 $roles = new roles($data);
                 //var_dump($roles); die;
                 $res = insert($roles);
@@ -50,12 +51,21 @@ if (isset($_SESSION['user-iniger'])) {
 
                 //if ($res['code'] != 1) {
                 $_SESSION['messages'] = $res;
+                if (!empty($_SESSION['messages'])) {
+                    if ($_SESSION['messages']['code'] == 1) {
+                        echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                    } else {
+                        echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                    }
+                }
+                die;
                 // }
             }
             require_once("view/roleView.php");
         } elseif ($action == 'module') {
-            if (!empty($_POST)) {
-                $data = $_POST;
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($input)) {
+                $data = $input;
                 $res = 0;
                 if (!empty($_GET['modif'])) {
                     $res = update('module', $data, 'id', $_GET['modif']);
@@ -73,6 +83,14 @@ if (isset($_SESSION['user-iniger'])) {
                     $_SESSION['messages'] = "Enregistrement réussis";
                     $_SESSION['type'] = 1;
                 }
+                if (!empty($_SESSION['messages'])) {
+                    if ($_SESSION['type'] == 1) {
+                        echo Manager::messages($_SESSION['messages'], 'alert-success');
+                    } else {
+                        echo Manager::messages($_SESSION['messages'], 'alert-danger');
+                    }
+                }
+                die;
                 // die('ok '.$_SESSION['type']);
             }
             require_once("view/moduleView.php");
@@ -377,7 +395,7 @@ if (isset($_SESSION['user-iniger'])) {
                 if (!empty($_POST)) {
                     $data = json_decode(file_get_contents("public/traduction.json"), true);
                     $data[strtolower($_POST['langue'])][$_POST['key']] = $_POST['value'];
-                    
+
                     file_put_contents("public/traduction.json", json_encode($data), FILE_USE_INCLUDE_PATH);
                     // $_SESSION['messages'] = $res;
                 }
@@ -550,7 +568,7 @@ if (isset($_SESSION['user-iniger'])) {
         }
     }
     require('view/loginView.php');
-}  else {
+} else {
 
     if (!empty($_GET['mat'])) {
         require('view/getDocumentView.php');

@@ -7,7 +7,13 @@ if (!empty($_GET['modif'])) {
   $title = "Modifier module";
   $module_data = Manager::getData('module', 'id', $_GET['modif'])['data'];
 }
-ob_start();
+$page = 1;
+$per_page = 4;
+if (!empty($_GET['page'])) {
+  extract($_GET);
+}
+$start_form = ($page - 1) * $per_page;
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -36,7 +42,7 @@ ob_start();
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form role="form" method="post">
+          <form id="permissionForm" role="form" method="post">
             <div class="card-body">
               <div class="form-group">
                 <label for="name">Nom du module</label>
@@ -48,7 +54,7 @@ ob_start();
               </div>
               <div class="form-group">
                 <label for="description">Description</label>
-                <textarea value="<?= (!empty($_GET['modif']) ? $module_data['description'] : '') ?>" required class="form-control" id="description" name="description" placeholder="description du module"></textarea>
+                <textarea required class="form-control" id="description" name="description" placeholder="description du module"><?= (!empty($_GET['modif']) ? $module_data['description'] : '') ?></textarea>
               </div>
               <div class="form-group">
                 <label for="is_menu">Menu</label>
@@ -57,7 +63,7 @@ ob_start();
                   <option <?= (!empty($_GET['modif']) ? (($module_data['is_menu'] == '0') ? 'selected' : '') : '') ?> value="0">Non</option>
                 </select>
               </div>
-              <?php if (!empty($_GET['modif'])) : ?>
+              <?php if (!empty($_GET['modif']) && !empty($module_data['sub_module'])) : ?>
                 <div class="form-group">
                   <label for="sub_module">Sous menu de</label>
                   <select class="form-control" id="sub_module" name="sub_module">
@@ -80,8 +86,10 @@ ob_start();
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-success">Valider</button>
-              <p></p>
+              <button type="submit" onclick="postData('permissionForm', 'module'<?= (!empty($_GET['modif']) ? ', ' . $module_data['id'] : '') ?>)" class="btn btn-success">Valider</button>
+              <p id="postMessage">
+
+              </p>
               <?php
               if (isset($_SESSION['messages'])) {
                 echo Manager::messages($_SESSION['messages'], $_SESSION['type']);
@@ -109,9 +117,10 @@ ob_start();
                   <th>Action</th>
                 </tr>
                 <?php
-                $data = Manager::getData('module');
-                $data = $data['data'];
+                $sql = "SELECT * FROM module LIMIT $start_form, $per_page";
+                $data = Manager::getMultiplesRecords($sql);
                 if (is_array($data) || is_object($data)) {
+                  // var_dump($page, $sql);
                   foreach ($data as $value) {
 
                     //var_dump(Manager::getData('module', "id", $value['sub_module'])); die;
@@ -122,10 +131,10 @@ ob_start();
                       <td><?= $value['description'] ?></td>
                       <td>
                         <?php if (!isset($_GET['role'])) : ?>
-                          <a href="index.php?action=module&modif=<?= $value['id'] ?>" class="btn btn-success">
+                          <a href="javascript:void()" onclick="getHTML('module&modif=<?= $value['id'] ?>')" class="btn btn-success">
                             <i class="fa fa-edit white"></i>
                           </a>
-                          <a href="index.php?action=permission&module=<?= $value['id'] ?>" class="btn btn-success">
+                          <a href="javascript:void()" onclick="getHTML('permission&module=<?= $value['id'] ?>')" class="btn btn-success">
                             <i class="fa fa-plus"></i>
                           </a>
                         <?php else : ?>
@@ -149,6 +158,49 @@ ob_start();
                 ?>
               </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <?php
+                $sql = "SELECT COUNT(*) nb FROM module";
+                $total_row = Manager::getSingleRecords($sql)['nb'];
+                $total_page = ceil($total_row / $per_page);
+                
+
+
+
+                ?>
+                <li class="page-item <?= $page >= 2 ? '' : 'disabled' ?>">
+                  <a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $page - 1 ?>')" aria-label="Previous">
+                    <span aria-hidden="true">«</span>
+                    <span class="sr-only">Precedent</span>
+                  </a>
+                </li>
+                <?php
+                for ($i = 1; $i < $total_page; $i++) {
+                  if ($i == $page) {
+
+
+                ?>
+                    <li class="page-item active"><a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $i ?>')"><?= $i ?></a></li>
+                <?php
+                  }else {
+                ?>
+                <li class="page-item"><a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $i ?>')"><?= $i ?></a></li>
+                <?php
+                  
+                    
+                  }
+                }
+                ?>
+                <li class="page-item <?= $page < $total_page ? '' : 'disabled' ?>">
+                  <a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $page + 1 ?>')" aria-label="Next">
+                    <span aria-hidden="true">»</span>
+                    <span class="sr-only">Suivant</span>
+                  </a>
+                </li>
+               
+              </ul>
+            </nav>
           </form>
         </div>
         <!-- /.card-body -->
@@ -159,7 +211,24 @@ ob_start();
     </div>
   </div>
 </div>
+
+<script>
+  $('input:checkbox.module_is_checked').each(function(i, v) {
+    $mr = getDataWith2Param('module_role', 'module', $(v).val(), 'role_id', <?= $_GET['role'] ?>);
+
+    $mr.done(function($mr) {
+      if (!$mr.error) {
+        $(v).attr('checked', true);
+      }
+    });
+
+    $mr.fail(function($mr) {
+      $(v).attr('checked', false);
+
+    });
+  });
+</script>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

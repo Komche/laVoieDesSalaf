@@ -15,8 +15,8 @@ document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
 
     $_GET[decode(arguments[1])] = decode(arguments[2]);
 });
-if ($_GET['uniqueId']!='') {
-    
+if ($_GET['uniqueId'] != '') {
+
     getModel($_GET['uniqueId']);
 }
 
@@ -121,10 +121,14 @@ function getModuleRole() {
 
 }
 
-function getPermission() {
-    console.log("perm");
+function getPermission(module) {
+    console.log("perm", module);
 
     $permision = getDatas('module', 'sub_module', $_GET['module']);
+    if (module != "") {
+        $permision = getDatas('module', 'sub_module', module);
+
+    }
     //console.log("module", $permision);
 
     $permision.done(function ($permision) {
@@ -168,24 +172,24 @@ function getModel(uniqueId) {
                 $key = '';
                 // console.log(i, 'index');
                 $.map(v, function (element, index) {
-                    if (i!="model_name" && i != 'entity' && i != 'uniqueId') {
-                        param += element+", ";
+                    if (i != "model_name" && i != 'entity' && i != 'uniqueId') {
+                        param += element + ", ";
                     }
                     if (i == 'entity') {
-                        param += " "+i+": "+element+", ";
-                    }else if (i == 'uniqueId') {
-                        param += " model: "+element+", ";
+                        param += " " + i + ": " + element + ", ";
+                    } else if (i == 'uniqueId') {
+                        param += " model: " + element + ", ";
                     }
 
                 });
                 if (i != 'entity' && i != 'uniqueId') {
                     $.map(v, function (element, index) {
-                        console.log("i="+i);
-                        if (i=="model_name") {
+                        console.log("i=" + i);
+                        if (i == "model_name") {
                             $("#modelName").text(element);
-                        }else {
+                        } else {
 
-                        $dataModel += `
+                            $dataModel += `
                                 <tr>
                                 <td>` + element + `</td>
                                 <td>
@@ -200,7 +204,7 @@ function getModel(uniqueId) {
                 }
 
             });
-            param+=" entity_matricule";
+            param += " entity_matricule";
             $('#body_model').html($dataModel);
             $('#param').append(param);
         },
@@ -221,7 +225,7 @@ function setActionUrl(name) {
     return name;
 }
 
-function addData(table) {
+function addData(table, module) {
     var go;
     var data = $('#add_permission').serializeObject();
     data.action_url = setActionUrl(data.name);
@@ -239,7 +243,7 @@ function addData(table) {
             success: function (result) {
                 console.log(result);
 
-                getPermission();
+                getPermission(module);
             },
             error: function (xhr, resp, text) {
                 //  error to console
@@ -255,11 +259,11 @@ function addModel() {
     var data = $('#add_model').serializeObject();
     data.uniqueId = uniqueId;
     console.log(data, "ok", uniqueId);
-    if ($_GET['uniqueId']!= '' && $_GET['uniqueId']!=undefined) {
-        
+    if ($_GET['uniqueId'] != '' && $_GET['uniqueId'] != undefined) {
+
         data.uniqueId = $_GET['uniqueId'];
     }
-    
+
     var form_data = JSON.stringify(data);
     go = canContinue(data);
     console.log(form_data, data, customUrl + "addModel");
@@ -453,33 +457,143 @@ function hidePleaseWait() {
     $("#pleaseWaitDialog").modal("hide");
 }
 
-function postDat() {
+function postData(formId, action, id) {
+    $('#' + formId).submit(function (e) {
+        showPleaseWait();
+        var data = $('#' + formId).serializeObject();
 
-}
-
-$(document).ready(function() {
-    $('#submitForm').submit(function(e) {
-            showPleaseWait();
+        var formData = JSON.stringify(data);
+        if (id != '') {
+            putData(formData, customUrl + action + '&modif=' + id);
+        } else {
             $.ajax({
-                url: customUrl+"searchView&data="+$('#inputSearch').val(),
-                type: "GET",
+                url: customUrl + action,
+                type: "POST",
+                // contentType: 'application/json',
                 dataType: "html",
+                data: formData,
+                cache: false,
+                enctype: 'multipart/form-data',
+                processData: false, // tell jQuery not to process the data
+                contentType: false, // tell jQuery not to set contentType
+                timeout: 30000,
                 success: function (result) {
                     console.log(result, "res");
                     hidePleaseWait();
-                    // $("#allDoc").toggle();
-                    // $("#searchDoc").toggle();
-                    $("#contentData").html(result);
+                    $('#postMessage').html(result);
                 },
                 error: function (xhr, resp, text) {
-                    hidePleaseWait();
-                    // $("#allDoc").toggle();
-                    // $("#searchDoc").toggle();
-                    $("#contentData").html("<p> Document non trouvé </p>");
                     //  error to console
                     console.log(xhr, resp, text);
+                    hidePleaseWait();
+                    $('#postMessage').html(`<div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-warning"></i> iniger!</h4>
+                    Erreur !
+                  </div>`);
                 }
             });
+        }
+
+        // Now you can use formData.get('foo'), for example.
+        // Don't forget e.preventDefault() if you want to stop normal form .submission
+        console.log(formData, 'oui');
+        return false;
+    });
+    // document.querySelector('#'+formId).addEventListener('submit', (e) => {
+
+    //   });
+    // var formData = new FormData(document.querySelector('#'+formId));
+
+}
+
+function putData(formData, modifUrl) {
+    console.log(modifUrl);
+
+    $.ajax({
+        url: modifUrl,
+        type: "POST",
+        // contentType: 'application/json',
+        dataType: "html",
+        data: formData,
+        cache: false,
+        enctype: 'multipart/form-data',
+        processData: false, // tell jQuery not to process the data
+        contentType: false, // tell jQuery not to set contentType
+        timeout: 30000,
+        success: function (result) {
+            console.log(result, "res");
+            hidePleaseWait();
+            $('#postMessage').html(result);
+        },
+        error: function (xhr, resp, text) {
+            //  error to console
+            console.log(xhr, resp, text);
+            hidePleaseWait();
+            $('#postMessage').html(`<div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-warning"></i> iniger!</h4>
+                Erreur !
+              </div>`);
+        }
+    });
+    // Now you can use formData.get('foo'), for example.
+    // Don't forget e.preventDefault() if you want to stop normal form .submission
+
+    // document.querySelector('#'+formId).addEventListener('submit', (e) => {
+
+    //   });
+    // var formData = new FormData(document.querySelector('#'+formId));
+
+}
+
+function getHTML(action) {
+    showPleaseWait();
+    $.ajax({
+        url: customUrl + action,
+        type: "GET",
+        dataType: "html",
+        success: function (result) {
+            console.log(result, "res");
+            hidePleaseWait();
+            // $("#allDoc").toggle();
+            // $("#searchDoc").toggle();
+            $("#contentData").html(result);
+        },
+        error: function (xhr, resp, text) {
+            hidePleaseWait();
+            // $("#allDoc").toggle();
+            // $("#searchDoc").toggle();
+            $("#contentData").html("<p> Document non trouvé </p>");
+            //  error to console
+            console.log(xhr, resp, text);
+        }
+    });
+}
+
+$(document).ready(function () {
+    $('#submitForm').submit(function (e) {
+        showPleaseWait();
+        $.ajax({
+            url: customUrl + "searchView&data=" + $('#inputSearch').val(),
+            type: "GET",
+            dataType: "html",
+            success: function (result) {
+                console.log(result, "res");
+                hidePleaseWait();
+                // $("#allDoc").toggle();
+                // $("#searchDoc").toggle();
+                $("#contentData").html(result);
+            },
+            error: function (xhr, resp, text) {
+                hidePleaseWait();
+                // $("#allDoc").toggle();
+                // $("#searchDoc").toggle();
+                $("#contentData").html("<p> Document non trouvé </p>");
+                //  error to console
+                console.log(xhr, resp, text);
+            }
+        });
         return false;
     });
 });

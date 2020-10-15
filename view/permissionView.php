@@ -2,7 +2,7 @@
 $title = "Permission";
 $module = 1;
 if (isset($_GET['module'])) extract($_GET);
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -29,7 +29,7 @@ ob_start();
         <div class="card-header with-border">
           <i class="fa fa-server"></i>
           <h3 class="card-title"><?= Manager::getData('module', 'id', $module)['data']['name'] ?></h3>
-          <a onclick="addTableRow()" style="float: right" class="btn btn-success">
+          <a onclick="addTableRow(<?=$module?>)" style="float: right" class="btn btn-success">
             <i class="fa fa-plus white"></i>
           </a>
         </div>
@@ -57,7 +57,10 @@ ob_start();
     </div>
   </div>
 </div>
+<script>
+  getPermission(<?=$module?>);
+</script>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>
