@@ -8,7 +8,7 @@ if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
   //die();
   $src = Manager::getData("files", "id", $datas['photo'])['data']['file_url'];
 }
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -36,7 +36,7 @@ ob_start();
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form ville="form" method="post" enctype="multipart/form-data">
+        <form id="fikrForm" ville="form" method="post" enctype="multipart/form-data">
           <div class="card-body">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -145,7 +145,7 @@ ob_start();
           <!-- /.box-body -->
 
 
-          <button type="submit" class="btn btn-success">Valider</button>
+          <button type="submit" onclick="postData('fikrForm', 'ajouter-fikr'<?= (!empty($_GET['modif']) ? ', ' . $module_data['id'] : '') ?>)" class="btn btn-success">Valider</button>
           <p id="postMessage">
 
             </p>
@@ -183,6 +183,6 @@ ob_start();
   });
 </script>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

@@ -1,7 +1,7 @@
 <?php
 $title = "Consulter les données";
 
-ob_start();
+//ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -37,7 +37,7 @@ ob_start();
                 foreach ($fikr as $key => $value) :
             ?>
                   <div class="col-md-2">
-                    <a href="index.php?action=donnee&dfikr=<?= $value['id'] ?>">
+                    <a onclick="getHTML('donnee&dfikr=<?= $value['id'] ?>')">
                       <span class="align-self-center mr-3 action-icon badge badge-secondary-inverse"><i class="fa fa-folder-o fa-2x"></i></span>
                       <p><?= $value['titre'] ?></p>
                     </a>
@@ -101,6 +101,6 @@ ob_start();
   </div>
 </div>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

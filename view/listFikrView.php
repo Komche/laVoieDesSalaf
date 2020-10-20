@@ -1,6 +1,6 @@
 <?php
 $title = "Consulter fikr";
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -75,7 +75,7 @@ ob_start();
                       <td><img src="<?= $value['file_url'] ?>" width="50" alt="img"></td>
                       <td>
                         
-                        <a href="index.php?action=addData&fikr=<?= $value['id'] ?>" class="btn btn-primary">
+                        <a href="javascript:void()" onclick="getHTML('addData&fikr=<?= $value['id'] ?>')"  class="btn btn-primary">
                           <i class="fa fa-plus"></i>
                         </a>
                       </td>
@@ -99,6 +99,6 @@ ob_start();
   </div>
 </div>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

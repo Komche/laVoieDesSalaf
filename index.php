@@ -314,10 +314,11 @@ if (isset($_SESSION['user-iniger'])) {
                 }
             }
             require_once("view/auteurView.php");
-        } elseif ($action == 'ajouter-fikr') { //View livre
+        } elseif ($action == 'ajouter-fikr') { //View ajouter fikr
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
             if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'cfikr', 'id', $_GET['modif']);
@@ -326,9 +327,9 @@ if (isset($_SESSION['user-iniger'])) {
                     }
                 }
             } else { // Ajout auteur
-                if (!empty($_POST) && !empty($_FILES)) {
+                if (!empty($input) && !empty($_FILES)) {
 
-                    $data = $_POST;
+                    $data = $input;
                     $file = new Files();
                     $lid = $file->uploadFilePicture($_FILES['photo']);
                     $data['photo'] = is_numeric($lid) ? $lid : 0;
@@ -337,6 +338,14 @@ if (isset($_SESSION['user-iniger'])) {
                     $res = insert($fikr);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/fikrsView.php");
