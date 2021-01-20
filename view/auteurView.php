@@ -9,7 +9,7 @@ if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
       LEFT JOIN ville v ON a.ville = v.id WHERE a.id=?";
         $datas = Manager::getSingleRecords($sql, [$_GET['modif']]);
 }
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -37,7 +37,7 @@ ob_start();
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form ville="form" method="post" enctype="multipart/form-data">
+        <form id="auteurForm" ville="form" method="post" enctype="multipart/form-data">
           <div class="card-body">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -107,7 +107,7 @@ ob_start();
           <!-- /.box-body -->
 
 
-          <button type="submit" class="btn btn-success">Valider</button>
+          <button type="submit" onclick="postData('auteurForm', 'auteur'<?= (!empty($_GET['modif']) ? ', ' . $_GET['modif'] : '') ?>)" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
           <p id="postMessage">
 
             </p>
@@ -147,7 +147,7 @@ ob_start();
 
                 </div>
                 <div class="card-footer text-center">
-                <a href="index.php?action=auteur&modif=<?=  $value['id']?>" class="btn btn-primary-rgba">Modifier<i class="feather icon-edit ml-2"></i></a>
+                <a href="javascript:void()" onclick="getHTML('auteur&modif=<?= $value['id'] ?>')" class="btn btn-primary-rgba">Modifier<i class="feather icon-edit ml-2"></i></a>
                 </div>
               </div>
             </div>
@@ -178,6 +178,6 @@ ob_start();
   });
 </script>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

@@ -86,7 +86,7 @@ $start_form = ($page - 1) * $per_page;
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" onclick="postData('permissionForm', 'module'<?= (!empty($_GET['modif']) ? ', ' . $module_data['id'] : '') ?>)" class="btn btn-success">Valider</button>
+              <button type="submit" onclick="postData('permissionForm', 'module'<?= (!empty($_GET['modif']) ? ', ' . $module_data['id'] : '') ?>)" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
               <p id="postMessage">
 
               </p>
@@ -164,13 +164,15 @@ $start_form = ($page - 1) * $per_page;
                 $sql = "SELECT COUNT(*) nb FROM module";
                 $total_row = Manager::getSingleRecords($sql)['nb'];
                 $total_page = ceil($total_row / $per_page);
-                
-
+                $pageType='';
+                if (!empty($_GET['role'])) {
+                  $pageType="&role=".$_GET['role'];
+                }
 
 
                 ?>
                 <li class="page-item <?= $page >= 2 ? '' : 'disabled' ?>">
-                  <a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $page - 1 ?>')" aria-label="Previous">
+                  <a class="page-link" href="javascript:void()" onclick="getHTML('module<?= $pageType ?>&page=<?= $page - 1 ?>')" aria-label="Previous">
                     <span aria-hidden="true">«</span>
                     <span class="sr-only">Precedent</span>
                   </a>
@@ -181,11 +183,11 @@ $start_form = ($page - 1) * $per_page;
 
 
                 ?>
-                    <li class="page-item active"><a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $i ?>')"><?= $i ?></a></li>
+                    <li class="page-item active"><a class="page-link" href="javascript:void()" onclick="getHTML('module<?= $pageType ?>&page=<?= $i ?>')"><?= $i ?></a></li>
                 <?php
                   }else {
                 ?>
-                <li class="page-item"><a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $i ?>')"><?= $i ?></a></li>
+                <li class="page-item"><a class="page-link" href="javascript:void()" onclick="getHTML('module<?= $pageType ?>&page=<?= $i ?>')"><?= $i ?></a></li>
                 <?php
                   
                     
@@ -193,7 +195,7 @@ $start_form = ($page - 1) * $per_page;
                 }
                 ?>
                 <li class="page-item <?= $page < $total_page ? '' : 'disabled' ?>">
-                  <a class="page-link" href="javascript:void()" onclick="getHTML('module&page=<?= $page + 1 ?>')" aria-label="Next">
+                  <a class="page-link" href="javascript:void()" onclick="getHTML('module<?= $pageType ?>&page=<?= $page + 1 ?>')" aria-label="Next">
                     <span aria-hidden="true">»</span>
                     <span class="sr-only">Suivant</span>
                   </a>

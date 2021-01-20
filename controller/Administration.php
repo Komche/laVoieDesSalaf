@@ -26,24 +26,22 @@ include_once('model/database/auteurs.php');
 include_once('model/database/fikrs.php');
 include_once('model/database/datas.php');
 include_once('model/database/annonces.php');
+include_once('model/database/partenaire.php');
 
 
 function addData($data, $table)
 {
     $url = API_ROOT_PATH. "/object/$table";
     $res = Manager::addoNTable($url, $data, $table);
-    // Manager::showError($res);
     $res = Manager::correct($res);
     if (isset($res['error'])) {
         if (!$res['error']) {
             $lastId = $res['lastId'];
             if (!empty($lastId)) {
-                $res = Manager::addHistory($table, $lastId);
-                if ($res != 1) {
-                    return $res['message'];
-                }else {
+                // Manager::showError($lastId);
+               
                     return 1;
-                }
+                
             }else {
                 return $res['message'];
             }

@@ -59,7 +59,7 @@
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg btn-block font-18">Valider</button>
+                    <button type="submit" class="btn btn-success btn-lg btn-block font-18"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
                   </form>
                   <!-- <div class="login-or">
                                         <h6 class="text-muted">OR</h6>

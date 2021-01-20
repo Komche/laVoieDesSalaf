@@ -106,185 +106,326 @@ if (isset($_SESSION['user-iniger'])) {
             }
             require_once("view/permissionView.php");
         } elseif ($action == 'ville') { //View Ville
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
             if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
-                    $res = Manager::updateData($data, 'ville', 'idVille', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=ville');
+                    $res = Manager::updateData($data, 'ville', 'id', $_GET['modif']);
+                    if ($res['code'] = 1) {
+                        echo " <script>
+                        getHTML('ville');
+                    </script>";
+                    die;
                     }
                 }
             } else { // Ajout Ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+                if (!empty($input)) {
+                    $data = $input;
                     $ville = new ville($data);
                     //var_dump($ville); die;
                     $res = insert($ville);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/villeView.php");
-        } elseif ($action == 'pays') { //View Ville
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+        } elseif ($action == 'pays') { //View pays
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'un pays
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
-                    $res = Manager::updateData($data, 'pays', 'id', $_GET['modif']);
+                    $res = Manager::updateData($data, 'country', 'id', $_GET['modif']);
                     if ($res['code'] = 200) {
-                        header('Location: index.php?action=pays');
+                        echo " <script>
+                        getHTML('pays');
+                    </script>";
+                    die;
                     }
                 }
-            } else { // Ajout Ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+            } else { // Ajout pays
+                if (!empty($input)) {
+                    $data = $input;
                     $pays = new country($data);
                     //var_dump($pays); die;
                     $res = insert($pays);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/paysView.php");
-        } elseif ($action == 'cannonce') { //View annonce
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+        } elseif ($action == 'partenaire') { //View partenaire
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'un partenaire
+                if (!empty($input)) {
+                    $data = $input;
+                    //var_dump($data);
+                    //die();
+                    if (!empty($_FILES['photo']['name'])) {
+                        $file = new Files();
+                        $lid = $file->uploadFilePicture($_FILES['photo']);
+                        $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    } else {
+                        unset($data['photo']);
+                    }
+                    $res = Manager::updateData($data, 'partenaire', 'id', $_GET['modif']);
+                    if ($res['code'] = 200) {
+                        echo " <script>
+                        getHTML('partenaire');
+                    </script>";
+                    die;
+                    }
+                }
+            } else { // Ajout partenaire
+                if (!empty($input)) {
+                    $data = $input;
+                    $file = new Files();
+                    $lid = $file->uploadFilePicture($_FILES['photo']);
+                    $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    $partenaire = new partenaire($data);
+                    //var_dump($partenaire); die;
+                    $res = insert($partenaire);
+
+                    $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
+                }
+            }
+            require_once("view/partenaireView.php");
+        } elseif ($action == 'cannonce') { //View cannonce
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une cannonce
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'cannonces', 'id', $_GET['modif']);
                     if ($res['code'] = 200) {
-                        header('Location: index.php?action=cannonce');
+                        echo " <script>
+                        getHTML('cannonce');
+                    </script>";
+                    die;
                     }
                 }
             } else { // Ajout Ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+                if (!empty($input)) {
+                    $data = $input;
                     $cannonce = new cannonces($data);
                     //var_dump($cannonce); die;
                     $res = insert($cannonce);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/cAnnonceView.php");
-        } elseif ($action == 'cactualite') { //View actualite
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+        } elseif ($action == 'cactualite') { //View cactualite
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une catualite
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'cactualites', 'id', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=cactualite');
+                    if ($res['code'] = 1) {
+                        echo " <script>
+                        getHTML('cactualite');
+                    </script>";
+                    die;
                     }
                 }
             } else { // Ajout Ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+                if (!empty($input)) {
+                    $data = $input;
                     $cactualite = new cactualites($data);
                     //var_dump($cactualite); die;
                     $res = insert($cactualite);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/cActualiteView.php");
-        } elseif ($action == 'clivre') { //View livre
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+        } elseif ($action == 'clivre') { //View clivre
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une clivre
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'clivres', 'id', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=clivre');
+                    if ($res['code'] = 1) {
+                        echo " <script>
+                        getHTML('clivre');
+                    </script>";
+                    die;
                     }
                 }
             } else { // Ajout Ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+                if (!empty($input)) {
+                    $data = $input;
                     $clivre = new clivres($data);
                     //var_dump($clivre); die;
                     $res = insert($clivre);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/cLivreView.php");
-        } elseif ($action == 'langue') { //View livre
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+        } elseif ($action == 'langue') { //View langue
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une langue
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'langues', 'id', $_GET['modif']);
                     if ($res['code'] = 200) {
-                        header('Location: index.php?action=langue');
+                        echo " <script>
+                        getHTML('langue');
+                    </script>";
+                    die;
                     }
                 }
             } else { // Ajout livre
-                if (!empty($_POST)) {
-                    $data = $_POST;
+                if (!empty($input)) {
+                    $data = $input;
                     $langue = new langues($data);
                     //var_dump($langue); die;
                     $res = insert($langue);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/langueView.php");
-        } elseif ($action == 'statut') { //View livre
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+        } elseif ($action == 'statut') { //View statut
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une statut
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'statuts', 'id', $_GET['modif']);
                     if ($res['code'] = 200) {
-                        header('Location: index.php?action=statut');
+                        echo " <script>
+                        getHTML('statut');
+                    </script>";
+                    die;
                     }
                 }
             } else { // Ajout Ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+                if (!empty($input)) {
+                    $data = $input;
                     $statut = new statuts($data);
                     //var_dump($statut); die;
                     $res = insert($statut);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/statutView.php");
-        } elseif ($action == 'cfikr') { //View livre
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+        } elseif ($action == 'cfikr') { //View cfikr
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une cfikr
+                if (!empty($input)) {
+                    $data = $input;
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'cfikr', 'id', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=cfikr');
+                    if ($res['code'] == 1) {
+                        echo " <script>
+                        getHTML('cfikr');
+                    </script>";
+                    die;
                     }
                 }
-            } else { // Ajout Ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+            } else { // Ajout cfikr
+                if (!empty($input)) {
+                    $data = $input;
                     $cfikr = new cfikr($data);
                     //var_dump($cfikr); die;
                     $res = insert($cfikr);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 }
             }
             require_once("view/cFikrView.php");
-        } elseif ($action == 'auteur') { //View livre
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
-                if (!empty($_POST)) {
-                    $data = $_POST;
+        } elseif ($action == 'auteur') { //View auteur
+          $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une auteur
+                if (!empty($input)) {
+                    $data = $input;
                     if (!empty($_FILES['photo']['name'])) {
                         $file = new Files();
                         $lid = $file->uploadFilePicture($_FILES['photo']);
@@ -295,14 +436,17 @@ if (isset($_SESSION['user-iniger'])) {
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'auteurs', 'id', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=auteur');
-                    }
+                    if ($res['code'] == 1) {
+                      echo " <script>
+                      getHTML('auteur');
+                  </script>";
+                  die;
+                  }
                 }
             } else { // Ajout auteur
-                if (!empty($_POST) && !empty($_FILES)) {
+                if (!empty($input) && !empty($_FILES)) {
 
-                    $data = $_POST;
+                    $data = $input;
                     $file = new Files();
                     $lid = $file->uploadFilePicture($_FILES['photo']);
                     $data['photo'] = is_numeric($lid) ? $lid : 0;
@@ -311,20 +455,31 @@ if (isset($_SESSION['user-iniger'])) {
                     $res = insert($auteur);
 
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                      if ($_SESSION['messages']['code'] == 1) {
+                          echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                      } else {
+                          echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                      }
+                  }
+                  die;
                 }
             }
             require_once("view/auteurView.php");
-        } elseif ($action == 'ajouter-fikr') { //View ajouter fikr
-            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une ville
+        } elseif ($action == 'ajouter-fikr') { //View ajouter-fikr
+          $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification  ajouter-fikr
                 if (!empty($input)) {
                     $data = $input;
                     //var_dump($data);
                     //die();
                     $res = Manager::updateData($data, 'cfikr', 'id', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=cfikr');
-                    }
+                    if ($res['code'] == 1) {
+                      echo " <script>
+                      getHTML('fikr');
+                  </script>";
+                  die;
+                  }
                 }
             } else { // Ajout auteur
                 if (!empty($input) && !empty($_FILES)) {
@@ -339,6 +494,103 @@ if (isset($_SESSION['user-iniger'])) {
 
                     $_SESSION['messages'] = $res;
                     if (!empty($_SESSION['messages'])) {
+                      if ($_SESSION['messages']['code'] == 1) {
+                          echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                      } else {
+                          echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                      }
+                  }
+                  die;
+                }
+            }
+            require_once("view/fikrsView.php");
+        } elseif ($action == 'ajouter-annonce') { //View annonce
+          $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une annonce
+                if (!empty($input)) {
+                    $data = $input;
+                    if (!empty($_FILES['photo']['name'])) {
+                        $file = new Files();
+                        $lid = $file->uploadFilePicture($_FILES['photo']);
+                        $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    } else {
+                        unset($data['photo']);
+                    }
+                    // var_dump($data);
+                    // die();
+                    $res = Manager::updateData($data, 'annonces', 'id', $_GET['modif']);
+                    if ($res['code'] == 1) {
+                      echo " <script>
+                      getHTML('consulter-annonce');
+                  </script>";
+                  die;
+                  }
+                }
+            } else { // Ajout annonce
+                if (!empty($input) && !empty($_FILES['photo'])) {
+
+                    $data = $input;
+                    // var_dump($_POST); die;
+                    $file = new Files();
+                    $lid = $file->uploadFilePicture($_FILES['photo']);
+                    $data['photo'] = is_numeric($lid) ? $lid : 0;
+                    $annonce = new annonces($data);
+                    $res = insert($annonce);
+
+                    $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                      if ($_SESSION['messages']['code'] == 1) {
+                          echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                      } else {
+                          echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                      }
+                  }
+                  die;
+                }
+            }
+            require_once("view/addAnnonceView.php");
+        } elseif ($action == 'traduction') { //View traduction
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+                if (!empty($input)) {
+                    $data = json_decode(file_get_contents("public/traduction.json"), true);
+                    $data[strtolower($input['langue'])][$input['key']] = $input['value'];
+
+                    file_put_contents("public/traduction.json", json_encode($data), FILE_USE_INCLUDE_PATH);
+                    $_SESSION['messages']['message'] = "Traduction effectué";
+                    $_SESSION['messages']['code'] = 1;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    
+                    die;
+                }
+            
+            require_once("view/addTradutionView.php");
+        } elseif ($action == 'type') {
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            if (!empty($input)) {
+                $data = $input;
+                $res = addData($data, 'type_agent');
+
+                if ($res != 1) {
+                    $_SESSION['messages'] = $res;
+                    $_SESSION['messages']['code'] = 0;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
+                }else {
+                    $_SESSION['messages']['message'] = "Enregistrement reussis";
+                    $_SESSION['messages']['code'] = 1;
+                    if (!empty($_SESSION['messages'])) {
                         if ($_SESSION['messages']['code'] == 1) {
                             echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
                         } else {
@@ -348,121 +600,62 @@ if (isset($_SESSION['user-iniger'])) {
                     die;
                 }
             }
-            require_once("view/fikrsView.php");
-        } elseif ($action == 'ajouter-annonce') { //View annonce
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une annonce
-                if (!empty($_POST)) {
-                    $data = $_POST;
-                    if (!empty($_FILES['photo']['name'])) {
-                        $file = new Files();
-                        $lid = $file->uploadFilePicture($_FILES['photo']);
-                        $data['photo'] = is_numeric($lid) ? $lid : 0;
-                    } else {
-                        unset($data['photo']);
-                    }
-                    // var_dump($data);
-                    // die();
-                    $res = Manager::updateData($data, 'annonces', 'id', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=consulter-annonce');
-                    }
-                }
-            } else { // Ajout annonce
-                if (!empty($_POST) && !empty($_FILES['photo'])) {
-
-                    $data = $_POST;
-                    // var_dump($_POST); die;
-                    $file = new Files();
-                    $lid = $file->uploadFilePicture($_FILES['photo']);
-                    $data['photo'] = is_numeric($lid) ? $lid : 0;
-                    $annonce = new annonces($data);
-                    $res = insert($annonce);
-
-                    $_SESSION['messages'] = $res;
-                }
-            }
-            require_once("view/addAnnonceView.php");
-        } elseif ($action == 'traduction') { //View annonce
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'une annonce
-                if (!empty($_POST)) {
-                    $data = $_POST;
-                    if (!empty($_FILES['photo']['name'])) {
-                        $file = new Files();
-                        $lid = $file->uploadFilePicture($_FILES['photo']);
-                        $data['photo'] = is_numeric($lid) ? $lid : 0;
-                    } else {
-                        unset($data['photo']);
-                    }
-                    // var_dump($data);
-                    // die();
-                    $res = Manager::updateData($data, 'annonces', 'id', $_GET['modif']);
-                    if ($res['code'] = 200) {
-                        header('Location: index.php?action=consulter-annonce');
-                    }
-                }
-            } else { // Ajout annonce
-                if (!empty($_POST)) {
-                    $data = json_decode(file_get_contents("public/traduction.json"), true);
-                    $data[strtolower($_POST['langue'])][$_POST['key']] = $_POST['value'];
-
-                    file_put_contents("public/traduction.json", json_encode($data), FILE_USE_INCLUDE_PATH);
-                    // $_SESSION['messages'] = $res;
-                }
-            }
-            require_once("view/addTradutionView.php");
-        } elseif ($action == 'type') {
-            if (!empty($_POST)) {
-                $data = $_POST;
-                $res = addData($data, 'type_agent');
-
-                if ($res != 1) {
-                    $_SESSION['messages'] = $res;
-                }
-            }
             require_once("view/typeAgentView.php");
         } elseif ($action == 'addUser') {
-            //Manager::showError($_FILES);
-            if (!empty($_POST) && !empty($_FILES)) {
-                $data = $_POST;
+            $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            // Manager::showError($_FILES);
+            if (!empty($input) && !empty($_FILES) && empty($_GET['modif'])) {
+                $data = $input;
                 $data['profile_picture'] = $_FILES['profile_picture'];
                 $res = UserManager::addUser($data);
                 // Manager::showError($res);
                 if ($res != 1) {
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 } else {
-                    header('Location: index.php?action=showUser');
+                   echo " <script>
+                        getHTML('showUser');
+                    </script>";
+                    die;
+                    // header('Location: index.php?action=');
                 }
+                
             }
-            if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) { //Modification d'un utilisateur
-                $data = $_POST;
-                if (!empty($_FILES)) {
-                    //$data['profile_picture'] = $_FILES['profile_picture'];
+            if (!empty($_GET['modif']) && ctype_digit($_GET['modif']) && !empty($input)) { //Modification d'un utilisateur
+                $data = $input;
+                if (!empty($_FILES['profile_picture']['name'])) {
+                    $data['photo'] = UserManager::uploadProfilePicture($_FILES['profile_picture']);
+                    // $data['profile_picture'] = $_FILES['profile_picture'];
                 }
                 $res = Manager::updateData($data, 'users', 'id', $_GET['modif']);
                 if ($res != 1) {
                     $_SESSION['messages'] = $res;
+                    if (!empty($_SESSION['messages'])) {
+                        if ($_SESSION['messages']['code'] == 1) {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-success');
+                        } else {
+                            echo Manager::messages($_SESSION['messages']['message'], 'alert-danger');
+                        }
+                    }
+                    die;
                 } else {
-                    header('Location: index.php?action=showUser');
+                    echo " <script>
+                        getHTML('showUser');
+                    </script>";
+                    die;
                 }
             }
             require_once("view/addUserView.php");
-        } elseif ($action == 'addEmergency') {
-            //Manager::showError($_FILES);
-            if (!empty($_POST) && !empty($_FILES)) {
-                $data = $_POST;
-                $file = new Files();
-                var_dump($file->uploadFilePicture($_FILES['files']));
-                die;
-                $data['files'] = $_FILES['files'];
-                $res = EmergencyManager::addEmergency($data);
-                //Manager::showError($data);
-                if ($res != 1) {
-                    $_SESSION['messages'] = $res;
-                } else {
-                    header('Location: index.php?action=showEmergency');
-                }
-            }
-            require_once("view/addEmergencyGestView.php");
+        } elseif ($action == 'showUser') {
+
+            require_once("view/showUserView.php");
         } elseif ($action == 'export_cards') {
 
             require_once("model/export_to_pdf.php");

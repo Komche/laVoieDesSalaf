@@ -8,7 +8,7 @@ if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
    WHERE a.cannonce = c.id AND a.photo = f.id AND a.users=u.id AND a.id=?";
 $datas = Manager::getSingleRecords($sql, [$_GET['modif']]);
 }
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -36,7 +36,7 @@ ob_start();
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" method="post" enctype="multipart/form-data">
+        <form id="annonceForm" role="form" method="post" enctype="multipart/form-data">
           <div class="card-body">
             <div class="form-group">
               <label for="titre">Libelle</label>
@@ -95,7 +95,7 @@ ob_start();
             <input type="file" name="photo" id="profile_input" value="" style="display: none;">
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-success">Valider</button>
+            <button type="submit" onclick="postData('annonceForm', 'ajouter-annonce'<?= (!empty($_GET['modif']) ? ', ' . $_GET['modif'] : '') ?>)" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
             <p id="postMessage">
 
             </p>
@@ -117,7 +117,18 @@ ob_start();
 
   </div>
 </div>
+<script src="public/vendor/js/custom/custom-form-editor.js"></script>
+<script>
+  console.log($('.note-editable'), "ok");
+
+$('#description').val($('.note-editable').html());
+$('.note-editable').bind('DOMSubtreeModified', function() {
+    console.log($(this).html(), 'ok');
+    $('#description').val($(this).html());
+
+});
+</script>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

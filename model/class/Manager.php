@@ -632,9 +632,9 @@ class Manager
 
             $req = self::bdd()->prepare($sql);
             if ($req->execute($value)) {
-               return self::throwError(200, "Enregistrement modifié avec succès");
+               return self::throwError(1, "Enregistrement modifié avec succès");
             } else {
-               return self::throwError(503, "modification échouée", true);
+               return self::throwError(0, "modification échouée", true);
             }
         }
     }

@@ -8,7 +8,7 @@ if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
   //die();
   $src = Manager::getData("files", "id", $datas['photo'])['data']['file_url'];
 }
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -29,7 +29,7 @@ ob_start();
         $module = Manager::getData("module", "action_url", "showUser")['data']['id'];
         if (haveAction($_SESSION['user-iniger']['roleId'], $module)) :
         ?>
-          <a href="index.php?action=showUser" class="btn btn-success-rgba"><i class="fa fa-eye"></i> Liste des Utilisateur</a>
+          <a href="javascript:void()" onclick="getHTML('showUser')" class="btn btn-success-rgba"><i class="fa fa-eye"></i> Liste des Utilisateur</a>
         <?php endif ?>
       </div>
     </div>
@@ -45,7 +45,7 @@ ob_start();
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form id="userForm" role="form" method="post" enctype="multipart/form-data">
         <div class="card-body">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -83,7 +83,7 @@ ob_start();
               if (is_array($data) || is_object($data)) {
                 foreach ($data as $value) {
               ?>
-                  <option <?= (!empty($_GET['modif'])) ? ($value['id'] == $datas['type_agent']) ? "selected" : "" : "" ?> value="<?= $value['id'] ?>"><?= $value['label'] ?></option>
+                  <option <?= (!empty($_GET['modif'])) ? (($value['id'] == $datas['type_agent']) ? "selected" : "") : "" ?> value="<?= $value['id'] ?>"><?= $value['label'] ?></option>
               <?php
                 }
               } else {
@@ -102,7 +102,7 @@ ob_start();
               if (is_array($data) || is_object($data)) {
                 foreach ($data as $value) {
               ?>
-                  <option <?= (!empty($_GET['modif'])) ? ($value['id'] == $datas['role']) ? "selected" : "" : "" ?> value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                  <option <?= (!empty($_GET['modif'])) ? (($value['id'] == $datas['role']) ? "selected" : "") : "" ?> value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
               <?php
                 }
               } else {
@@ -117,28 +117,9 @@ ob_start();
               Entité
             </label>
           </div> -->
-          <div id="selectEntity" style="display: none;" class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Entité</span>
-            </div>
-            <select class="form-control" id="entity" name="entity">
-              <option value="<?= NULL ?>">Choisir une entité</option>
-              <?php
-              $data = Manager::getData('entity')['data'];
-              if (is_array($data) || is_object($data)) {
-                foreach ($data as $value) {
-              ?>
-                  <option <?= (!empty($_GET['modif'])) ? ($value['id'] == $datas['entity']) ? "selected" : "" : "" ?> value="<?= $value['id_entity'] ?>"><?= $value['label'] ?></option>
-              <?php
-                }
-              } else {
-                Manager::messages('Aucune donnée trouvé', 'alert-warning');
-              }
-              ?>
-            </select>
-          </div>
+       
           <div class="input-group mb-3" style="text-align: center;">
-            <img src="<?= (!empty($_GET['modif'])) ? $src : 'public/img/150x150.png' ?>" id="profile_img" style="height: 100px; border-radius: 50%" alt="">
+            <img src="<?= (!empty($_GET['modif'])) ? $src : 'public/img/150x150.png' ?>" id="profile_img" style="height: 100px; border-radius: 50%" alt="photo profile">
             <!-- hidden file input to trigger with JQuery  -->
             <input type="file" name="profile_picture" id="profile_input" value="" style="display: none;">
           </div>
@@ -146,7 +127,7 @@ ob_start();
         <!-- /.box-body -->
 
 
-        <button type="submit" class="btn btn-success">Valider</button>
+        <button type="submit" onclick="postData('userForm', 'addUser'<?= (!empty($_GET['modif']) ? ', ' . $_GET['modif'] : '') ?>)" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
         <p id="postMessage">
 
             </p>
@@ -159,27 +140,8 @@ ob_start();
     </div>
   </div>
 </div>
-<script>
-  
-  $(document).ready(function() {
-    //set initial state.
-    
 
-    $('#role').change(function() {
-      
-      if ($(this).val()!=6) {
-        $('#entity').val(null);
-        $('#selectEntity').hide();
-      }else {
-        $('#selectEntity').show();
-
-      }
-    console.log($('#entity').val());      
-    });
-  });
- 
-</script>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

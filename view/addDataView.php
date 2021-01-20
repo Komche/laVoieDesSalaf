@@ -1,5 +1,5 @@
 <?php
-$title = "Consulter fikr";
+$title = "Ajouter des données";
 // ob_start();
 ?>
 <div class="breadcrumbbar">
@@ -66,6 +66,31 @@ $title = "Consulter fikr";
     <!-- End col -->
   </div>
 </div>
+
+<script>
+   $("#chemin").fileinput({
+                    showRemove: true,
+                    showPreview: true,
+
+                    uploadUrl: "index.php?action=sendData", // server upload action
+                    uploadAsync: false,
+                    uploadExtraData: function() {
+                        return {
+                            fikr: <?= $_GET['fikr'] ?>
+                        };
+                    }
+                }).on('filebatchpreupload', function(event, data, id, index) {
+                    $('#kv-success-2').html('<h4>Statut</h4><ul></ul>').hide();
+                }).on('filebatchuploadsuccess', function(event, data) {
+                    var out = '';
+                    $.each(data.files, function(key, file) {
+                        var fname = file.name;
+                        out = out + '<li>' + 'Fichier ajouter # ' + (key + 1) + ' - ' + fname + ' successfully.' + '</li>';
+                    });
+                    $('#kv-success-2 ul').append(out);
+                    $('#kv-success-2').fadeIn('slow');
+                });
+</script>
 <?php
 // $content = ob_get_clean();
 // require('template.php');

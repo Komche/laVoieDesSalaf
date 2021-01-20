@@ -145,7 +145,7 @@ if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
           <!-- /.box-body -->
 
 
-          <button type="submit" onclick="postData('fikrForm', 'ajouter-fikr'<?= (!empty($_GET['modif']) ? ', ' . $module_data['id'] : '') ?>)" class="btn btn-success">Valider</button>
+          <button type="submit" onclick="postData('fikrForm', 'ajouter-fikr'<?= (!empty($_GET['modif']) ? ', ' . $_GET['modif'] : '') ?>)" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
           <p id="postMessage">
 
             </p>

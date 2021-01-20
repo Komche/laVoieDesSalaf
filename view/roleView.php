@@ -40,7 +40,7 @@ $title = "Rôle";
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" onclick="postData('roleForm', 'role')" class="btn btn-success">Valider</button>
+            <button type="submit" onclick="postData('roleForm', 'role')" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
             <p id="postMessage">
 
             </p>

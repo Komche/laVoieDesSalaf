@@ -4,7 +4,7 @@ if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
   $title = "Modifier Traduction";
  
 }
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -32,7 +32,7 @@ ob_start();
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" method="post" enctype="multipart/form-data">
+        <form id="traductionForm" role="form" method="post" enctype="multipart/form-data">
           <div class="card-body">
             <div class="form-group">
               <label for="key">Clés</label>
@@ -64,7 +64,7 @@ ob_start();
           </div>
           
           <div class="card-footer">
-            <button type="submit" class="btn btn-success">Valider</button>
+            <button type="submit" onclick="postData('traductionForm', 'traduction'<?= (!empty($_GET['modif']) ? ', ' . $_GET['modif'] : '') ?>)"  class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
             <p id="postMessage">
 
             </p>
@@ -87,6 +87,6 @@ ob_start();
   </div>
 </div>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

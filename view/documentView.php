@@ -161,7 +161,7 @@ ob_start();
                 ?>
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-success">Valider</button>
+                <button type="submit" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
                 <p id="postMessage">
 
             </p>

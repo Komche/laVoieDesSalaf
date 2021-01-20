@@ -1,6 +1,6 @@
 <?php
 $title = "Type des agents";
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -28,7 +28,7 @@ ob_start();
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" method="post">
+        <form id="typeForm" role="form" method="post">
           <div class="card-body">
             <div class="form-group">
               <label for="label">Nom du type d'agent</label>
@@ -36,7 +36,7 @@ ob_start();
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-success">Valider</button>
+            <button type="submit" onclick="postData('typeForm', 'type'<?= (!empty($_GET['modif']) ? ', ' . $_GET['modif'] : '') ?>)" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
             <p id="postMessage">
 
             </p>
@@ -97,6 +97,6 @@ ob_start();
 </div>
 <br> <br> <br>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

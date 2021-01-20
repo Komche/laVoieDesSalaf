@@ -4,7 +4,7 @@ if (!empty($_GET['modif']) && ctype_digit($_GET['modif'])) {
   $title = "Modifier catégorie actulaite";
   $datas = Manager::getData("cactualites", "id", $_GET['modif'])['data'];
 }
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -32,7 +32,7 @@ ob_start();
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" method="post">
+        <form id="cactualiteForm" role="form" method="post">
           <div class="card-body">
             <div class="form-group">
               <label for="titre">Libelle</label>
@@ -41,7 +41,7 @@ ob_start();
             
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-success">Valider</button>
+            <button type="submit" onclick="postData('cactualiteForm', 'cactualite'<?= (!empty($_GET['modif']) ? ', ' . $_GET['modif'] : '') ?>)" class="btn btn-success"><?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?></button>
             <p id="postMessage">
 
             </p>
@@ -84,7 +84,7 @@ ob_start();
                   <tr>
                     <td><?= $value['titre'] ?></td>
                     <td>
-                      <a href="index.php?action=cactualite&modif=<?= $value['id'] ?>" class="btn btn-success">
+                      <a href="javascript:void()" onclick="getHTML('cactualite&modif=<?= $value['id'] ?>')"  class="btn btn-success">
                         <i class="fa fa-edit"></i>
                       </a>
                     </td>
@@ -107,6 +107,6 @@ ob_start();
   </div>
 </div>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

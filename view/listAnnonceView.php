@@ -1,6 +1,6 @@
 <?php
 $title = "Consulter annoncce";
-ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -47,7 +47,7 @@ ob_start();
               <div class="row align-items-center">
                 <div class="col-md-4">
                   <div class="blog-link">
-                    <a href="index.php?action=ajouter-annonce&modif=<?=  $value['id']?>" class="btn btn-primary-rgba">Modifier<i class="feather icon-edit ml-2"></i></a>
+                    <a href="javascript:void()" onclick="getHTML('ajouter-annonce&modif=<?= $value['id'] ?>')" class="btn btn-primary-rgba">Modifier<i class="feather icon-edit ml-2"></i></a>
                   </div>
                 </div>
                 <div class="col-md-8">
@@ -74,6 +74,6 @@ ob_start();
   </div>
 </div>
 <?php
-$content = ob_get_clean();
-require('template.php');
+// $content = ob_get_clean();
+// require('template.php');
 ?>

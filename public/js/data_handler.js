@@ -459,19 +459,34 @@ function hidePleaseWait() {
 
 function postData(formId, action, id) {
     $('#' + formId).submit(function (e) {
+        e.preventDefault();
+        var formDat = new FormData(this);
+
         showPleaseWait();
         var data = $('#' + formId).serializeObject();
 
+
+        // // for (var key in data) {
+        // //     formDat.append(key, data[key]);
+        // //     // console.log(key, data[key], "key");
+
+        // // }
+        // // Display the key/value pairs
+        // for (var pair of formDat.entries()) {
+        //     console.log(pair[0] + ', ' + pair[1]);
+        // }
+        console.log("id", id);
+
         var formData = JSON.stringify(data);
         if (id != '') {
-            putData(formData, customUrl + action + '&modif=' + id);
+            putData(formDat, customUrl + action + '&modif=' + id);
         } else {
             $.ajax({
                 url: customUrl + action,
                 type: "POST",
                 // contentType: 'application/json',
                 dataType: "html",
-                data: formData,
+                data: formDat,
                 cache: false,
                 enctype: 'multipart/form-data',
                 processData: false, // tell jQuery not to process the data

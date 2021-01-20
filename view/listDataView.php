@@ -1,7 +1,7 @@
 <?php
 $title = "Consulter les données";
 
-//ob_start();
+// ob_start();
 ?>
 <div class="breadcrumbbar">
   <div class="row align-items-center">
@@ -37,7 +37,7 @@ $title = "Consulter les données";
                 foreach ($fikr as $key => $value) :
             ?>
                   <div class="col-md-2">
-                    <a onclick="getHTML('donnee&dfikr=<?= $value['id'] ?>')">
+                    <a href="javascript:void()" onclick="getHTML('donnee&dfikr=<?= $value['id'] ?>')">
                       <span class="align-self-center mr-3 action-icon badge badge-secondary-inverse"><i class="fa fa-folder-o fa-2x"></i></span>
                       <p><?= $value['titre'] ?></p>
                     </a>
@@ -82,7 +82,7 @@ $title = "Consulter les données";
                 foreach ($data as $key => $value) :
                   ?>
                   <div class="col-md-2">
-                    <a href="<?= $value['file_url'] ?>">
+                    <a target="_blank" href="<?= $value['file_url'] ?>">
                       <span class="align-self-center mr-3 action-icon badge badge-secondary-inverse"><i class="fa <?= getFontAwsomeByFileType($value['file_type']) ?> fa-2x"></i></span>
                       <p><?= $value['dt'] ?></p>
                     </a>

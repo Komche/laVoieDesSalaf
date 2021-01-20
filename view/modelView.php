@@ -172,7 +172,7 @@ ob_start();
                         <td>
                           <button type="button" onclick="addModel()" class="btn btn-success">
                             <i class="fa  fa-check-square white"></i>
-                            Valider
+                            <?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?>
                           </button>
                         </td>
                     </tr>
@@ -222,7 +222,7 @@ ob_start();
                         <td>
                           <button type="button" onclick="addModel()" class="btn btn-success">
                             <i class="fa  fa-check-square white"></i>
-                            Valider
+                            <?= $GLOBALS['lang']['btn-valid'] ?? 'valider' ?>
                           </button>
                         </td>
                     </tr>
